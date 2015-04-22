@@ -1,0 +1,77 @@
+package byteio
+
+import (
+	"io"
+	"math"
+	"sync"
+)
+
+type BigEndianWriter struct {
+	io.Writer
+
+	mu    sync.Mutex
+	bytes [8]byte
+}
+
+func (b BigEndianWriter) WriteUint8(d uint8) (int, error) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.bytes[0] = byte(d)
+	return b.Write(b.bytes[:1])
+}
+
+func (b BigEndianWriter) WriteInt8(d int8) (int, error) {
+	return b.WriteUint8(uint8(d))
+}
+
+func (b BigEndianWriter) WriteUint16(d uint16) (int, error) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.bytes[0] = byte(d >> 8)
+	b.bytes[1] = byte(d)
+	return b.Write(b.bytes[:2])
+}
+
+func (b BigEndianWriter) WriteInt16(d int16) (int, error) {
+	return b.WriteUint16(uint16(d))
+}
+
+func (b BigEndianWriter) WriteUint32(d uint32) (int, error) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.bytes[0] = byte(d >> 24)
+	b.bytes[1] = byte(d >> 16)
+	b.bytes[2] = byte(d >> 8)
+	b.bytes[3] = byte(d)
+	return b.Write(b.bytes[:4])
+}
+
+func (b BigEndianWriter) WriteInt32(d int32) (int, error) {
+	return b.WriteUint32(uint32(d))
+}
+
+func (b BigEndianWriter) WriteUint64(d uint64) (int, error) {
+	b.mu.Lock()
+	defer b.mu.Unlock()
+	b.bytes[0] = byte(d >> 56)
+	b.bytes[1] = byte(d >> 48)
+	b.bytes[2] = byte(d >> 40)
+	b.bytes[3] = byte(d >> 32)
+	b.bytes[4] = byte(d >> 24)
+	b.bytes[5] = byte(d >> 16)
+	b.bytes[6] = byte(d >> 8)
+	b.bytes[7] = byte(d)
+	return b.Write(b.bytes[:])
+}
+
+func (b BigEndianWriter) WriteInt64(d int16) (int, error) {
+	return b.WriteUint64(uint64(d))
+}
+
+func (b BigEndianWriter) WriteFloat32(d float32) (int, error) {
+	return b.WriteUint32(math.Float32bits)
+}
+
+func (b BigEndianWriter) WriteFloat64(d float64) (int, error) {
+	return b.WriteUint64(math.Float64bits)
+}
