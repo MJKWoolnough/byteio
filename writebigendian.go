@@ -69,9 +69,9 @@ func (b BigEndianWriter) WriteInt64(d int16) (int, error) {
 }
 
 func (b BigEndianWriter) WriteFloat32(d float32) (int, error) {
-	return b.WriteUint32(math.Float32bits)
+	return b.WriteUint32(math.Float32bits(d))
 }
 
 func (b BigEndianWriter) WriteFloat64(d float64) (int, error) {
-	return b.WriteUint64(math.Float64bits)
+	return b.WriteUint64(math.Float64bits(d))
 }

@@ -69,9 +69,9 @@ func (l LittleEndianWriter) WriteInt64(d int16) (int, error) {
 }
 
 func (l LittleEndianWriter) WriteFloat32(d float32) (int, error) {
-	return l.WriteUint32(math.Float32bits)
+	return l.WriteUint32(math.Float32bits(d))
 }
 
 func (l LittleEndianWriter) WriteFloat64(d float64) (int, error) {
-	return l.WriteUint64(math.Float64bits)
+	return l.WriteUint64(math.Float64bits(d))
 }
