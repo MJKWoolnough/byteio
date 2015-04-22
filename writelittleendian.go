@@ -13,18 +13,18 @@ type LittleEndianWriter struct {
 	bytes [8]byte
 }
 
-func (l LittleEndianWriter) WriteUint8(d uint8) (int, error) {
+func (l *LittleEndianWriter) WriteUint8(d uint8) (int, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	l.bytes[0] = byte(d)
 	return l.Write(l.bytes[:1])
 }
 
-func (l LittleEndianWriter) WriteInt8(d int8) (int, error) {
+func (l *LittleEndianWriter) WriteInt8(d int8) (int, error) {
 	return l.WriteUint8(uint8(d))
 }
 
-func (l LittleEndianWriter) WriteUint16(d uint16) (int, error) {
+func (l *LittleEndianWriter) WriteUint16(d uint16) (int, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	l.bytes[0] = byte(d)
@@ -32,11 +32,11 @@ func (l LittleEndianWriter) WriteUint16(d uint16) (int, error) {
 	return l.Write(l.bytes[:2])
 }
 
-func (l LittleEndianWriter) WriteInt16(d int16) (int, error) {
+func (l *LittleEndianWriter) WriteInt16(d int16) (int, error) {
 	return l.WriteUint16(uint16(d))
 }
 
-func (l LittleEndianWriter) WriteUint32(d uint32) (int, error) {
+func (l *LittleEndianWriter) WriteUint32(d uint32) (int, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	l.bytes[0] = byte(d)
@@ -46,11 +46,11 @@ func (l LittleEndianWriter) WriteUint32(d uint32) (int, error) {
 	return l.Write(l.bytes[:4])
 }
 
-func (l LittleEndianWriter) WriteInt32(d int32) (int, error) {
+func (l *LittleEndianWriter) WriteInt32(d int32) (int, error) {
 	return l.WriteUint32(uint32(d))
 }
 
-func (l LittleEndianWriter) WriteUint64(d uint64) (int, error) {
+func (l *LittleEndianWriter) WriteUint64(d uint64) (int, error) {
 	l.mu.Lock()
 	defer l.mu.Unlock()
 	l.bytes[0] = byte(d)
@@ -64,14 +64,14 @@ func (l LittleEndianWriter) WriteUint64(d uint64) (int, error) {
 	return l.Write(l.bytes[:])
 }
 
-func (l LittleEndianWriter) WriteInt64(d int16) (int, error) {
+func (l *LittleEndianWriter) WriteInt64(d int16) (int, error) {
 	return l.WriteUint64(uint64(d))
 }
 
-func (l LittleEndianWriter) WriteFloat32(d float32) (int, error) {
+func (l *LittleEndianWriter) WriteFloat32(d float32) (int, error) {
 	return l.WriteUint32(math.Float32bits(d))
 }
 
-func (l LittleEndianWriter) WriteFloat64(d float64) (int, error) {
+func (l *LittleEndianWriter) WriteFloat64(d float64) (int, error) {
 	return l.WriteUint64(math.Float64bits(d))
 }
