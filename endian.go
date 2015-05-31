@@ -29,3 +29,10 @@ type EndianWriter interface {
 	WriteFloat32(float32) (int, error)
 	WriteFloat64(float64) (int, error)
 }
+
+var (
+	_ EndianReader = BigEndianReader{}
+	_ EndianReader = LittleEndianReader{}
+	_ EndianWriter = &BigEndianWriter{}
+	_ EndianWriter = &LittleEndianWriter{}
+)
