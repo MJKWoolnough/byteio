@@ -64,7 +64,7 @@ func (l *LittleEndianWriter) WriteUint64(d uint64) (int, error) {
 	return l.Write(l.bytes[:])
 }
 
-func (l *LittleEndianWriter) WriteInt64(d int16) (int, error) {
+func (l *LittleEndianWriter) WriteInt64(d int64) (int, error) {
 	return l.WriteUint64(uint64(d))
 }
 

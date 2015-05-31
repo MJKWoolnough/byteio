@@ -64,7 +64,7 @@ func (b *BigEndianWriter) WriteUint64(d uint64) (int, error) {
 	return b.Write(b.bytes[:])
 }
 
-func (b *BigEndianWriter) WriteInt64(d int16) (int, error) {
+func (b *BigEndianWriter) WriteInt64(d int64) (int, error) {
 	return b.WriteUint64(uint64(d))
 }
 
