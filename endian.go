@@ -12,6 +12,8 @@ type EndianReader interface {
 	ReadInt32() (int32, int, error)
 	ReadUint64() (uint64, int, error)
 	ReadInt64() (int64, int, error)
+	ReadFloat32() (float32, int, error)
+	ReadFloat64() (float64, int, error)
 }
 
 type EndianWriter interface {
@@ -24,4 +26,6 @@ type EndianWriter interface {
 	WriteInt32(int32) (int, error)
 	WriteUint64(uint64) (int, error)
 	WriteInt64(int64) (int, error)
+	WriteFloat32(float32) (int, error)
+	WriteFloat64(float64) (int, error)
 }
