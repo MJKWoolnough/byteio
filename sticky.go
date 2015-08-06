@@ -6,6 +6,15 @@ type StickyReader struct {
 	Count  int64
 }
 
+func (s *StickyReader) Read(b []byte) {
+	if s.Err != nil {
+		return
+	}
+	n, err := s.Reader.Read(b)
+	s.Err = err
+	s.Count += int64(n)
+}
+
 func (s *StickyReader) ReadUint8() uint8 {
 	if s.Err != nil {
 		return 0
@@ -110,6 +119,15 @@ type StickyWriter struct {
 	Writer EndianWriter
 	Err    error
 	Count  int64
+}
+
+func (s *StickyWriter) Write(p []byte) {
+	if s.Err != nil {
+		return
+	}
+	n, err := s.Writer.Write(p)
+	s.Err = err
+	s.Count += int64(n)
 }
 
 func (s *StickyWriter) WriteUint8(i uint8) {
