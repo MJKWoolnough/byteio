@@ -2,6 +2,8 @@ package byteio
 
 import "io"
 
+// EndianReader is an interface that reads various types with a particular
+// endianness
 type EndianReader interface {
 	io.Reader
 	ReadUint8() (uint8, int, error)
@@ -16,6 +18,8 @@ type EndianReader interface {
 	ReadFloat64() (float64, int, error)
 }
 
+// EndianWriter is an interface that writes various types with a particular
+// endianness
 type EndianWriter interface {
 	io.Writer
 	WriteUint8(uint8) (int, error)
