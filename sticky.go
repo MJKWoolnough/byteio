@@ -13,13 +13,14 @@ type StickyReader struct {
 }
 
 // Read will do a simple byte read from the underlying io.Reader.
-func (s *StickyReader) Read(b []byte) {
+func (s *StickyReader) Read(b []byte) (int, error) {
 	if s.Err != nil {
-		return
+		return 0, s.Err
 	}
 	n, err := s.Reader.Read(b)
 	s.Err = err
 	s.Count += int64(n)
+	return n, err
 }
 
 // ReadUint8 will read a uint8 from the underlying reader
@@ -145,13 +146,14 @@ type StickyWriter struct {
 }
 
 // Write will do a simple byte write to the underlying io.Writer.
-func (s *StickyWriter) Write(p []byte) {
+func (s *StickyWriter) Write(p []byte) (int, error) {
 	if s.Err != nil {
-		return
+		return 0, s.Err
 	}
 	n, err := s.Writer.Write(p)
 	s.Err = err
 	s.Count += int64(n)
+	return n, err
 }
 
 // WriteUint8 will write a uint8 to the underlying writer
