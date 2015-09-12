@@ -1,3 +1,5 @@
+// Package byteio helps with writing number types in both big and little endian
+// formats
 package byteio
 
 import "io"
