@@ -2,6 +2,8 @@
 --
     import "github.com/MJKWoolnough/byteio"
 
+Package byteio helps with writing number types in both big and little endian
+### formats
 
 ## Usage
 
@@ -407,7 +409,7 @@ returned, unless that error is cleared on the type
 #### func (*StickyReader) Read
 
 ```go
-func (s *StickyReader) Read(b []byte)
+func (s *StickyReader) Read(b []byte) (int, error)
 ```
 Read will do a simple byte read from the underlying io.Reader.
 
@@ -499,7 +501,7 @@ returned, unless that error is cleared on the type
 #### func (*StickyWriter) Write
 
 ```go
-func (s *StickyWriter) Write(p []byte)
+func (s *StickyWriter) Write(p []byte) (int, error)
 ```
 Write will do a simple byte write to the underlying io.Writer.
 
