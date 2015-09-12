@@ -2,8 +2,7 @@
 --
     import "github.com/MJKWoolnough/byteio"
 
-Package byteio helps with writing number types in both big and little endian
-### formats
+Package byteio helps with writing number types in both big and little endian formats
 
 ## Usage
 
