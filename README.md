@@ -401,9 +401,10 @@ type StickyReader struct {
 ```
 
 StickyReader will wrap an EndianReader and record all bytes read and errors
-received. Byte counts and errors will not be returned from any method, but can
-be retrieved from this type. All methods will be a no-op after an error has been
-returned, unless that error is cleared on the type
+received. Byte counts and errors will not be returned from any method (except
+Read so it still counts as an io.Reader), but can be retrieved from this type.
+All methods will be a no-op after an error has been returned, unless that error
+is cleared on the type
 
 #### func (*StickyReader) Read
 
@@ -493,9 +494,10 @@ type StickyWriter struct {
 ```
 
 StickyWriter will wrap an EndianWriter and record all bytes written and errors
-received. Byte counts and errors will not be returned from any method, but can
-be retrieved from this type. All methods will be a no-op after an error has been
-returned, unless that error is cleared on the type
+received. Byte counts and errors will not be returned from any method (except
+Write, so it still counts as an io.Writer), but can be retrieved from this type.
+All methods will be a no-op after an error has been returned, unless that error
+is cleared on the type
 
 #### func (*StickyWriter) Write
 
