@@ -38,6 +38,6 @@ type EndianWriter interface {
 var (
 	_ EndianReader = BigEndianReader{}
 	_ EndianReader = LittleEndianReader{}
-	_ EndianWriter = &BigEndianWriter{}
-	_ EndianWriter = &LittleEndianWriter{}
+	_ EndianWriter = BigEndianWriter{}
+	_ EndianWriter = LittleEndianWriter{}
 )
