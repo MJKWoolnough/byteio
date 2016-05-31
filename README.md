@@ -2,7 +2,8 @@
 --
     import "github.com/MJKWoolnough/byteio"
 
-Package byteio helps with writing number types in both big and little endian formats
+Package byteio helps with writing number types in both big and little endian
+### formats
 
 ## Usage
 
@@ -106,73 +107,73 @@ type BigEndianWriter struct {
 BigEndianWriter is a wrapper around a io.Writer that can be used to write types
 in the big endian format
 
-#### func (*BigEndianWriter) WriteFloat32
+#### func (BigEndianWriter) WriteFloat32
 
 ```go
-func (b *BigEndianWriter) WriteFloat32(d float32) (int, error)
+func (b BigEndianWriter) WriteFloat32(d float32) (int, error)
 ```
 WriteFloat32 will write the given float32 to the writer, in big endian format
 
-#### func (*BigEndianWriter) WriteFloat64
+#### func (BigEndianWriter) WriteFloat64
 
 ```go
-func (b *BigEndianWriter) WriteFloat64(d float64) (int, error)
+func (b BigEndianWriter) WriteFloat64(d float64) (int, error)
 ```
 WriteFloat64 will write the given float64 to the writer, in big endian format
 
-#### func (*BigEndianWriter) WriteInt16
+#### func (BigEndianWriter) WriteInt16
 
 ```go
-func (b *BigEndianWriter) WriteInt16(d int16) (int, error)
+func (b BigEndianWriter) WriteInt16(d int16) (int, error)
 ```
 WriteInt16 will write the given int16 to the writer, in big endian format
 
-#### func (*BigEndianWriter) WriteInt32
+#### func (BigEndianWriter) WriteInt32
 
 ```go
-func (b *BigEndianWriter) WriteInt32(d int32) (int, error)
+func (b BigEndianWriter) WriteInt32(d int32) (int, error)
 ```
 WriteInt32 will write the given int32 to the writer, in big endian format
 
-#### func (*BigEndianWriter) WriteInt64
+#### func (BigEndianWriter) WriteInt64
 
 ```go
-func (b *BigEndianWriter) WriteInt64(d int64) (int, error)
+func (b BigEndianWriter) WriteInt64(d int64) (int, error)
 ```
 WriteInt64 will write the given int64 to the writer, in big endian format
 
-#### func (*BigEndianWriter) WriteInt8
+#### func (BigEndianWriter) WriteInt8
 
 ```go
-func (b *BigEndianWriter) WriteInt8(d int8) (int, error)
+func (b BigEndianWriter) WriteInt8(d int8) (int, error)
 ```
 WriteInt8 will write the given int8 to the writer
 
-#### func (*BigEndianWriter) WriteUint16
+#### func (BigEndianWriter) WriteUint16
 
 ```go
-func (b *BigEndianWriter) WriteUint16(d uint16) (int, error)
+func (b BigEndianWriter) WriteUint16(d uint16) (int, error)
 ```
 WriteUint16 will write the given uint16 to the writer, in big endian format
 
-#### func (*BigEndianWriter) WriteUint32
+#### func (BigEndianWriter) WriteUint32
 
 ```go
-func (b *BigEndianWriter) WriteUint32(d uint32) (int, error)
+func (b BigEndianWriter) WriteUint32(d uint32) (int, error)
 ```
 WriteUint32 will write the given uint32 to the writer, in big endian format
 
-#### func (*BigEndianWriter) WriteUint64
+#### func (BigEndianWriter) WriteUint64
 
 ```go
-func (b *BigEndianWriter) WriteUint64(d uint64) (int, error)
+func (b BigEndianWriter) WriteUint64(d uint64) (int, error)
 ```
 WriteUint64 will write the given uint64 to the writer, in big endian format
 
-#### func (*BigEndianWriter) WriteUint8
+#### func (BigEndianWriter) WriteUint8
 
 ```go
-func (b *BigEndianWriter) WriteUint8(d uint8) (int, error)
+func (b BigEndianWriter) WriteUint8(d uint8) (int, error)
 ```
 WriteUint8 will write the given uint8 to the writer
 
@@ -320,73 +321,73 @@ type LittleEndianWriter struct {
 LittleEndianWriter is a wrapper around a io.Writer that can be used to write
 types in the little endian format
 
-#### func (*LittleEndianWriter) WriteFloat32
+#### func (LittleEndianWriter) WriteFloat32
 
 ```go
-func (l *LittleEndianWriter) WriteFloat32(d float32) (int, error)
+func (l LittleEndianWriter) WriteFloat32(d float32) (int, error)
 ```
 WriteFloat32 will write the given float32 to the writer, in little endian format
 
-#### func (*LittleEndianWriter) WriteFloat64
+#### func (LittleEndianWriter) WriteFloat64
 
 ```go
-func (l *LittleEndianWriter) WriteFloat64(d float64) (int, error)
+func (l LittleEndianWriter) WriteFloat64(d float64) (int, error)
 ```
 WriteFloat64 will write the given float64 to the writer, in little endian format
 
-#### func (*LittleEndianWriter) WriteInt16
+#### func (LittleEndianWriter) WriteInt16
 
 ```go
-func (l *LittleEndianWriter) WriteInt16(d int16) (int, error)
+func (l LittleEndianWriter) WriteInt16(d int16) (int, error)
 ```
 WriteInt16 will write the given int16 to the writer, in little endian format
 
-#### func (*LittleEndianWriter) WriteInt32
+#### func (LittleEndianWriter) WriteInt32
 
 ```go
-func (l *LittleEndianWriter) WriteInt32(d int32) (int, error)
+func (l LittleEndianWriter) WriteInt32(d int32) (int, error)
 ```
 WriteInt32 will write the given int32 to the writer, in little endian format
 
-#### func (*LittleEndianWriter) WriteInt64
+#### func (LittleEndianWriter) WriteInt64
 
 ```go
-func (l *LittleEndianWriter) WriteInt64(d int64) (int, error)
+func (l LittleEndianWriter) WriteInt64(d int64) (int, error)
 ```
 WriteInt64 will write the given int64 to the writer, in little endian format
 
-#### func (*LittleEndianWriter) WriteInt8
+#### func (LittleEndianWriter) WriteInt8
 
 ```go
-func (l *LittleEndianWriter) WriteInt8(d int8) (int, error)
+func (l LittleEndianWriter) WriteInt8(d int8) (int, error)
 ```
 WriteInt8 will write the given int8 to the writer
 
-#### func (*LittleEndianWriter) WriteUint16
+#### func (LittleEndianWriter) WriteUint16
 
 ```go
-func (l *LittleEndianWriter) WriteUint16(d uint16) (int, error)
+func (l LittleEndianWriter) WriteUint16(d uint16) (int, error)
 ```
 WriteUint16 will write the given uint16 to the writer, in little endian format
 
-#### func (*LittleEndianWriter) WriteUint32
+#### func (LittleEndianWriter) WriteUint32
 
 ```go
-func (l *LittleEndianWriter) WriteUint32(d uint32) (int, error)
+func (l LittleEndianWriter) WriteUint32(d uint32) (int, error)
 ```
 WriteUint32 will write the given uint32 to the writer, in little endian format
 
-#### func (*LittleEndianWriter) WriteUint64
+#### func (LittleEndianWriter) WriteUint64
 
 ```go
-func (l *LittleEndianWriter) WriteUint64(d uint64) (int, error)
+func (l LittleEndianWriter) WriteUint64(d uint64) (int, error)
 ```
 WriteUint64 will write the given uint64 to the writer, in little endian format
 
-#### func (*LittleEndianWriter) WriteUint8
+#### func (LittleEndianWriter) WriteUint8
 
 ```go
-func (l *LittleEndianWriter) WriteUint8(d uint8) (int, error)
+func (l LittleEndianWriter) WriteUint8(d uint8) (int, error)
 ```
 WriteUint8 will write the given uint8 to the writer
 
