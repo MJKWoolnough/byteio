@@ -1,7 +1,10 @@
 // Package byteio helps with writing number types in both big and little endian formats
 package byteio
 
-import "io"
+import (
+	"io"
+	"sync"
+)
 
 // EndianReader is an interface that reads various types with a particular
 // endianness
@@ -41,3 +44,10 @@ var (
 	_ EndianWriter = BigEndianWriter{}
 	_ EndianWriter = LittleEndianWriter{}
 )
+
+// pool for read/write buffers
+var pool = sync.Pool{
+	New: func() interface{} {
+		return new([8]byte)
+	},
+}
