@@ -20,7 +20,6 @@ func (l LittleEndianReader) ReadUint8() (uint8, int, error) {
 		return 0, n, err
 	}
 	v := uint8(bytes[0])
-	bytes[0] = 0
 	pool.Put(bytes)
 	return v, n, nil
 }
@@ -41,8 +40,6 @@ func (l LittleEndianReader) ReadUint16() (uint16, int, error) {
 		return 0, n, err
 	}
 	v := uint16(bytes[0]) | uint16(bytes[1])<<8
-	bytes[0] = 0
-	bytes[1] = 0
 	pool.Put(bytes)
 	return v, n, nil
 }
@@ -63,10 +60,6 @@ func (l LittleEndianReader) ReadUint32() (uint32, int, error) {
 		return 0, n, err
 	}
 	v := uint32(bytes[0]) | uint32(bytes[1])<<8 | uint32(bytes[2])<<16 | uint32(bytes[3])<<24
-	bytes[0] = 0
-	bytes[1] = 0
-	bytes[2] = 0
-	bytes[3] = 0
 	pool.Put(bytes)
 	return v, n, nil
 }
@@ -87,14 +80,6 @@ func (l LittleEndianReader) ReadUint64() (uint64, int, error) {
 		return 0, n, err
 	}
 	v := uint64(bytes[0]) | uint64(bytes[1])<<8 | uint64(bytes[2])<<16 | uint64(bytes[3])<<24 | uint64(bytes[4])<<32 | uint64(bytes[5])<<40 | uint64(bytes[6])<<48 | uint64(bytes[7])<<56
-	bytes[0] = 0
-	bytes[1] = 0
-	bytes[2] = 0
-	bytes[3] = 0
-	bytes[4] = 0
-	bytes[5] = 0
-	bytes[6] = 0
-	bytes[7] = 0
 	pool.Put(bytes)
 	return v, 8, nil
 }

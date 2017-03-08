@@ -16,7 +16,6 @@ func (l LittleEndianWriter) WriteUint8(d uint8) (int, error) {
 	bytes := pool.Get().(*[8]byte)
 	bytes[0] = byte(d)
 	n, err := l.Writer.Write(bytes[:1])
-	bytes[0] = 0
 	pool.Put(bytes)
 	return n, err
 }
@@ -33,8 +32,6 @@ func (l LittleEndianWriter) WriteUint16(d uint16) (int, error) {
 	bytes[0] = byte(d)
 	bytes[1] = byte(d >> 8)
 	n, err := l.Writer.Write(bytes[:2])
-	bytes[0] = 0
-	bytes[1] = 0
 	pool.Put(bytes)
 	return n, err
 }
@@ -53,10 +50,6 @@ func (l LittleEndianWriter) WriteUint32(d uint32) (int, error) {
 	bytes[2] = byte(d >> 16)
 	bytes[3] = byte(d >> 24)
 	n, err := l.Writer.Write(bytes[:4])
-	bytes[0] = 0
-	bytes[1] = 0
-	bytes[2] = 0
-	bytes[3] = 0
 	pool.Put(bytes)
 	return n, err
 }
@@ -79,14 +72,6 @@ func (l LittleEndianWriter) WriteUint64(d uint64) (int, error) {
 	bytes[6] = byte(d >> 48)
 	bytes[7] = byte(d >> 56)
 	n, err := l.Writer.Write(bytes[:8])
-	bytes[0] = 0
-	bytes[1] = 0
-	bytes[2] = 0
-	bytes[3] = 0
-	bytes[4] = 0
-	bytes[5] = 0
-	bytes[6] = 0
-	bytes[7] = 0
 	pool.Put(bytes)
 	return n, err
 }
