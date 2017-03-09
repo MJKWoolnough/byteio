@@ -17,6 +17,7 @@ func (l LittleEndianReader) ReadUint8() (uint8, int, error) {
 	bytes := pool.Get().(*[8]byte)
 	n, err := io.ReadFull(l.Reader, bytes[:1])
 	if err != nil {
+		pool.Put(bytes)
 		return 0, n, err
 	}
 	v := uint8(bytes[0])
@@ -37,6 +38,7 @@ func (l LittleEndianReader) ReadUint16() (uint16, int, error) {
 	bytes := pool.Get().(*[8]byte)
 	n, err := io.ReadFull(l.Reader, bytes[:2])
 	if err != nil {
+		pool.Put(bytes)
 		return 0, n, err
 	}
 	v := uint16(bytes[0]) | uint16(bytes[1])<<8
@@ -57,6 +59,7 @@ func (l LittleEndianReader) ReadUint32() (uint32, int, error) {
 	bytes := pool.Get().(*[8]byte)
 	n, err := io.ReadFull(l.Reader, bytes[:4])
 	if err != nil {
+		pool.Put(bytes)
 		return 0, n, err
 	}
 	v := uint32(bytes[0]) | uint32(bytes[1])<<8 | uint32(bytes[2])<<16 | uint32(bytes[3])<<24
@@ -77,6 +80,7 @@ func (l LittleEndianReader) ReadUint64() (uint64, int, error) {
 	bytes := pool.Get().(*[8]byte)
 	n, err := io.ReadFull(l.Reader, bytes[:8])
 	if err != nil {
+		pool.Put(bytes)
 		return 0, n, err
 	}
 	v := uint64(bytes[0]) | uint64(bytes[1])<<8 | uint64(bytes[2])<<16 | uint64(bytes[3])<<24 | uint64(bytes[4])<<32 | uint64(bytes[5])<<40 | uint64(bytes[6])<<48 | uint64(bytes[7])<<56
