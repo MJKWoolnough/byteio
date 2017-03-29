@@ -20,7 +20,7 @@ func (l *LittleEndianReader) ReadUint8() (uint8, int, error) {
 		return 0, n, err
 	}
 	v := uint8(l.buffer[0])
-	return v, n, nil
+	return v, 1, nil
 }
 
 // ReadInt8 will read a single byte from the reader, in little endian format,
