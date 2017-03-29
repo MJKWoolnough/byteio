@@ -7,7 +7,7 @@ import (
 
 func TestReadBigEndian(t *testing.T) {
 	const testData = "\x0a\x0b\x0c\x0d\x0c\x0d\x01\x02\x03\x04\x05\x06\x07\x08A"
-	r := BigEndianReader{strings.NewReader(testData)}
+	r := BigEndianReader{Reader: strings.NewReader(testData)}
 	if i, n, err := r.ReadUint32(); err != nil {
 		t.Errorf("test 1: unexpected error: %s", err)
 	} else if n != 4 {

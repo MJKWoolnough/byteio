@@ -7,7 +7,7 @@ import (
 
 func TestReadLittleEndian(t *testing.T) {
 	const testData = "\x0d\x0c\x0b\x0a\x0d\x0c\x08\x07\x06\x05\x04\x03\x02\x01A"
-	r := LittleEndianReader{strings.NewReader(testData)}
+	r := LittleEndianReader{Reader: strings.NewReader(testData)}
 	if i, n, err := r.ReadUint32(); err != nil {
 		t.Errorf("test 1: unexpected error: %s", err)
 	} else if n != 4 {
