@@ -37,10 +37,12 @@ func (b *BigEndianWriter) WriteInt16(d int16) (int, error) {
 
 // WriteUint32 will write the given uint32 to the writer, in big endian format
 func (b *BigEndianWriter) WriteUint32(d uint32) (int, error) {
-	b.buffer[0] = byte(d >> 24)
-	b.buffer[1] = byte(d >> 16)
-	b.buffer[2] = byte(d >> 8)
-	b.buffer[3] = byte(d)
+	b.buffer = [8]byte{
+		byte(d >> 24),
+		byte(d >> 16),
+		byte(d >> 8),
+		byte(d),
+	}
 	return b.Writer.Write(b.buffer[:4])
 }
 
@@ -51,14 +53,16 @@ func (b *BigEndianWriter) WriteInt32(d int32) (int, error) {
 
 // WriteUint64 will write the given uint64 to the writer, in big endian format
 func (b *BigEndianWriter) WriteUint64(d uint64) (int, error) {
-	b.buffer[0] = byte(d >> 56)
-	b.buffer[1] = byte(d >> 48)
-	b.buffer[2] = byte(d >> 40)
-	b.buffer[3] = byte(d >> 32)
-	b.buffer[4] = byte(d >> 24)
-	b.buffer[5] = byte(d >> 16)
-	b.buffer[6] = byte(d >> 8)
-	b.buffer[7] = byte(d)
+	b.buffer = [8]byte{
+		byte(d >> 56),
+		byte(d >> 48),
+		byte(d >> 40),
+		byte(d >> 32),
+		byte(d >> 24),
+		byte(d >> 16),
+		byte(d >> 8),
+		byte(d),
+	}
 	return b.Writer.Write(b.buffer[:8])
 }
 

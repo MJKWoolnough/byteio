@@ -39,10 +39,12 @@ func (l *LittleEndianWriter) WriteInt16(d int16) (int, error) {
 // WriteUint32 will write the given uint32 to the writer, in little endian
 // format
 func (l *LittleEndianWriter) WriteUint32(d uint32) (int, error) {
-	l.buffer[0] = byte(d)
-	l.buffer[1] = byte(d >> 8)
-	l.buffer[2] = byte(d >> 16)
-	l.buffer[3] = byte(d >> 24)
+	l.buffer = [8]byte{
+		byte(d),
+		byte(d >> 8),
+		byte(d >> 16),
+		byte(d >> 24),
+	}
 	return l.Writer.Write(l.buffer[:4])
 }
 
@@ -54,14 +56,16 @@ func (l *LittleEndianWriter) WriteInt32(d int32) (int, error) {
 // WriteUint64 will write the given uint64 to the writer, in little endian
 // format
 func (l *LittleEndianWriter) WriteUint64(d uint64) (int, error) {
-	l.buffer[0] = byte(d)
-	l.buffer[1] = byte(d >> 8)
-	l.buffer[2] = byte(d >> 16)
-	l.buffer[3] = byte(d >> 24)
-	l.buffer[4] = byte(d >> 32)
-	l.buffer[5] = byte(d >> 40)
-	l.buffer[6] = byte(d >> 48)
-	l.buffer[7] = byte(d >> 56)
+	l.buffer = [8]byte{
+		byte(d),
+		byte(d >> 8),
+		byte(d >> 16),
+		byte(d >> 24),
+		byte(d >> 32),
+		byte(d >> 40),
+		byte(d >> 48),
+		byte(d >> 56),
+	}
 	return l.Writer.Write(l.buffer[:8])
 }
 
