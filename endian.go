@@ -35,9 +35,45 @@ type EndianWriter interface {
 	WriteFloat64(float64) (int, error)
 }
 
+// StickyEndianReader is an interface that reads various types with a
+// particular endianness and stores the Read return values
+type StickyEndianReader interface {
+	io.Reader
+	ReadUint8() uint8
+	ReadInt8() int8
+	ReadUint16() uint16
+	ReadInt16() int16
+	ReadUint32() uint32
+	ReadInt32() int32
+	ReadUint64() uint64
+	ReadInt64() int64
+	ReadFloat32() float32
+	ReadFloat64() float64
+}
+
+// StickyEndianWriter is an interface that writes various types with a
+// particular endianness and stores the Write return values
+type StickyEndianWriter interface {
+	io.Writer
+	WriteUint8(uint8)
+	WriteInt8(int8)
+	WriteUint16(uint16)
+	WriteInt16(int16)
+	WriteUint32(uint32)
+	WriteInt32(int32)
+	WriteUint64(uint64)
+	WriteInt64(int64)
+	WriteFloat32(float32)
+	WriteFloat64(float64)
+}
+
 var (
-	_ EndianReader = &BigEndianReader{}
-	_ EndianReader = &LittleEndianReader{}
-	_ EndianWriter = &BigEndianWriter{}
-	_ EndianWriter = &LittleEndianWriter{}
+	_ EndianReader       = &BigEndianReader{}
+	_ EndianReader       = &LittleEndianReader{}
+	_ EndianWriter       = &BigEndianWriter{}
+	_ EndianWriter       = &LittleEndianWriter{}
+	_ StickyEndianReader = &StickyBigEndianReader{}
+	_ StickyEndianReader = &StickyLittleEndianReader{}
+	_ StickyEndianWriter = &StickyBigEndianWriter{}
+	_ StickyEndianWriter = &StickyLittleEndianWriter{}
 )
