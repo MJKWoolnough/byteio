@@ -7,6 +7,8 @@ import (
 	"math"
 )
 
+// StickyLittleEndianWriter wraps a io.Writer to provide methods
+// to make it easier to Write fundamental types
 type StickyLittleEndianWriter struct {
 	io.Writer
 	buffer [8]byte
@@ -14,6 +16,7 @@ type StickyLittleEndianWriter struct {
 	Count  int64
 }
 
+// Write implements the io.Writer interface
 func (e *StickyLittleEndianWriter) Write(p []byte) (int, error) {
 	if e.Err != nil {
 		return 0, e.Err
@@ -24,6 +27,8 @@ func (e *StickyLittleEndianWriter) Write(p []byte) (int, error) {
 	return n, e.Err
 }
 
+// WriteInt8 Writes a int8 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteInt8(d int8) {
 	if e.Err != nil {
 		return
@@ -36,6 +41,8 @@ func (e *StickyLittleEndianWriter) WriteInt8(d int8) {
 	e.Count += int64(n)
 }
 
+// WriteInt16 Writes a int16 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteInt16(d int16) {
 	if e.Err != nil {
 		return
@@ -50,6 +57,8 @@ func (e *StickyLittleEndianWriter) WriteInt16(d int16) {
 	e.Count += int64(n)
 }
 
+// WriteInt32 Writes a int32 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteInt32(d int32) {
 	if e.Err != nil {
 		return
@@ -66,6 +75,8 @@ func (e *StickyLittleEndianWriter) WriteInt32(d int32) {
 	e.Count += int64(n)
 }
 
+// WriteInt64 Writes a int64 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteInt64(d int64) {
 	if e.Err != nil {
 		return
@@ -86,6 +97,8 @@ func (e *StickyLittleEndianWriter) WriteInt64(d int64) {
 	e.Count += int64(n)
 }
 
+// WriteUint8 Writes a uint8 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteUint8(d uint8) {
 	if e.Err != nil {
 		return
@@ -98,6 +111,8 @@ func (e *StickyLittleEndianWriter) WriteUint8(d uint8) {
 	e.Count += int64(n)
 }
 
+// WriteUint16 Writes a uint16 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteUint16(d uint16) {
 	if e.Err != nil {
 		return
@@ -111,6 +126,8 @@ func (e *StickyLittleEndianWriter) WriteUint16(d uint16) {
 	e.Count += int64(n)
 }
 
+// WriteUint32 Writes a uint32 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteUint32(d uint32) {
 	if e.Err != nil {
 		return
@@ -126,6 +143,8 @@ func (e *StickyLittleEndianWriter) WriteUint32(d uint32) {
 	e.Count += int64(n)
 }
 
+// WriteUint64 Writes a uint64 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteUint64(d uint64) {
 	if e.Err != nil {
 		return
@@ -145,6 +164,8 @@ func (e *StickyLittleEndianWriter) WriteUint64(d uint64) {
 	e.Count += int64(n)
 }
 
+// WriteFloat32 Writes a float32 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteFloat32(d float32) {
 	if e.Err != nil {
 		return
@@ -161,6 +182,8 @@ func (e *StickyLittleEndianWriter) WriteFloat32(d float32) {
 	e.Count += int64(n)
 }
 
+// WriteFloat64 Writes a float64 using the underlying io.Writer
+// Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteFloat64(d float64) {
 	if e.Err != nil {
 		return

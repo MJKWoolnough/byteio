@@ -28,6 +28,8 @@ import (
 	"math"
 )
 
+// ${s}${e}Endian${rw}${er} wraps a io.${rw}${er} to provide methods
+// to make it easier to $rw fundamental types
 type ${s}${e}Endian${rw}${er} struct {
 	io.${rw}${er}
 	buffer [8]byte
@@ -42,6 +44,7 @@ HEREDOC
 				if [ ! -z "$s" ]; then
 					cat <<HEREDOC
 
+// ${rw} implements the io.${rw}${er} interface
 func (e *${s}${e}Endian${rw}${er}) ${rw}(p []byte) (int, error) {
 	if e.Err != nil {
 		return 0, e.Err
@@ -62,6 +65,10 @@ HEREDOC
 					for i in $types; do
 						tu="$(echo "$t" | tr A-Z a-z)$i";
 						echo;
+						echo "// ${rw}${t}${i} ${rw}s a $tu using the underlying io.${rw}${er}";
+						if [ ! -z "$s" ]; then
+							echo "// Any errors and the running byte read count are stored instead or returned";
+						fi;
 						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}${i}(";
 						if [ "$rw" = "Write" ]; then
 							echo -n "d $tu) ";
