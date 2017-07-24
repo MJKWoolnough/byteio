@@ -15,86 +15,78 @@ type BigEndianReader struct {
 }
 ```
 
-BigEndianReader is a wrapper around a io.Reader that can be used to read types
-in the big endian format
+BigEndianReader wraps a io.Reader to provide methods to make it easier to Read
+fundamental types
 
-#### func (BigEndianReader) ReadFloat32
-
-```go
-func (b BigEndianReader) ReadFloat32() (float32, int, error)
-```
-ReadFloat32 will read four bytes from the reader, in big endian format, and
-return it as a float32
-
-#### func (BigEndianReader) ReadFloat64
+#### func (*BigEndianReader) ReadFloat32
 
 ```go
-func (b BigEndianReader) ReadFloat64() (float64, int, error)
+func (e *BigEndianReader) ReadFloat32() (float32, int, error)
 ```
-ReadFloat64 will read eight bytes from the reader, in big endian format, and
-return it as a float64
+ReadFloat32 Reads a float32 using the underlying io.Reader
 
-#### func (BigEndianReader) ReadInt16
+#### func (*BigEndianReader) ReadFloat64
 
 ```go
-func (b BigEndianReader) ReadInt16() (int16, int, error)
+func (e *BigEndianReader) ReadFloat64() (float64, int, error)
 ```
-ReadInt16 will read two bytes from the reader, in big endian format, and return
-it as an int16
+ReadFloat64 Reads a float64 using the underlying io.Reader
 
-#### func (BigEndianReader) ReadInt32
+#### func (*BigEndianReader) ReadInt16
 
 ```go
-func (b BigEndianReader) ReadInt32() (int32, int, error)
+func (e *BigEndianReader) ReadInt16() (int16, int, error)
 ```
-ReadInt32 will read four bytes from the reader, in big endian format, and return
-it as an int32
+ReadInt16 Reads a int16 using the underlying io.Reader
 
-#### func (BigEndianReader) ReadInt64
+#### func (*BigEndianReader) ReadInt32
 
 ```go
-func (b BigEndianReader) ReadInt64() (int64, int, error)
+func (e *BigEndianReader) ReadInt32() (int32, int, error)
 ```
-ReadInt64 will read eight bytes from the reader, in big endian format, and
-return it as an int64
+ReadInt32 Reads a int32 using the underlying io.Reader
 
-#### func (BigEndianReader) ReadInt8
+#### func (*BigEndianReader) ReadInt64
 
 ```go
-func (b BigEndianReader) ReadInt8() (int8, int, error)
+func (e *BigEndianReader) ReadInt64() (int64, int, error)
 ```
-ReadInt8 will read a single byte from the reader and return it as an int8
+ReadInt64 Reads a int64 using the underlying io.Reader
 
-#### func (BigEndianReader) ReadUint16
+#### func (*BigEndianReader) ReadInt8
 
 ```go
-func (b BigEndianReader) ReadUint16() (uint16, int, error)
+func (e *BigEndianReader) ReadInt8() (int8, int, error)
 ```
-ReadUint16 will read two bytes from the reader, in big endian format, and return
-it as a uint16
+ReadInt8 Reads a int8 using the underlying io.Reader
 
-#### func (BigEndianReader) ReadUint32
+#### func (*BigEndianReader) ReadUint16
 
 ```go
-func (b BigEndianReader) ReadUint32() (uint32, int, error)
+func (e *BigEndianReader) ReadUint16() (uint16, int, error)
 ```
-ReadUint32 will read four bytes from the reader, in big endian format, and
-return it as a uint32
+ReadUint16 Reads a uint16 using the underlying io.Reader
 
-#### func (BigEndianReader) ReadUint64
+#### func (*BigEndianReader) ReadUint32
 
 ```go
-func (b BigEndianReader) ReadUint64() (uint64, int, error)
+func (e *BigEndianReader) ReadUint32() (uint32, int, error)
 ```
-ReadUint64 will read eight bytes from the reader, in big endian format, and
-return it as a uint64
+ReadUint32 Reads a uint32 using the underlying io.Reader
 
-#### func (BigEndianReader) ReadUint8
+#### func (*BigEndianReader) ReadUint64
 
 ```go
-func (b BigEndianReader) ReadUint8() (uint8, int, error)
+func (e *BigEndianReader) ReadUint64() (uint64, int, error)
 ```
-ReadUint8 will read a single byte from the reader and return it as a uint8
+ReadUint64 Reads a uint64 using the underlying io.Reader
+
+#### func (*BigEndianReader) ReadUint8
+
+```go
+func (e *BigEndianReader) ReadUint8() (uint8, int, error)
+```
+ReadUint8 Reads a uint8 using the underlying io.Reader
 
 #### type BigEndianWriter
 
@@ -104,78 +96,78 @@ type BigEndianWriter struct {
 }
 ```
 
-BigEndianWriter is a wrapper around a io.Writer that can be used to write types
-in the big endian format
+BigEndianWriter wraps a io.Writer to provide methods to make it easier to Write
+fundamental types
 
-#### func (BigEndianWriter) WriteFloat32
-
-```go
-func (b BigEndianWriter) WriteFloat32(d float32) (int, error)
-```
-WriteFloat32 will write the given float32 to the writer, in big endian format
-
-#### func (BigEndianWriter) WriteFloat64
+#### func (*BigEndianWriter) WriteFloat32
 
 ```go
-func (b BigEndianWriter) WriteFloat64(d float64) (int, error)
+func (e *BigEndianWriter) WriteFloat32(d float32) (int, error)
 ```
-WriteFloat64 will write the given float64 to the writer, in big endian format
+WriteFloat32 Writes a float32 using the underlying io.Writer
 
-#### func (BigEndianWriter) WriteInt16
+#### func (*BigEndianWriter) WriteFloat64
 
 ```go
-func (b BigEndianWriter) WriteInt16(d int16) (int, error)
+func (e *BigEndianWriter) WriteFloat64(d float64) (int, error)
 ```
-WriteInt16 will write the given int16 to the writer, in big endian format
+WriteFloat64 Writes a float64 using the underlying io.Writer
 
-#### func (BigEndianWriter) WriteInt32
+#### func (*BigEndianWriter) WriteInt16
 
 ```go
-func (b BigEndianWriter) WriteInt32(d int32) (int, error)
+func (e *BigEndianWriter) WriteInt16(d int16) (int, error)
 ```
-WriteInt32 will write the given int32 to the writer, in big endian format
+WriteInt16 Writes a int16 using the underlying io.Writer
 
-#### func (BigEndianWriter) WriteInt64
+#### func (*BigEndianWriter) WriteInt32
 
 ```go
-func (b BigEndianWriter) WriteInt64(d int64) (int, error)
+func (e *BigEndianWriter) WriteInt32(d int32) (int, error)
 ```
-WriteInt64 will write the given int64 to the writer, in big endian format
+WriteInt32 Writes a int32 using the underlying io.Writer
 
-#### func (BigEndianWriter) WriteInt8
+#### func (*BigEndianWriter) WriteInt64
 
 ```go
-func (b BigEndianWriter) WriteInt8(d int8) (int, error)
+func (e *BigEndianWriter) WriteInt64(d int64) (int, error)
 ```
-WriteInt8 will write the given int8 to the writer
+WriteInt64 Writes a int64 using the underlying io.Writer
 
-#### func (BigEndianWriter) WriteUint16
+#### func (*BigEndianWriter) WriteInt8
 
 ```go
-func (b BigEndianWriter) WriteUint16(d uint16) (int, error)
+func (e *BigEndianWriter) WriteInt8(d int8) (int, error)
 ```
-WriteUint16 will write the given uint16 to the writer, in big endian format
+WriteInt8 Writes a int8 using the underlying io.Writer
 
-#### func (BigEndianWriter) WriteUint32
+#### func (*BigEndianWriter) WriteUint16
 
 ```go
-func (b BigEndianWriter) WriteUint32(d uint32) (int, error)
+func (e *BigEndianWriter) WriteUint16(d uint16) (int, error)
 ```
-WriteUint32 will write the given uint32 to the writer, in big endian format
+WriteUint16 Writes a uint16 using the underlying io.Writer
 
-#### func (BigEndianWriter) WriteUint64
+#### func (*BigEndianWriter) WriteUint32
 
 ```go
-func (b BigEndianWriter) WriteUint64(d uint64) (int, error)
+func (e *BigEndianWriter) WriteUint32(d uint32) (int, error)
 ```
-WriteUint64 will write the given uint64 to the writer, in big endian format
+WriteUint32 Writes a uint32 using the underlying io.Writer
 
-#### func (BigEndianWriter) WriteUint8
+#### func (*BigEndianWriter) WriteUint64
 
 ```go
-func (b BigEndianWriter) WriteUint8(d uint8) (int, error)
+func (e *BigEndianWriter) WriteUint64(d uint64) (int, error)
 ```
-WriteUint8 will write the given uint8 to the writer
+WriteUint64 Writes a uint64 using the underlying io.Writer
+
+#### func (*BigEndianWriter) WriteUint8
+
+```go
+func (e *BigEndianWriter) WriteUint8(d uint8) (int, error)
+```
+WriteUint8 Writes a uint8 using the underlying io.Writer
 
 #### type EndianReader
 
@@ -227,88 +219,78 @@ type LittleEndianReader struct {
 }
 ```
 
-LittleEndianReader is a wrapper around a io.Reader that can be used to read
-types in the little endian format
+LittleEndianReader wraps a io.Reader to provide methods to make it easier to
+Read fundamental types
 
-#### func (LittleEndianReader) ReadFloat32
-
-```go
-func (l LittleEndianReader) ReadFloat32() (float32, int, error)
-```
-ReadFloat32 will read four bytes from the reader, in little endian format, and
-return it as a float32
-
-#### func (LittleEndianReader) ReadFloat64
+#### func (*LittleEndianReader) ReadFloat32
 
 ```go
-func (l LittleEndianReader) ReadFloat64() (float64, int, error)
+func (e *LittleEndianReader) ReadFloat32() (float32, int, error)
 ```
-ReadFloat64 will read eight bytes from the reader, in little endian format, and
-return it as a float64
+ReadFloat32 Reads a float32 using the underlying io.Reader
 
-#### func (LittleEndianReader) ReadInt16
+#### func (*LittleEndianReader) ReadFloat64
 
 ```go
-func (l LittleEndianReader) ReadInt16() (int16, int, error)
+func (e *LittleEndianReader) ReadFloat64() (float64, int, error)
 ```
-ReadInt16 will read two bytes from the reader, in little endian format, and
-return it as an int16
+ReadFloat64 Reads a float64 using the underlying io.Reader
 
-#### func (LittleEndianReader) ReadInt32
+#### func (*LittleEndianReader) ReadInt16
 
 ```go
-func (l LittleEndianReader) ReadInt32() (int32, int, error)
+func (e *LittleEndianReader) ReadInt16() (int16, int, error)
 ```
-ReadInt32 will read four bytes from the reader, in little endian format, and
-return it as an int32
+ReadInt16 Reads a int16 using the underlying io.Reader
 
-#### func (LittleEndianReader) ReadInt64
+#### func (*LittleEndianReader) ReadInt32
 
 ```go
-func (l LittleEndianReader) ReadInt64() (int64, int, error)
+func (e *LittleEndianReader) ReadInt32() (int32, int, error)
 ```
-ReadInt64 will read eight bytes from the reader, in little endian format, and
-return it as an int64
+ReadInt32 Reads a int32 using the underlying io.Reader
 
-#### func (LittleEndianReader) ReadInt8
+#### func (*LittleEndianReader) ReadInt64
 
 ```go
-func (l LittleEndianReader) ReadInt8() (int8, int, error)
+func (e *LittleEndianReader) ReadInt64() (int64, int, error)
 ```
-ReadInt8 will read a single byte from the reader, in little endian format, and
-return it as an int8
+ReadInt64 Reads a int64 using the underlying io.Reader
 
-#### func (LittleEndianReader) ReadUint16
+#### func (*LittleEndianReader) ReadInt8
 
 ```go
-func (l LittleEndianReader) ReadUint16() (uint16, int, error)
+func (e *LittleEndianReader) ReadInt8() (int8, int, error)
 ```
-ReadUint16 will read two bytes from the reader, in little endian format, and
-return it as a uint16
+ReadInt8 Reads a int8 using the underlying io.Reader
 
-#### func (LittleEndianReader) ReadUint32
+#### func (*LittleEndianReader) ReadUint16
 
 ```go
-func (l LittleEndianReader) ReadUint32() (uint32, int, error)
+func (e *LittleEndianReader) ReadUint16() (uint16, int, error)
 ```
-ReadUint32 will read four bytes from the reader, in little endian format, and
-return it as a uint32
+ReadUint16 Reads a uint16 using the underlying io.Reader
 
-#### func (LittleEndianReader) ReadUint64
+#### func (*LittleEndianReader) ReadUint32
 
 ```go
-func (l LittleEndianReader) ReadUint64() (uint64, int, error)
+func (e *LittleEndianReader) ReadUint32() (uint32, int, error)
 ```
-ReadUint64 will read eight bytes from the reader, in little endian format, and
-return it as a uint64
+ReadUint32 Reads a uint32 using the underlying io.Reader
 
-#### func (LittleEndianReader) ReadUint8
+#### func (*LittleEndianReader) ReadUint64
 
 ```go
-func (l LittleEndianReader) ReadUint8() (uint8, int, error)
+func (e *LittleEndianReader) ReadUint64() (uint64, int, error)
 ```
-ReadUint8 will read a single byte from the reader, in little endian format, and
-return it as a uint8
+ReadUint64 Reads a uint64 using the underlying io.Reader
+
+#### func (*LittleEndianReader) ReadUint8
+
+```go
+func (e *LittleEndianReader) ReadUint8() (uint8, int, error)
+```
+ReadUint8 Reads a uint8 using the underlying io.Reader
 
 #### type LittleEndianWriter
 
@@ -318,78 +300,524 @@ type LittleEndianWriter struct {
 }
 ```
 
-LittleEndianWriter is a wrapper around a io.Writer that can be used to write
-types in the little endian format
+LittleEndianWriter wraps a io.Writer to provide methods to make it easier to
+Write fundamental types
 
-#### func (LittleEndianWriter) WriteFloat32
-
-```go
-func (l LittleEndianWriter) WriteFloat32(d float32) (int, error)
-```
-WriteFloat32 will write the given float32 to the writer, in little endian format
-
-#### func (LittleEndianWriter) WriteFloat64
+#### func (*LittleEndianWriter) WriteFloat32
 
 ```go
-func (l LittleEndianWriter) WriteFloat64(d float64) (int, error)
+func (e *LittleEndianWriter) WriteFloat32(d float32) (int, error)
 ```
-WriteFloat64 will write the given float64 to the writer, in little endian format
+WriteFloat32 Writes a float32 using the underlying io.Writer
 
-#### func (LittleEndianWriter) WriteInt16
+#### func (*LittleEndianWriter) WriteFloat64
 
 ```go
-func (l LittleEndianWriter) WriteInt16(d int16) (int, error)
+func (e *LittleEndianWriter) WriteFloat64(d float64) (int, error)
 ```
-WriteInt16 will write the given int16 to the writer, in little endian format
+WriteFloat64 Writes a float64 using the underlying io.Writer
 
-#### func (LittleEndianWriter) WriteInt32
+#### func (*LittleEndianWriter) WriteInt16
 
 ```go
-func (l LittleEndianWriter) WriteInt32(d int32) (int, error)
+func (e *LittleEndianWriter) WriteInt16(d int16) (int, error)
 ```
-WriteInt32 will write the given int32 to the writer, in little endian format
+WriteInt16 Writes a int16 using the underlying io.Writer
 
-#### func (LittleEndianWriter) WriteInt64
+#### func (*LittleEndianWriter) WriteInt32
 
 ```go
-func (l LittleEndianWriter) WriteInt64(d int64) (int, error)
+func (e *LittleEndianWriter) WriteInt32(d int32) (int, error)
 ```
-WriteInt64 will write the given int64 to the writer, in little endian format
+WriteInt32 Writes a int32 using the underlying io.Writer
 
-#### func (LittleEndianWriter) WriteInt8
+#### func (*LittleEndianWriter) WriteInt64
 
 ```go
-func (l LittleEndianWriter) WriteInt8(d int8) (int, error)
+func (e *LittleEndianWriter) WriteInt64(d int64) (int, error)
 ```
-WriteInt8 will write the given int8 to the writer
+WriteInt64 Writes a int64 using the underlying io.Writer
 
-#### func (LittleEndianWriter) WriteUint16
+#### func (*LittleEndianWriter) WriteInt8
 
 ```go
-func (l LittleEndianWriter) WriteUint16(d uint16) (int, error)
+func (e *LittleEndianWriter) WriteInt8(d int8) (int, error)
 ```
-WriteUint16 will write the given uint16 to the writer, in little endian format
+WriteInt8 Writes a int8 using the underlying io.Writer
 
-#### func (LittleEndianWriter) WriteUint32
+#### func (*LittleEndianWriter) WriteUint16
 
 ```go
-func (l LittleEndianWriter) WriteUint32(d uint32) (int, error)
+func (e *LittleEndianWriter) WriteUint16(d uint16) (int, error)
 ```
-WriteUint32 will write the given uint32 to the writer, in little endian format
+WriteUint16 Writes a uint16 using the underlying io.Writer
 
-#### func (LittleEndianWriter) WriteUint64
+#### func (*LittleEndianWriter) WriteUint32
 
 ```go
-func (l LittleEndianWriter) WriteUint64(d uint64) (int, error)
+func (e *LittleEndianWriter) WriteUint32(d uint32) (int, error)
 ```
-WriteUint64 will write the given uint64 to the writer, in little endian format
+WriteUint32 Writes a uint32 using the underlying io.Writer
 
-#### func (LittleEndianWriter) WriteUint8
+#### func (*LittleEndianWriter) WriteUint64
 
 ```go
-func (l LittleEndianWriter) WriteUint8(d uint8) (int, error)
+func (e *LittleEndianWriter) WriteUint64(d uint64) (int, error)
 ```
-WriteUint8 will write the given uint8 to the writer
+WriteUint64 Writes a uint64 using the underlying io.Writer
+
+#### func (*LittleEndianWriter) WriteUint8
+
+```go
+func (e *LittleEndianWriter) WriteUint8(d uint8) (int, error)
+```
+WriteUint8 Writes a uint8 using the underlying io.Writer
+
+#### type StickyBigEndianReader
+
+```go
+type StickyBigEndianReader struct {
+	io.Reader
+
+	Err   error
+	Count int64
+}
+```
+
+StickyBigEndianReader wraps a io.Reader to provide methods to make it easier to
+Read fundamental types
+
+#### func (*StickyBigEndianReader) Read
+
+```go
+func (e *StickyBigEndianReader) Read(p []byte) (int, error)
+```
+Read implements the io.Reader interface
+
+#### func (*StickyBigEndianReader) ReadFloat32
+
+```go
+func (e *StickyBigEndianReader) ReadFloat32() float32
+```
+ReadFloat32 Reads a float32 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadFloat64
+
+```go
+func (e *StickyBigEndianReader) ReadFloat64() float64
+```
+ReadFloat64 Reads a float64 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadInt16
+
+```go
+func (e *StickyBigEndianReader) ReadInt16() int16
+```
+ReadInt16 Reads a int16 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadInt32
+
+```go
+func (e *StickyBigEndianReader) ReadInt32() int32
+```
+ReadInt32 Reads a int32 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadInt64
+
+```go
+func (e *StickyBigEndianReader) ReadInt64() int64
+```
+ReadInt64 Reads a int64 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadInt8
+
+```go
+func (e *StickyBigEndianReader) ReadInt8() int8
+```
+ReadInt8 Reads a int8 using the underlying io.Reader Any errors and the running
+byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadUint16
+
+```go
+func (e *StickyBigEndianReader) ReadUint16() uint16
+```
+ReadUint16 Reads a uint16 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadUint32
+
+```go
+func (e *StickyBigEndianReader) ReadUint32() uint32
+```
+ReadUint32 Reads a uint32 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadUint64
+
+```go
+func (e *StickyBigEndianReader) ReadUint64() uint64
+```
+ReadUint64 Reads a uint64 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianReader) ReadUint8
+
+```go
+func (e *StickyBigEndianReader) ReadUint8() uint8
+```
+ReadUint8 Reads a uint8 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### type StickyBigEndianWriter
+
+```go
+type StickyBigEndianWriter struct {
+	io.Writer
+
+	Err   error
+	Count int64
+}
+```
+
+StickyBigEndianWriter wraps a io.Writer to provide methods to make it easier to
+Write fundamental types
+
+#### func (*StickyBigEndianWriter) Write
+
+```go
+func (e *StickyBigEndianWriter) Write(p []byte) (int, error)
+```
+Write implements the io.Writer interface
+
+#### func (*StickyBigEndianWriter) WriteFloat32
+
+```go
+func (e *StickyBigEndianWriter) WriteFloat32(d float32)
+```
+WriteFloat32 Writes a float32 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteFloat64
+
+```go
+func (e *StickyBigEndianWriter) WriteFloat64(d float64)
+```
+WriteFloat64 Writes a float64 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteInt16
+
+```go
+func (e *StickyBigEndianWriter) WriteInt16(d int16)
+```
+WriteInt16 Writes a int16 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteInt32
+
+```go
+func (e *StickyBigEndianWriter) WriteInt32(d int32)
+```
+WriteInt32 Writes a int32 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteInt64
+
+```go
+func (e *StickyBigEndianWriter) WriteInt64(d int64)
+```
+WriteInt64 Writes a int64 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteInt8
+
+```go
+func (e *StickyBigEndianWriter) WriteInt8(d int8)
+```
+WriteInt8 Writes a int8 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteUint16
+
+```go
+func (e *StickyBigEndianWriter) WriteUint16(d uint16)
+```
+WriteUint16 Writes a uint16 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteUint32
+
+```go
+func (e *StickyBigEndianWriter) WriteUint32(d uint32)
+```
+WriteUint32 Writes a uint32 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteUint64
+
+```go
+func (e *StickyBigEndianWriter) WriteUint64(d uint64)
+```
+WriteUint64 Writes a uint64 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyBigEndianWriter) WriteUint8
+
+```go
+func (e *StickyBigEndianWriter) WriteUint8(d uint8)
+```
+WriteUint8 Writes a uint8 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### type StickyEndianReader
+
+```go
+type StickyEndianReader interface {
+	io.Reader
+	ReadUint8() uint8
+	ReadInt8() int8
+	ReadUint16() uint16
+	ReadInt16() int16
+	ReadUint32() uint32
+	ReadInt32() int32
+	ReadUint64() uint64
+	ReadInt64() int64
+	ReadFloat32() float32
+	ReadFloat64() float64
+}
+```
+
+StickyEndianReader is an interface that reads various types with a particular
+endianness and stores the Read return values
+
+#### type StickyEndianWriter
+
+```go
+type StickyEndianWriter interface {
+	io.Writer
+	WriteUint8(uint8)
+	WriteInt8(int8)
+	WriteUint16(uint16)
+	WriteInt16(int16)
+	WriteUint32(uint32)
+	WriteInt32(int32)
+	WriteUint64(uint64)
+	WriteInt64(int64)
+	WriteFloat32(float32)
+	WriteFloat64(float64)
+}
+```
+
+StickyEndianWriter is an interface that writes various types with a particular
+endianness and stores the Write return values
+
+#### type StickyLittleEndianReader
+
+```go
+type StickyLittleEndianReader struct {
+	io.Reader
+
+	Err   error
+	Count int64
+}
+```
+
+StickyLittleEndianReader wraps a io.Reader to provide methods to make it easier
+to Read fundamental types
+
+#### func (*StickyLittleEndianReader) Read
+
+```go
+func (e *StickyLittleEndianReader) Read(p []byte) (int, error)
+```
+Read implements the io.Reader interface
+
+#### func (*StickyLittleEndianReader) ReadFloat32
+
+```go
+func (e *StickyLittleEndianReader) ReadFloat32() float32
+```
+ReadFloat32 Reads a float32 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadFloat64
+
+```go
+func (e *StickyLittleEndianReader) ReadFloat64() float64
+```
+ReadFloat64 Reads a float64 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadInt16
+
+```go
+func (e *StickyLittleEndianReader) ReadInt16() int16
+```
+ReadInt16 Reads a int16 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadInt32
+
+```go
+func (e *StickyLittleEndianReader) ReadInt32() int32
+```
+ReadInt32 Reads a int32 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadInt64
+
+```go
+func (e *StickyLittleEndianReader) ReadInt64() int64
+```
+ReadInt64 Reads a int64 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadInt8
+
+```go
+func (e *StickyLittleEndianReader) ReadInt8() int8
+```
+ReadInt8 Reads a int8 using the underlying io.Reader Any errors and the running
+byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadUint16
+
+```go
+func (e *StickyLittleEndianReader) ReadUint16() uint16
+```
+ReadUint16 Reads a uint16 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadUint32
+
+```go
+func (e *StickyLittleEndianReader) ReadUint32() uint32
+```
+ReadUint32 Reads a uint32 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadUint64
+
+```go
+func (e *StickyLittleEndianReader) ReadUint64() uint64
+```
+ReadUint64 Reads a uint64 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianReader) ReadUint8
+
+```go
+func (e *StickyLittleEndianReader) ReadUint8() uint8
+```
+ReadUint8 Reads a uint8 using the underlying io.Reader Any errors and the
+running byte read count are stored instead or returned
+
+#### type StickyLittleEndianWriter
+
+```go
+type StickyLittleEndianWriter struct {
+	io.Writer
+
+	Err   error
+	Count int64
+}
+```
+
+StickyLittleEndianWriter wraps a io.Writer to provide methods to make it easier
+to Write fundamental types
+
+#### func (*StickyLittleEndianWriter) Write
+
+```go
+func (e *StickyLittleEndianWriter) Write(p []byte) (int, error)
+```
+Write implements the io.Writer interface
+
+#### func (*StickyLittleEndianWriter) WriteFloat32
+
+```go
+func (e *StickyLittleEndianWriter) WriteFloat32(d float32)
+```
+WriteFloat32 Writes a float32 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteFloat64
+
+```go
+func (e *StickyLittleEndianWriter) WriteFloat64(d float64)
+```
+WriteFloat64 Writes a float64 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteInt16
+
+```go
+func (e *StickyLittleEndianWriter) WriteInt16(d int16)
+```
+WriteInt16 Writes a int16 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteInt32
+
+```go
+func (e *StickyLittleEndianWriter) WriteInt32(d int32)
+```
+WriteInt32 Writes a int32 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteInt64
+
+```go
+func (e *StickyLittleEndianWriter) WriteInt64(d int64)
+```
+WriteInt64 Writes a int64 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteInt8
+
+```go
+func (e *StickyLittleEndianWriter) WriteInt8(d int8)
+```
+WriteInt8 Writes a int8 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteUint16
+
+```go
+func (e *StickyLittleEndianWriter) WriteUint16(d uint16)
+```
+WriteUint16 Writes a uint16 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteUint32
+
+```go
+func (e *StickyLittleEndianWriter) WriteUint32(d uint32)
+```
+WriteUint32 Writes a uint32 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteUint64
+
+```go
+func (e *StickyLittleEndianWriter) WriteUint64(d uint64)
+```
+WriteUint64 Writes a uint64 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
+
+#### func (*StickyLittleEndianWriter) WriteUint8
+
+```go
+func (e *StickyLittleEndianWriter) WriteUint8(d uint8)
+```
+WriteUint8 Writes a uint8 using the underlying io.Writer Any errors and the
+running byte read count are stored instead or returned
 
 #### type StickyReader
 
