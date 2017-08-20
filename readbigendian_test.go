@@ -37,3 +37,66 @@ func TestReadBigEndian(t *testing.T) {
 		t.Errorf("test 4: expecting 65, got %d", i)
 	}
 }
+
+func BenchmarkReadBigEndianUint8(b *testing.B) {
+	r := BigEndianReader{Reader: neverending{1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadUint8()
+	}
+}
+
+func BenchmarkReadBigEndianInt8(b *testing.B) {
+	r := BigEndianReader{Reader: neverending{1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadInt8()
+	}
+}
+func BenchmarkReadBigEndianUint16(b *testing.B) {
+	r := BigEndianReader{Reader: neverending{1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadUint16()
+	}
+}
+
+func BenchmarkReadBigEndianInt16(b *testing.B) {
+	r := BigEndianReader{Reader: neverending{1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadInt16()
+	}
+}
+
+func BenchmarkReadBigEndianUint32(b *testing.B) {
+	r := BigEndianReader{Reader: neverending{1, 1, 1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadUint32()
+	}
+}
+
+func BenchmarkReadBigEndianInt32(b *testing.B) {
+	r := BigEndianReader{Reader: neverending{1, 1, 1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadInt32()
+	}
+}
+
+func BenchmarkReadBigEndianUint64(b *testing.B) {
+	r := BigEndianReader{Reader: neverending{1, 1, 1, 1, 1, 1, 1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadUint64()
+	}
+}
+
+func BenchmarkReadBigEndianInt64(b *testing.B) {
+	r := BigEndianReader{Reader: neverending{1, 1, 1, 1, 1, 1, 1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadInt64()
+	}
+}

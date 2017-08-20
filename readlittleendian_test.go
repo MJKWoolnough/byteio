@@ -37,3 +37,72 @@ func TestReadLittleEndian(t *testing.T) {
 		t.Errorf("test 4: expecting 65, got %d", i)
 	}
 }
+
+type neverending []byte
+
+func (n neverending) Read(b []byte) (int, error) {
+	return copy(b, n), nil
+}
+
+func BenchmarkReadLittleEndianUint8(b *testing.B) {
+	r := LittleEndianReader{Reader: neverending{1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadUint8()
+	}
+}
+
+func BenchmarkReadLittleEndianInt8(b *testing.B) {
+	r := LittleEndianReader{Reader: neverending{1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadInt8()
+	}
+}
+func BenchmarkReadLittleEndianUint16(b *testing.B) {
+	r := LittleEndianReader{Reader: neverending{1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadUint16()
+	}
+}
+
+func BenchmarkReadLittleEndianInt16(b *testing.B) {
+	r := LittleEndianReader{Reader: neverending{1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadInt16()
+	}
+}
+
+func BenchmarkReadLittleEndianUint32(b *testing.B) {
+	r := LittleEndianReader{Reader: neverending{1, 1, 1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadUint32()
+	}
+}
+
+func BenchmarkReadLittleEndianInt32(b *testing.B) {
+	r := LittleEndianReader{Reader: neverending{1, 1, 1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadInt32()
+	}
+}
+
+func BenchmarkReadLittleEndianUint64(b *testing.B) {
+	r := LittleEndianReader{Reader: neverending{1, 1, 1, 1, 1, 1, 1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadUint64()
+	}
+}
+
+func BenchmarkReadLittleEndianInt64(b *testing.B) {
+	r := LittleEndianReader{Reader: neverending{1, 1, 1, 1, 1, 1, 1, 1}}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		_, _, _ = r.ReadInt64()
+	}
+}
