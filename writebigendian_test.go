@@ -2,6 +2,7 @@ package byteio
 
 import (
 	"bytes"
+	"io/ioutil"
 	"testing"
 )
 
@@ -32,5 +33,69 @@ func TestWriteBigEndian(t *testing.T) {
 	}
 	if str := b.String(); str != testData {
 		t.Errorf("expecting %q, got %q", testData, str)
+	}
+}
+
+func BenchmarkWriteBigUint8(b *testing.B) {
+	w := BigEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteUint8(1)
+	}
+}
+
+func BenchmarkWriteBigInt8(b *testing.B) {
+	w := BigEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteInt8(1)
+	}
+}
+
+func BenchmarkWriteBigUint16(b *testing.B) {
+	w := BigEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteUint16(1)
+	}
+}
+
+func BenchmarkWriteBigInt16(b *testing.B) {
+	w := BigEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteInt16(1)
+	}
+}
+
+func BenchmarkWriteBigUint32(b *testing.B) {
+	w := BigEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteUint32(1)
+	}
+}
+
+func BenchmarkWriteBigInt32(b *testing.B) {
+	w := BigEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteInt32(1)
+	}
+}
+
+func BenchmarkWriteBigUint64(b *testing.B) {
+	w := BigEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteUint64(1)
+	}
+}
+
+func BenchmarkWriteBigInt64(b *testing.B) {
+	w := BigEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteInt64(1)
 	}
 }

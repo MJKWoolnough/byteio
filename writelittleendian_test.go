@@ -2,6 +2,7 @@ package byteio
 
 import (
 	"bytes"
+	"io/ioutil"
 	"testing"
 )
 
@@ -32,5 +33,69 @@ func TestWriteLittleEndian(t *testing.T) {
 	}
 	if str := b.String(); str != testData {
 		t.Errorf("expecting %q, got %q", testData, str)
+	}
+}
+
+func BenchmarkWriteLittleUint8(b *testing.B) {
+	w := LittleEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteUint8(1)
+	}
+}
+
+func BenchmarkWriteLittleInt8(b *testing.B) {
+	w := LittleEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteInt8(1)
+	}
+}
+
+func BenchmarkWriteLittleUint16(b *testing.B) {
+	w := LittleEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteUint16(1)
+	}
+}
+
+func BenchmarkWriteLittleInt16(b *testing.B) {
+	w := LittleEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteInt16(1)
+	}
+}
+
+func BenchmarkWriteLittleUint32(b *testing.B) {
+	w := LittleEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteUint32(1)
+	}
+}
+
+func BenchmarkWriteLittleInt32(b *testing.B) {
+	w := LittleEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteInt32(1)
+	}
+}
+
+func BenchmarkWriteLittleUint64(b *testing.B) {
+	w := LittleEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteUint64(1)
+	}
+}
+
+func BenchmarkWriteLittleInt64(b *testing.B) {
+	w := LittleEndianWriter{Writer: ioutil.Discard}
+	b.ResetTimer()
+	for i := 0; i < b.N; i++ {
+		w.WriteInt64(1)
 	}
 }
