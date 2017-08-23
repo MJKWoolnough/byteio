@@ -16,32 +16,40 @@ type BigEndianWriter struct {
 
 // WriteInt8 Writes a int8 using the underlying io.Writer
 func (e *BigEndianWriter) WriteInt8(d int8) (int, error) {
-	e.buffer = [8]byte{
-		byte(d),
-	}
+	e.buffer[0] = byte(d)
 	return e.Writer.Write(e.buffer[:1])
 }
 
 // WriteInt16 Writes a int16 using the underlying io.Writer
 func (e *BigEndianWriter) WriteInt16(d int16) (int, error) {
-	c := uint16(d)
+	c := uint64(d)
 	e.buffer = [8]byte{
-		byte(c >> 8),
-		byte(c),
-	}
-	return e.Writer.Write(e.buffer[:2])
-}
-
-// WriteInt32 Writes a int32 using the underlying io.Writer
-func (e *BigEndianWriter) WriteInt32(d int32) (int, error) {
-	c := uint32(d)
-	e.buffer = [8]byte{
+		byte(c >> 56),
+		byte(c >> 48),
+		byte(c >> 40),
+		byte(c >> 32),
 		byte(c >> 24),
 		byte(c >> 16),
 		byte(c >> 8),
 		byte(c),
 	}
-	return e.Writer.Write(e.buffer[:4])
+	return e.Writer.Write(e.buffer[6:])
+}
+
+// WriteInt32 Writes a int32 using the underlying io.Writer
+func (e *BigEndianWriter) WriteInt32(d int32) (int, error) {
+	c := uint64(d)
+	e.buffer = [8]byte{
+		byte(c >> 56),
+		byte(c >> 48),
+		byte(c >> 40),
+		byte(c >> 32),
+		byte(c >> 24),
+		byte(c >> 16),
+		byte(c >> 8),
+		byte(c),
+	}
+	return e.Writer.Write(e.buffer[4:])
 }
 
 // WriteInt64 Writes a int64 using the underlying io.Writer
@@ -57,35 +65,45 @@ func (e *BigEndianWriter) WriteInt64(d int64) (int, error) {
 		byte(c >> 8),
 		byte(c),
 	}
-	return e.Writer.Write(e.buffer[:8])
+	return e.Writer.Write(e.buffer[0:])
 }
 
 // WriteUint8 Writes a uint8 using the underlying io.Writer
 func (e *BigEndianWriter) WriteUint8(d uint8) (int, error) {
-	e.buffer = [8]byte{
-		d,
-	}
+	e.buffer[0] = d
 	return e.Writer.Write(e.buffer[:1])
 }
 
 // WriteUint16 Writes a uint16 using the underlying io.Writer
 func (e *BigEndianWriter) WriteUint16(d uint16) (int, error) {
+	c := uint64(d)
 	e.buffer = [8]byte{
-		byte(d >> 8),
-		byte(d),
+		byte(c >> 56),
+		byte(c >> 48),
+		byte(c >> 40),
+		byte(c >> 32),
+		byte(c >> 24),
+		byte(c >> 16),
+		byte(c >> 8),
+		byte(c),
 	}
-	return e.Writer.Write(e.buffer[:2])
+	return e.Writer.Write(e.buffer[6:])
 }
 
 // WriteUint32 Writes a uint32 using the underlying io.Writer
 func (e *BigEndianWriter) WriteUint32(d uint32) (int, error) {
+	c := uint64(d)
 	e.buffer = [8]byte{
-		byte(d >> 24),
-		byte(d >> 16),
-		byte(d >> 8),
-		byte(d),
+		byte(c >> 56),
+		byte(c >> 48),
+		byte(c >> 40),
+		byte(c >> 32),
+		byte(c >> 24),
+		byte(c >> 16),
+		byte(c >> 8),
+		byte(c),
 	}
-	return e.Writer.Write(e.buffer[:4])
+	return e.Writer.Write(e.buffer[4:])
 }
 
 // WriteUint64 Writes a uint64 using the underlying io.Writer
@@ -100,19 +118,23 @@ func (e *BigEndianWriter) WriteUint64(d uint64) (int, error) {
 		byte(d >> 8),
 		byte(d),
 	}
-	return e.Writer.Write(e.buffer[:8])
+	return e.Writer.Write(e.buffer[0:])
 }
 
 // WriteFloat32 Writes a float32 using the underlying io.Writer
 func (e *BigEndianWriter) WriteFloat32(d float32) (int, error) {
-	c := math.Float32bits(d)
+	c := uint64(d)
 	e.buffer = [8]byte{
+		byte(c >> 56),
+		byte(c >> 48),
+		byte(c >> 40),
+		byte(c >> 32),
 		byte(c >> 24),
 		byte(c >> 16),
 		byte(c >> 8),
 		byte(c),
 	}
-	return e.Writer.Write(e.buffer[:4])
+	return e.Writer.Write(e.buffer[4:])
 }
 
 // WriteFloat64 Writes a float64 using the underlying io.Writer
@@ -128,5 +150,5 @@ func (e *BigEndianWriter) WriteFloat64(d float64) (int, error) {
 		byte(c >> 8),
 		byte(c),
 	}
-	return e.Writer.Write(e.buffer[:8])
+	return e.Writer.Write(e.buffer[0:])
 }

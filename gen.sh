@@ -152,35 +152,45 @@ HEREDOC
 							fi;
 						else
 							var="d";
-							if [ "$t" = "Int" -a $i -ne 8 ]; then
-								var="c";
-								echo "	c := uint$i(d)";
-							elif [ "$t" = "Float" ]; then
-								var="c";
-								echo "	c := math.Float${i}bits(d)";
-							fi;
-							echo "	e.buffer = [8]byte{";
+							if [ $i -eq 8 ]; then
+								if [ "$t" = "Int" ]; then
+									echo "	e.buffer[0] = byte(d)";
+								else
+									echo "	e.buffer[0] = d";
+								fi;
+							else
+								if [ "$t" = "Int" -o $i -ne 64 ]; then
+									var="c";
+									echo "	c := uint64(d)";
+								elif [ "$t" = "Float" ]; then
+									var="c";
+									echo "	c := math.Float${i}bits(d)";
+								fi;
+								echo "	e.buffer = [8]byte{";
 
-							shift=$(( $startP * ($i - 8) ))
+								shift=0;
+								if [ $order -eq -1 ]; then
+									shift=56;
+								fi;
 
-
-							for n in $(seq 1 $(( $i / 8 ))); do
-								echo -n "		";
-								if [ $tu != "uint8" ]; then
+								for n in {1..8}; do
+									echo -n "		";
+									#if [ $tu != "uint8" ]; then
 									echo -n "byte(";
-								fi;
-								echo -n "$var";
-								if [ $shift -ne 0 ]; then
-									echo -n " >> $shift";
-								fi;
-								if [ $tu != "uint8" ]; then
+									#fi;
+									echo -n "$var";
+									if [ $shift -ne 0 ]; then
+										echo -n " >> $shift";
+									fi;
+									#if [ $tu != "uint8" ]; then
 									echo -n ")";
-								fi;
-								echo ",";
-								let "shift += 8 * $order";
-							done;
+									#fi;
+									echo ",";
+									let "shift += 8 * $order";
+								done;
 
-							echo "	}";
+								echo "	}";
+							fi;
 
 							if [ -z "$s" ]; then
 								echo -n "	return ";
@@ -189,7 +199,13 @@ HEREDOC
 								echo -n "	n, e.Err = ";
 							fi;
 							
-							echo "e.Writer.Write(e.buffer[:$(( $i / 8 ))])";
+							if [ $i -eq 8 ]; then
+								echo "e.Writer.Write(e.buffer[:1])";
+							elif [ $order -eq 1 ]; then
+								echo "e.Writer.Write(e.buffer[:$(( ($i / 8) ))])";
+							else
+								echo "e.Writer.Write(e.buffer[$(( 8 - ($i / 8) )):])";
+							fi;
 							
 							if [ ! -z "$s" ]; then
 								echo "	e.Count += int64(n)";

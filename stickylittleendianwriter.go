@@ -33,9 +33,7 @@ func (e *StickyLittleEndianWriter) WriteInt8(d int8) {
 	if e.Err != nil {
 		return
 	}
-	e.buffer = [8]byte{
-		byte(d),
-	}
+	e.buffer[0] = byte(d)
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:1])
 	e.Count += int64(n)
@@ -47,10 +45,16 @@ func (e *StickyLittleEndianWriter) WriteInt16(d int16) {
 	if e.Err != nil {
 		return
 	}
-	c := uint16(d)
+	c := uint64(d)
 	e.buffer = [8]byte{
 		byte(c),
 		byte(c >> 8),
+		byte(c >> 16),
+		byte(c >> 24),
+		byte(c >> 32),
+		byte(c >> 40),
+		byte(c >> 48),
+		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:2])
@@ -63,12 +67,16 @@ func (e *StickyLittleEndianWriter) WriteInt32(d int32) {
 	if e.Err != nil {
 		return
 	}
-	c := uint32(d)
+	c := uint64(d)
 	e.buffer = [8]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
 		byte(c >> 24),
+		byte(c >> 32),
+		byte(c >> 40),
+		byte(c >> 48),
+		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:4])
@@ -103,9 +111,7 @@ func (e *StickyLittleEndianWriter) WriteUint8(d uint8) {
 	if e.Err != nil {
 		return
 	}
-	e.buffer = [8]byte{
-		d,
-	}
+	e.buffer[0] = d
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:1])
 	e.Count += int64(n)
@@ -117,9 +123,16 @@ func (e *StickyLittleEndianWriter) WriteUint16(d uint16) {
 	if e.Err != nil {
 		return
 	}
+	c := uint64(d)
 	e.buffer = [8]byte{
-		byte(d),
-		byte(d >> 8),
+		byte(c),
+		byte(c >> 8),
+		byte(c >> 16),
+		byte(c >> 24),
+		byte(c >> 32),
+		byte(c >> 40),
+		byte(c >> 48),
+		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:2])
@@ -132,11 +145,16 @@ func (e *StickyLittleEndianWriter) WriteUint32(d uint32) {
 	if e.Err != nil {
 		return
 	}
+	c := uint64(d)
 	e.buffer = [8]byte{
-		byte(d),
-		byte(d >> 8),
-		byte(d >> 16),
-		byte(d >> 24),
+		byte(c),
+		byte(c >> 8),
+		byte(c >> 16),
+		byte(c >> 24),
+		byte(c >> 32),
+		byte(c >> 40),
+		byte(c >> 48),
+		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:4])
@@ -170,12 +188,16 @@ func (e *StickyLittleEndianWriter) WriteFloat32(d float32) {
 	if e.Err != nil {
 		return
 	}
-	c := math.Float32bits(d)
+	c := uint64(d)
 	e.buffer = [8]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
 		byte(c >> 24),
+		byte(c >> 32),
+		byte(c >> 40),
+		byte(c >> 48),
+		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:4])
