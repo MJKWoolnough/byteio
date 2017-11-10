@@ -159,12 +159,12 @@ HEREDOC
 									echo "	e.buffer[0] = d";
 								fi;
 							else
-								if [ "$t" = "Int" -o $i -ne 64 ]; then
-									var="c";
-									echo "	c := uint64(d)";
-								elif [ "$t" = "Float" ]; then
+								if [ "$t" = "Float" ]; then
 									var="c";
 									echo "	c := math.Float${i}bits(d)";
+								elif [ "$t" = "Int" -o $i -ne 64 ]; then
+									var="c";
+									echo "	c := uint64(d)";
 								fi;
 								echo "	e.buffer = [8]byte{";
 
