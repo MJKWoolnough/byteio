@@ -123,7 +123,7 @@ func (e *BigEndianWriter) WriteUint64(d uint64) (int, error) {
 
 // WriteFloat32 Writes a float32 using the underlying io.Writer
 func (e *BigEndianWriter) WriteFloat32(d float32) (int, error) {
-	c := uint64(d)
+	c := math.Float32bits(d)
 	e.buffer = [8]byte{
 		byte(c >> 56),
 		byte(c >> 48),

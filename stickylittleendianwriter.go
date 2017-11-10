@@ -188,7 +188,7 @@ func (e *StickyLittleEndianWriter) WriteFloat32(d float32) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
+	c := math.Float32bits(d)
 	e.buffer = [8]byte{
 		byte(c),
 		byte(c >> 8),
