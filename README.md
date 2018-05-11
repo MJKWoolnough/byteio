@@ -18,6 +18,13 @@ type BigEndianReader struct {
 BigEndianReader wraps a io.Reader to provide methods to make it easier to Read
 fundamental types
 
+#### func (*BigEndianReader) ReadByte
+
+```go
+func (e *BigEndianReader) ReadByte() (byte, error)
+```
+ReadByte implements the io.ByteReader interface
+
 #### func (*BigEndianReader) ReadFloat32
 
 ```go
@@ -98,6 +105,13 @@ type BigEndianWriter struct {
 
 BigEndianWriter wraps a io.Writer to provide methods to make it easier to Write
 fundamental types
+
+#### func (*BigEndianWriter) WriteByte
+
+```go
+func (e *BigEndianWriter) WriteByte(c byte) error
+```
+WriteByte implements the io.ByteWriter interface
 
 #### func (*BigEndianWriter) WriteFloat32
 
@@ -222,6 +236,13 @@ type LittleEndianReader struct {
 LittleEndianReader wraps a io.Reader to provide methods to make it easier to
 Read fundamental types
 
+#### func (*LittleEndianReader) ReadByte
+
+```go
+func (e *LittleEndianReader) ReadByte() (byte, error)
+```
+ReadByte implements the io.ByteReader interface
+
 #### func (*LittleEndianReader) ReadFloat32
 
 ```go
@@ -302,6 +323,13 @@ type LittleEndianWriter struct {
 
 LittleEndianWriter wraps a io.Writer to provide methods to make it easier to
 Write fundamental types
+
+#### func (*LittleEndianWriter) WriteByte
+
+```go
+func (e *LittleEndianWriter) WriteByte(c byte) error
+```
+WriteByte implements the io.ByteWriter interface
 
 #### func (*LittleEndianWriter) WriteFloat32
 
@@ -393,6 +421,13 @@ Read fundamental types
 func (e *StickyBigEndianReader) Read(p []byte) (int, error)
 ```
 Read implements the io.Reader interface
+
+#### func (*StickyBigEndianReader) ReadByte
+
+```go
+func (e *StickyBigEndianReader) ReadByte() (byte, error)
+```
+ReadByte implements the io.ByteReader interface
 
 #### func (*StickyBigEndianReader) ReadFloat32
 
@@ -494,6 +529,13 @@ Write fundamental types
 func (e *StickyBigEndianWriter) Write(p []byte) (int, error)
 ```
 Write implements the io.Writer interface
+
+#### func (*StickyBigEndianWriter) WriteByte
+
+```go
+func (e *StickyBigEndianWriter) WriteByte(c byte) error
+```
+WriteByte implements the io.ByteWriter interface
 
 #### func (*StickyBigEndianWriter) WriteFloat32
 
@@ -638,6 +680,13 @@ func (e *StickyLittleEndianReader) Read(p []byte) (int, error)
 ```
 Read implements the io.Reader interface
 
+#### func (*StickyLittleEndianReader) ReadByte
+
+```go
+func (e *StickyLittleEndianReader) ReadByte() (byte, error)
+```
+ReadByte implements the io.ByteReader interface
+
 #### func (*StickyLittleEndianReader) ReadFloat32
 
 ```go
@@ -738,6 +787,13 @@ to Write fundamental types
 func (e *StickyLittleEndianWriter) Write(p []byte) (int, error)
 ```
 Write implements the io.Writer interface
+
+#### func (*StickyLittleEndianWriter) WriteByte
+
+```go
+func (e *StickyLittleEndianWriter) WriteByte(c byte) error
+```
+WriteByte implements the io.ByteWriter interface
 
 #### func (*StickyLittleEndianWriter) WriteFloat32
 
