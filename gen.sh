@@ -215,6 +215,80 @@ HEREDOC
 						echo "}";
 					done;
 				done;
+				echo;
+				echo "// ${rw}String ${rw}s a string";
+				echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}String(";
+				if [ "$rw" = "Write" ]; then
+					echo "str string) (int, error) {";
+					if [ -z "$s" ]; then
+						echo "	return io.WriteString(e.Writer, str)";
+					else
+						echo "	if e.Err != nil {";
+						echo "		return 0, e.Err";
+						echo "	}";
+						echo "	var n int";
+						echo "	n, e.Err = io.WriteString(e.Writer, str)";
+						echo "	e.Count += int64(n)";
+						echo "	return n, e.Err";
+					fi;
+				else
+					echo -n "size int) ";
+					if [ -z "$s" ]; then
+						echo "(string, int, error) {";
+						echo "	buf := make([]byte, size)";
+						echo "	n, err := io.ReadFull(e, buf)";
+						echo "	return string(buf[:n]), n, err";
+					else
+						echo "string {";
+						echo "	if e.Err != nil {";
+						echo "		return \"\"";
+						echo "	}";
+						echo "	buf := make([]byte, size)";
+						echo "	var n int";
+						echo "	n, e.Err = io.ReadFull(e.Reader, buf)";
+						echo "	e.Count += int64(n)";
+						echo "	return string(buf[:n])";
+					fi;
+				fi;
+				echo "}";
+				for size in "X" 8 16 32 64; do
+					tSize="$size";
+					if [ "$size" = "X" ]; then
+						tSize="64";
+					fi;
+					echo;
+					echo "// ${rw}String${size} ${rw}s the length of the string, using ReadUint${size} and then reads the bytes of the string";
+					echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}String${size}(";
+					if [ "$rw" = "Write" ]; then
+						if [ -z "$s" ]; then
+							echo "str string) (int, error) {";
+							echo "	n, err := e.WriteUint${size}(uint${tSize}(len(str)))";
+							echo "	if err != nil {";
+							echo "		return n, err";
+							echo "	}";
+							echo "	m, err := e.WriteString(str)";
+							echo "	return n + m, err";
+						else
+							echo "str string) {";
+							echo "	e.WriteUint${size}(uint${tSize}(len(str)))";
+							echo "	e.WriteString(str)"
+						fi;
+					else
+						if [ -z "$s" ]; then
+							echo ") (string, int, error) {";
+							echo "	size, n, err := e.ReadUint${size}()";
+							echo "	if err != nil {"
+							echo "		return \"\", n, err";
+							echo "	}";
+							echo "	str, m, err := e.ReadString(int(size))"
+							echo "	return str, n + m, err";
+						else
+							echo ") string {";
+							echo "	return e.ReadString(int(e.ReadUint${size}()))";
+						fi;
+					fi;
+					echo "}";
+				done;
 			) > "$(echo "${s}${e}Endian${rw}${er}" | tr A-Z a-z).go";
 		done;
 	done;
