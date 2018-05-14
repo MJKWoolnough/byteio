@@ -21,7 +21,7 @@ func (e *BigEndianWriter) WriteUintX(d uint64) (int, error) {
 	return e.Write(buf[pos:])
 }
 
-// WriteUintX writes the integer using a variable number of bytes
+// WriteIntX writes the integer using a variable number of bytes
 func (e *BigEndianWriter) WriteIntX(d int64) (int, error) {
 	return e.WriteUintX(zigzag(d))
 }

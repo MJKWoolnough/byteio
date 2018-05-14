@@ -15,7 +15,7 @@ func (e *LittleEndianWriter) WriteUintX(d uint64) (int, error) {
 	return e.Write(buf[:pos+1])
 }
 
-// WriteUintX writes the integer using a variable number of bytes
+// WriteIntX writes the integer using a variable number of bytes
 func (e *LittleEndianWriter) WriteIntX(d int64) (int, error) {
 	return e.WriteUintX(zigzag(d))
 }

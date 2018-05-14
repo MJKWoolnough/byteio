@@ -21,7 +21,7 @@ func (e *StickyBigEndianWriter) WriteUintX(d uint64) {
 	e.Write(buf[pos:])
 }
 
-// WriteUintX writes the integer using a variable number of bytes
+// WriteIntX writes the integer using a variable number of bytes
 func (e *StickyBigEndianWriter) WriteIntX(d int64) {
 	e.WriteUintX(zigzag(d))
 }
