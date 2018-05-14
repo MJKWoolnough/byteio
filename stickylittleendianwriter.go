@@ -225,3 +225,44 @@ func (e *StickyLittleEndianWriter) WriteFloat64(d float64) {
 	n, e.Err = e.Writer.Write(e.buffer[:8])
 	e.Count += int64(n)
 }
+
+// WriteString Writes a string
+func (e *StickyLittleEndianWriter) WriteString(str string) (int, error) {
+	if e.Err != nil {
+		return 0, e.Err
+	}
+	var n int
+	n, e.Err = io.WriteString(e.Writer, str)
+	e.Count += int64(n)
+	return n, e.Err
+}
+
+// WriteStringX Writes the length of the string, using ReadUintX and then reads the bytes of the string
+func (e *StickyLittleEndianWriter) WriteStringX(str string) {
+	e.WriteUintX(uint64(len(str)))
+	e.WriteString(str)
+}
+
+// WriteString8 Writes the length of the string, using ReadUint8 and then reads the bytes of the string
+func (e *StickyLittleEndianWriter) WriteString8(str string) {
+	e.WriteUint8(uint8(len(str)))
+	e.WriteString(str)
+}
+
+// WriteString16 Writes the length of the string, using ReadUint16 and then reads the bytes of the string
+func (e *StickyLittleEndianWriter) WriteString16(str string) {
+	e.WriteUint16(uint16(len(str)))
+	e.WriteString(str)
+}
+
+// WriteString32 Writes the length of the string, using ReadUint32 and then reads the bytes of the string
+func (e *StickyLittleEndianWriter) WriteString32(str string) {
+	e.WriteUint32(uint32(len(str)))
+	e.WriteString(str)
+}
+
+// WriteString64 Writes the length of the string, using ReadUint64 and then reads the bytes of the string
+func (e *StickyLittleEndianWriter) WriteString64(str string) {
+	e.WriteUint64(uint64(len(str)))
+	e.WriteString(str)
+}

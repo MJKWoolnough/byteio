@@ -103,3 +103,60 @@ func (e *BigEndianReader) ReadFloat64() (float64, int, error) {
 	}
 	return math.Float64frombits(uint64(e.buffer[7]) | uint64(e.buffer[6])<<8 | uint64(e.buffer[5])<<16 | uint64(e.buffer[4])<<24 | uint64(e.buffer[3])<<32 | uint64(e.buffer[2])<<40 | uint64(e.buffer[1])<<48 | uint64(e.buffer[0])<<56), 8, nil
 }
+
+// ReadString Reads a string
+func (e *BigEndianReader) ReadString(size int) (string, int, error) {
+	buf := make([]byte, size)
+	n, err := io.ReadFull(e, buf)
+	return string(buf[:n]), n, err
+}
+
+// ReadStringX Reads the length of the string, using ReadUintX and then reads the bytes of the string
+func (e *BigEndianReader) ReadStringX() (string, int, error) {
+	size, n, err := e.ReadUintX()
+	if err != nil {
+		return "", n, err
+	}
+	str, m, err := e.ReadString(int(size))
+	return str, n + m, err
+}
+
+// ReadString8 Reads the length of the string, using ReadUint8 and then reads the bytes of the string
+func (e *BigEndianReader) ReadString8() (string, int, error) {
+	size, n, err := e.ReadUint8()
+	if err != nil {
+		return "", n, err
+	}
+	str, m, err := e.ReadString(int(size))
+	return str, n + m, err
+}
+
+// ReadString16 Reads the length of the string, using ReadUint16 and then reads the bytes of the string
+func (e *BigEndianReader) ReadString16() (string, int, error) {
+	size, n, err := e.ReadUint16()
+	if err != nil {
+		return "", n, err
+	}
+	str, m, err := e.ReadString(int(size))
+	return str, n + m, err
+}
+
+// ReadString32 Reads the length of the string, using ReadUint32 and then reads the bytes of the string
+func (e *BigEndianReader) ReadString32() (string, int, error) {
+	size, n, err := e.ReadUint32()
+	if err != nil {
+		return "", n, err
+	}
+	str, m, err := e.ReadString(int(size))
+	return str, n + m, err
+}
+
+// ReadString64 Reads the length of the string, using ReadUint64 and then reads the bytes of the string
+func (e *BigEndianReader) ReadString64() (string, int, error) {
+	size, n, err := e.ReadUint64()
+	if err != nil {
+		return "", n, err
+	}
+	str, m, err := e.ReadString(int(size))
+	return str, n + m, err
+}

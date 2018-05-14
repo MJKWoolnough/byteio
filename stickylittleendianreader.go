@@ -176,3 +176,40 @@ func (e *StickyLittleEndianReader) ReadFloat64() float64 {
 	}
 	return math.Float64frombits(uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48 | uint64(e.buffer[7])<<56)
 }
+
+// ReadString Reads a string
+func (e *StickyLittleEndianReader) ReadString(size int) string {
+	if e.Err != nil {
+		return ""
+	}
+	buf := make([]byte, size)
+	var n int
+	n, e.Err = io.ReadFull(e.Reader, buf)
+	e.Count += int64(n)
+	return string(buf[:n])
+}
+
+// ReadStringX Reads the length of the string, using ReadUintX and then reads the bytes of the string
+func (e *StickyLittleEndianReader) ReadStringX() string {
+	return e.ReadString(int(e.ReadUintX()))
+}
+
+// ReadString8 Reads the length of the string, using ReadUint8 and then reads the bytes of the string
+func (e *StickyLittleEndianReader) ReadString8() string {
+	return e.ReadString(int(e.ReadUint8()))
+}
+
+// ReadString16 Reads the length of the string, using ReadUint16 and then reads the bytes of the string
+func (e *StickyLittleEndianReader) ReadString16() string {
+	return e.ReadString(int(e.ReadUint16()))
+}
+
+// ReadString32 Reads the length of the string, using ReadUint32 and then reads the bytes of the string
+func (e *StickyLittleEndianReader) ReadString32() string {
+	return e.ReadString(int(e.ReadUint32()))
+}
+
+// ReadString64 Reads the length of the string, using ReadUint64 and then reads the bytes of the string
+func (e *StickyLittleEndianReader) ReadString64() string {
+	return e.ReadString(int(e.ReadUint64()))
+}

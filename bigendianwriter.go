@@ -152,3 +152,58 @@ func (e *BigEndianWriter) WriteFloat64(d float64) (int, error) {
 	}
 	return e.Writer.Write(e.buffer[0:])
 }
+
+// WriteString Writes a string
+func (e *BigEndianWriter) WriteString(str string) (int, error) {
+	return io.WriteString(e.Writer, str)
+}
+
+// WriteStringX Writes the length of the string, using ReadUintX and then reads the bytes of the string
+func (e *BigEndianWriter) WriteStringX(str string) (int, error) {
+	n, err := e.WriteUintX(uint64(len(str)))
+	if err != nil {
+		return n, err
+	}
+	m, err := e.WriteString(str)
+	return n + m, err
+}
+
+// WriteString8 Writes the length of the string, using ReadUint8 and then reads the bytes of the string
+func (e *BigEndianWriter) WriteString8(str string) (int, error) {
+	n, err := e.WriteUint8(uint8(len(str)))
+	if err != nil {
+		return n, err
+	}
+	m, err := e.WriteString(str)
+	return n + m, err
+}
+
+// WriteString16 Writes the length of the string, using ReadUint16 and then reads the bytes of the string
+func (e *BigEndianWriter) WriteString16(str string) (int, error) {
+	n, err := e.WriteUint16(uint16(len(str)))
+	if err != nil {
+		return n, err
+	}
+	m, err := e.WriteString(str)
+	return n + m, err
+}
+
+// WriteString32 Writes the length of the string, using ReadUint32 and then reads the bytes of the string
+func (e *BigEndianWriter) WriteString32(str string) (int, error) {
+	n, err := e.WriteUint32(uint32(len(str)))
+	if err != nil {
+		return n, err
+	}
+	m, err := e.WriteString(str)
+	return n + m, err
+}
+
+// WriteString64 Writes the length of the string, using ReadUint64 and then reads the bytes of the string
+func (e *BigEndianWriter) WriteString64(str string) (int, error) {
+	n, err := e.WriteUint64(uint64(len(str)))
+	if err != nil {
+		return n, err
+	}
+	m, err := e.WriteString(str)
+	return n + m, err
+}
