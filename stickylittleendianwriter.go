@@ -5,13 +5,14 @@ package byteio
 import (
 	"io"
 	"math"
+	"unsafe"
 )
 
 // StickyLittleEndianWriter wraps a io.Writer to provide methods
 // to make it easier to Write fundamental types
 type StickyLittleEndianWriter struct {
 	io.Writer
-	buffer [8]byte
+	buffer [9]byte
 	Err    error
 	Count  int64
 }
@@ -45,16 +46,10 @@ func (e *StickyLittleEndianWriter) WriteInt16(d int16) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
-	e.buffer = [8]byte{
+	c := uint16(d)
+	*(*[2]byte)(unsafe.Pointer(&e.buffer)) = [2]byte{
 		byte(c),
 		byte(c >> 8),
-		byte(c >> 16),
-		byte(c >> 24),
-		byte(c >> 32),
-		byte(c >> 40),
-		byte(c >> 48),
-		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:2])
@@ -67,16 +62,12 @@ func (e *StickyLittleEndianWriter) WriteInt32(d int32) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
-	e.buffer = [8]byte{
+	c := uint32(d)
+	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
 		byte(c >> 24),
-		byte(c >> 32),
-		byte(c >> 40),
-		byte(c >> 48),
-		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:4])
@@ -90,7 +81,7 @@ func (e *StickyLittleEndianWriter) WriteInt64(d int64) {
 		return
 	}
 	c := uint64(d)
-	e.buffer = [8]byte{
+	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -123,16 +114,10 @@ func (e *StickyLittleEndianWriter) WriteUint16(d uint16) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
-	e.buffer = [8]byte{
+	c := uint16(d)
+	*(*[2]byte)(unsafe.Pointer(&e.buffer)) = [2]byte{
 		byte(c),
 		byte(c >> 8),
-		byte(c >> 16),
-		byte(c >> 24),
-		byte(c >> 32),
-		byte(c >> 40),
-		byte(c >> 48),
-		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:2])
@@ -145,16 +130,12 @@ func (e *StickyLittleEndianWriter) WriteUint32(d uint32) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
-	e.buffer = [8]byte{
+	c := uint32(d)
+	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
 		byte(c >> 24),
-		byte(c >> 32),
-		byte(c >> 40),
-		byte(c >> 48),
-		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:4])
@@ -167,7 +148,7 @@ func (e *StickyLittleEndianWriter) WriteUint64(d uint64) {
 	if e.Err != nil {
 		return
 	}
-	e.buffer = [8]byte{
+	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
 		byte(d),
 		byte(d >> 8),
 		byte(d >> 16),
@@ -189,15 +170,11 @@ func (e *StickyLittleEndianWriter) WriteFloat32(d float32) {
 		return
 	}
 	c := math.Float32bits(d)
-	e.buffer = [8]byte{
+	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
 		byte(c >> 24),
-		byte(c >> 32),
-		byte(c >> 40),
-		byte(c >> 48),
-		byte(c >> 56),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:4])
@@ -211,7 +188,7 @@ func (e *StickyLittleEndianWriter) WriteFloat64(d float64) {
 		return
 	}
 	c := math.Float64bits(d)
-	e.buffer = [8]byte{
+	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -237,31 +214,31 @@ func (e *StickyLittleEndianWriter) WriteString(str string) (int, error) {
 	return n, e.Err
 }
 
-// WriteStringX Writes the length of the string, using ReadUintX and then reads the bytes of the string
+// WriteStringX Writes the length of the string, using ReadUintX and then Writes the bytes of the string
 func (e *StickyLittleEndianWriter) WriteStringX(str string) {
 	e.WriteUintX(uint64(len(str)))
 	e.WriteString(str)
 }
 
-// WriteString8 Writes the length of the string, using ReadUint8 and then reads the bytes of the string
+// WriteString8 Writes the length of the string, using ReadUint8 and then Writes the bytes of the string
 func (e *StickyLittleEndianWriter) WriteString8(str string) {
 	e.WriteUint8(uint8(len(str)))
 	e.WriteString(str)
 }
 
-// WriteString16 Writes the length of the string, using ReadUint16 and then reads the bytes of the string
+// WriteString16 Writes the length of the string, using ReadUint16 and then Writes the bytes of the string
 func (e *StickyLittleEndianWriter) WriteString16(str string) {
 	e.WriteUint16(uint16(len(str)))
 	e.WriteString(str)
 }
 
-// WriteString32 Writes the length of the string, using ReadUint32 and then reads the bytes of the string
+// WriteString32 Writes the length of the string, using ReadUint32 and then Writes the bytes of the string
 func (e *StickyLittleEndianWriter) WriteString32(str string) {
 	e.WriteUint32(uint32(len(str)))
 	e.WriteString(str)
 }
 
-// WriteString64 Writes the length of the string, using ReadUint64 and then reads the bytes of the string
+// WriteString64 Writes the length of the string, using ReadUint64 and then Writes the bytes of the string
 func (e *StickyLittleEndianWriter) WriteString64(str string) {
 	e.WriteUint64(uint64(len(str)))
 	e.WriteString(str)

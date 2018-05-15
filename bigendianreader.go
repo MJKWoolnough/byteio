@@ -11,7 +11,7 @@ import (
 // to make it easier to Read fundamental types
 type BigEndianReader struct {
 	io.Reader
-	buffer [8]byte
+	buffer [9]byte
 }
 
 // ReadInt8 Reads a int8 using the underlying io.Reader
@@ -111,7 +111,7 @@ func (e *BigEndianReader) ReadString(size int) (string, int, error) {
 	return string(buf[:n]), n, err
 }
 
-// ReadStringX Reads the length of the string, using ReadUintX and then reads the bytes of the string
+// ReadStringX Reads the length of the string, using ReadUintX and then Reads the bytes of the string
 func (e *BigEndianReader) ReadStringX() (string, int, error) {
 	size, n, err := e.ReadUintX()
 	if err != nil {
@@ -121,7 +121,7 @@ func (e *BigEndianReader) ReadStringX() (string, int, error) {
 	return str, n + m, err
 }
 
-// ReadString8 Reads the length of the string, using ReadUint8 and then reads the bytes of the string
+// ReadString8 Reads the length of the string, using ReadUint8 and then Reads the bytes of the string
 func (e *BigEndianReader) ReadString8() (string, int, error) {
 	size, n, err := e.ReadUint8()
 	if err != nil {
@@ -131,7 +131,7 @@ func (e *BigEndianReader) ReadString8() (string, int, error) {
 	return str, n + m, err
 }
 
-// ReadString16 Reads the length of the string, using ReadUint16 and then reads the bytes of the string
+// ReadString16 Reads the length of the string, using ReadUint16 and then Reads the bytes of the string
 func (e *BigEndianReader) ReadString16() (string, int, error) {
 	size, n, err := e.ReadUint16()
 	if err != nil {
@@ -141,7 +141,7 @@ func (e *BigEndianReader) ReadString16() (string, int, error) {
 	return str, n + m, err
 }
 
-// ReadString32 Reads the length of the string, using ReadUint32 and then reads the bytes of the string
+// ReadString32 Reads the length of the string, using ReadUint32 and then Reads the bytes of the string
 func (e *BigEndianReader) ReadString32() (string, int, error) {
 	size, n, err := e.ReadUint32()
 	if err != nil {
@@ -151,7 +151,7 @@ func (e *BigEndianReader) ReadString32() (string, int, error) {
 	return str, n + m, err
 }
 
-// ReadString64 Reads the length of the string, using ReadUint64 and then reads the bytes of the string
+// ReadString64 Reads the length of the string, using ReadUint64 and then Reads the bytes of the string
 func (e *BigEndianReader) ReadString64() (string, int, error) {
 	size, n, err := e.ReadUint64()
 	if err != nil {

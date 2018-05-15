@@ -5,13 +5,14 @@ package byteio
 import (
 	"io"
 	"math"
+	"unsafe"
 )
 
 // StickyBigEndianWriter wraps a io.Writer to provide methods
 // to make it easier to Write fundamental types
 type StickyBigEndianWriter struct {
 	io.Writer
-	buffer [8]byte
+	buffer [9]byte
 	Err    error
 	Count  int64
 }
@@ -45,19 +46,13 @@ func (e *StickyBigEndianWriter) WriteInt16(d int16) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
-	e.buffer = [8]byte{
-		byte(c >> 56),
-		byte(c >> 48),
-		byte(c >> 40),
-		byte(c >> 32),
-		byte(c >> 24),
-		byte(c >> 16),
+	c := uint16(d)
+	*(*[2]byte)(unsafe.Pointer(&e.buffer)) = [2]byte{
 		byte(c >> 8),
 		byte(c),
 	}
 	var n int
-	n, e.Err = e.Writer.Write(e.buffer[6:])
+	n, e.Err = e.Writer.Write(e.buffer[:2])
 	e.Count += int64(n)
 }
 
@@ -67,19 +62,15 @@ func (e *StickyBigEndianWriter) WriteInt32(d int32) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
-	e.buffer = [8]byte{
-		byte(c >> 56),
-		byte(c >> 48),
-		byte(c >> 40),
-		byte(c >> 32),
+	c := uint32(d)
+	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
 		byte(c >> 24),
 		byte(c >> 16),
 		byte(c >> 8),
 		byte(c),
 	}
 	var n int
-	n, e.Err = e.Writer.Write(e.buffer[4:])
+	n, e.Err = e.Writer.Write(e.buffer[:4])
 	e.Count += int64(n)
 }
 
@@ -90,7 +81,7 @@ func (e *StickyBigEndianWriter) WriteInt64(d int64) {
 		return
 	}
 	c := uint64(d)
-	e.buffer = [8]byte{
+	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
 		byte(c >> 56),
 		byte(c >> 48),
 		byte(c >> 40),
@@ -101,7 +92,7 @@ func (e *StickyBigEndianWriter) WriteInt64(d int64) {
 		byte(c),
 	}
 	var n int
-	n, e.Err = e.Writer.Write(e.buffer[0:])
+	n, e.Err = e.Writer.Write(e.buffer[:8])
 	e.Count += int64(n)
 }
 
@@ -123,19 +114,13 @@ func (e *StickyBigEndianWriter) WriteUint16(d uint16) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
-	e.buffer = [8]byte{
-		byte(c >> 56),
-		byte(c >> 48),
-		byte(c >> 40),
-		byte(c >> 32),
-		byte(c >> 24),
-		byte(c >> 16),
+	c := uint16(d)
+	*(*[2]byte)(unsafe.Pointer(&e.buffer)) = [2]byte{
 		byte(c >> 8),
 		byte(c),
 	}
 	var n int
-	n, e.Err = e.Writer.Write(e.buffer[6:])
+	n, e.Err = e.Writer.Write(e.buffer[:2])
 	e.Count += int64(n)
 }
 
@@ -145,19 +130,15 @@ func (e *StickyBigEndianWriter) WriteUint32(d uint32) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
-	e.buffer = [8]byte{
-		byte(c >> 56),
-		byte(c >> 48),
-		byte(c >> 40),
-		byte(c >> 32),
+	c := uint32(d)
+	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
 		byte(c >> 24),
 		byte(c >> 16),
 		byte(c >> 8),
 		byte(c),
 	}
 	var n int
-	n, e.Err = e.Writer.Write(e.buffer[4:])
+	n, e.Err = e.Writer.Write(e.buffer[:4])
 	e.Count += int64(n)
 }
 
@@ -167,7 +148,7 @@ func (e *StickyBigEndianWriter) WriteUint64(d uint64) {
 	if e.Err != nil {
 		return
 	}
-	e.buffer = [8]byte{
+	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
 		byte(d >> 56),
 		byte(d >> 48),
 		byte(d >> 40),
@@ -178,7 +159,7 @@ func (e *StickyBigEndianWriter) WriteUint64(d uint64) {
 		byte(d),
 	}
 	var n int
-	n, e.Err = e.Writer.Write(e.buffer[0:])
+	n, e.Err = e.Writer.Write(e.buffer[:8])
 	e.Count += int64(n)
 }
 
@@ -189,18 +170,14 @@ func (e *StickyBigEndianWriter) WriteFloat32(d float32) {
 		return
 	}
 	c := math.Float32bits(d)
-	e.buffer = [8]byte{
-		byte(c >> 56),
-		byte(c >> 48),
-		byte(c >> 40),
-		byte(c >> 32),
+	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
 		byte(c >> 24),
 		byte(c >> 16),
 		byte(c >> 8),
 		byte(c),
 	}
 	var n int
-	n, e.Err = e.Writer.Write(e.buffer[4:])
+	n, e.Err = e.Writer.Write(e.buffer[:4])
 	e.Count += int64(n)
 }
 
@@ -211,7 +188,7 @@ func (e *StickyBigEndianWriter) WriteFloat64(d float64) {
 		return
 	}
 	c := math.Float64bits(d)
-	e.buffer = [8]byte{
+	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
 		byte(c >> 56),
 		byte(c >> 48),
 		byte(c >> 40),
@@ -222,7 +199,7 @@ func (e *StickyBigEndianWriter) WriteFloat64(d float64) {
 		byte(c),
 	}
 	var n int
-	n, e.Err = e.Writer.Write(e.buffer[0:])
+	n, e.Err = e.Writer.Write(e.buffer[:8])
 	e.Count += int64(n)
 }
 
@@ -237,31 +214,31 @@ func (e *StickyBigEndianWriter) WriteString(str string) (int, error) {
 	return n, e.Err
 }
 
-// WriteStringX Writes the length of the string, using ReadUintX and then reads the bytes of the string
+// WriteStringX Writes the length of the string, using ReadUintX and then Writes the bytes of the string
 func (e *StickyBigEndianWriter) WriteStringX(str string) {
 	e.WriteUintX(uint64(len(str)))
 	e.WriteString(str)
 }
 
-// WriteString8 Writes the length of the string, using ReadUint8 and then reads the bytes of the string
+// WriteString8 Writes the length of the string, using ReadUint8 and then Writes the bytes of the string
 func (e *StickyBigEndianWriter) WriteString8(str string) {
 	e.WriteUint8(uint8(len(str)))
 	e.WriteString(str)
 }
 
-// WriteString16 Writes the length of the string, using ReadUint16 and then reads the bytes of the string
+// WriteString16 Writes the length of the string, using ReadUint16 and then Writes the bytes of the string
 func (e *StickyBigEndianWriter) WriteString16(str string) {
 	e.WriteUint16(uint16(len(str)))
 	e.WriteString(str)
 }
 
-// WriteString32 Writes the length of the string, using ReadUint32 and then reads the bytes of the string
+// WriteString32 Writes the length of the string, using ReadUint32 and then Writes the bytes of the string
 func (e *StickyBigEndianWriter) WriteString32(str string) {
 	e.WriteUint32(uint32(len(str)))
 	e.WriteString(str)
 }
 
-// WriteString64 Writes the length of the string, using ReadUint64 and then reads the bytes of the string
+// WriteString64 Writes the length of the string, using ReadUint64 and then Writes the bytes of the string
 func (e *StickyBigEndianWriter) WriteString64(str string) {
 	e.WriteUint64(uint64(len(str)))
 	e.WriteString(str)

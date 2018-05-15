@@ -11,7 +11,7 @@ import (
 // to make it easier to Read fundamental types
 type StickyLittleEndianReader struct {
 	io.Reader
-	buffer [8]byte
+	buffer [9]byte
 	Err    error
 	Count  int64
 }
@@ -189,27 +189,27 @@ func (e *StickyLittleEndianReader) ReadString(size int) string {
 	return string(buf[:n])
 }
 
-// ReadStringX Reads the length of the string, using ReadUintX and then reads the bytes of the string
+// ReadStringX Reads the length of the string, using ReadUintX and then Reads the bytes of the string
 func (e *StickyLittleEndianReader) ReadStringX() string {
 	return e.ReadString(int(e.ReadUintX()))
 }
 
-// ReadString8 Reads the length of the string, using ReadUint8 and then reads the bytes of the string
+// ReadString8 Reads the length of the string, using ReadUint8 and then Reads the bytes of the string
 func (e *StickyLittleEndianReader) ReadString8() string {
 	return e.ReadString(int(e.ReadUint8()))
 }
 
-// ReadString16 Reads the length of the string, using ReadUint16 and then reads the bytes of the string
+// ReadString16 Reads the length of the string, using ReadUint16 and then Reads the bytes of the string
 func (e *StickyLittleEndianReader) ReadString16() string {
 	return e.ReadString(int(e.ReadUint16()))
 }
 
-// ReadString32 Reads the length of the string, using ReadUint32 and then reads the bytes of the string
+// ReadString32 Reads the length of the string, using ReadUint32 and then Reads the bytes of the string
 func (e *StickyLittleEndianReader) ReadString32() string {
 	return e.ReadString(int(e.ReadUint32()))
 }
 
-// ReadString64 Reads the length of the string, using ReadUint64 and then reads the bytes of the string
+// ReadString64 Reads the length of the string, using ReadUint64 and then Reads the bytes of the string
 func (e *StickyLittleEndianReader) ReadString64() string {
 	return e.ReadString(int(e.ReadUint64()))
 }
