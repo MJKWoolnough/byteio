@@ -14,8 +14,10 @@ for s in "" Sticky; do
 
 		for rw in Read Write; do
 			er="er";
+			import="";
 			if [ "$rw" = "Write" ]; then
 				er="r";
+				import="$(echo -e "\n	\"unsafe\"")";
 			fi;
 			(
 				cat <<HEREDOC
@@ -25,14 +27,14 @@ package byteio
 
 import (
 	"io"
-	"math"
+	"math"$import
 )
 
 // ${s}${e}Endian${rw}${er} wraps a io.${rw}${er} to provide methods
 // to make it easier to $rw fundamental types
 type ${s}${e}Endian${rw}${er} struct {
 	io.${rw}${er}
-	buffer [8]byte
+	buffer [9]byte
 HEREDOC
 				if [ ! -z "$s" ]; then
 					echo "	Err    error";
@@ -164,28 +166,23 @@ HEREDOC
 									echo "	c := math.Float${i}bits(d)";
 								elif [ "$t" = "Int" -o $i -ne 64 ]; then
 									var="c";
-									echo "	c := uint64(d)";
+									echo "	c := uint${i}(d)";
 								fi;
-								echo "	e.buffer = [8]byte{";
+								echo "	*(*[$(( i / 8 ))]byte)(unsafe.Pointer(&e.buffer)) = [$(( i / 8 ))]byte{";
 
 								shift=0;
+
 								if [ $order -eq -1 ]; then
-									shift=56;
+									shift=$(( ((i / 8) - 1) * 8));
 								fi;
 
-								for n in {1..8}; do
-									echo -n "		";
-									#if [ $tu != "uint8" ]; then
-									echo -n "byte(";
-									#fi;
+								for n in $(seq $(( i / 8 ))); do
+									echo -n "		byte(";
 									echo -n "$var";
 									if [ $shift -ne 0 ]; then
 										echo -n " >> $shift";
 									fi;
-									#if [ $tu != "uint8" ]; then
-									echo -n ")";
-									#fi;
-									echo ",";
+									echo "),";
 									let "shift += 8 * $order";
 								done;
 
@@ -199,13 +196,7 @@ HEREDOC
 								echo -n "	n, e.Err = ";
 							fi;
 							
-							if [ $i -eq 8 ]; then
-								echo "e.Writer.Write(e.buffer[:1])";
-							elif [ $order -eq 1 ]; then
-								echo "e.Writer.Write(e.buffer[:$(( ($i / 8) ))])";
-							else
-								echo "e.Writer.Write(e.buffer[$(( 8 - ($i / 8) )):])";
-							fi;
+							echo  "e.Writer.Write(e.buffer[:$(( $i / 8 ))])";
 							
 							if [ ! -z "$s" ]; then
 								echo "	e.Count += int64(n)";
@@ -257,7 +248,7 @@ HEREDOC
 						tSize="64";
 					fi;
 					echo;
-					echo "// ${rw}String${size} ${rw}s the length of the string, using ReadUint${size} and then reads the bytes of the string";
+					echo "// ${rw}String${size} ${rw}s the length of the string, using ReadUint${size} and then ${rw}s the bytes of the string";
 					echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}String${size}(";
 					if [ "$rw" = "Write" ]; then
 						if [ -z "$s" ]; then
