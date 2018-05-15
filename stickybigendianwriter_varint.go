@@ -2,23 +2,20 @@ package byteio
 
 // WriteUintX writes the unsigned integer using a variable number of bytes
 func (e *StickyBigEndianWriter) WriteUintX(d uint64) {
-	var (
-		buf [9]byte
-		pos = 8
-	)
+	pos := 8
 	if d > 9295997013522923647 {
-		buf[8] = byte(d)
+		e.buffer[8] = byte(d)
 		d >>= 8
 	} else {
-		buf[8] = byte(d & 0x7f)
+		e.buffer[8] = byte(d & 0x7f)
 		d >>= 7
 	}
 	for ; d > 0; d >>= 7 {
 		pos--
 		d--
-		buf[pos] = byte(d&0x7f) | 0x80
+		e.buffer[pos] = byte(d&0x7f) | 0x80
 	}
-	e.Write(buf[pos:])
+	e.Write(e.buffer[pos:])
 }
 
 // WriteIntX writes the integer using a variable number of bytes
