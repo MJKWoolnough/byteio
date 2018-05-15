@@ -86,7 +86,7 @@ ReadString Reads a string
 ```go
 func (e *BigEndianReader) ReadString16() (string, int, error)
 ```
-ReadString16 Reads the length of the string, using ReadUint16 and then reads the
+ReadString16 Reads the length of the string, using ReadUint16 and then Reads the
 bytes of the string
 
 #### func (*BigEndianReader) ReadString32
@@ -94,7 +94,7 @@ bytes of the string
 ```go
 func (e *BigEndianReader) ReadString32() (string, int, error)
 ```
-ReadString32 Reads the length of the string, using ReadUint32 and then reads the
+ReadString32 Reads the length of the string, using ReadUint32 and then Reads the
 bytes of the string
 
 #### func (*BigEndianReader) ReadString64
@@ -102,7 +102,7 @@ bytes of the string
 ```go
 func (e *BigEndianReader) ReadString64() (string, int, error)
 ```
-ReadString64 Reads the length of the string, using ReadUint64 and then reads the
+ReadString64 Reads the length of the string, using ReadUint64 and then Reads the
 bytes of the string
 
 #### func (*BigEndianReader) ReadString8
@@ -110,7 +110,7 @@ bytes of the string
 ```go
 func (e *BigEndianReader) ReadString8() (string, int, error)
 ```
-ReadString8 Reads the length of the string, using ReadUint8 and then reads the
+ReadString8 Reads the length of the string, using ReadUint8 and then Reads the
 bytes of the string
 
 #### func (*BigEndianReader) ReadStringX
@@ -118,7 +118,7 @@ bytes of the string
 ```go
 func (e *BigEndianReader) ReadStringX() (string, int, error)
 ```
-ReadStringX Reads the length of the string, using ReadUintX and then reads the
+ReadStringX Reads the length of the string, using ReadUintX and then Reads the
 bytes of the string
 
 #### func (*BigEndianReader) ReadUint16
@@ -236,7 +236,7 @@ WriteString Writes a string
 ```go
 func (e *BigEndianWriter) WriteString16(str string) (int, error)
 ```
-WriteString16 Writes the length of the string, using ReadUint16 and then reads
+WriteString16 Writes the length of the string, using ReadUint16 and then Writes
 the bytes of the string
 
 #### func (*BigEndianWriter) WriteString32
@@ -244,7 +244,7 @@ the bytes of the string
 ```go
 func (e *BigEndianWriter) WriteString32(str string) (int, error)
 ```
-WriteString32 Writes the length of the string, using ReadUint32 and then reads
+WriteString32 Writes the length of the string, using ReadUint32 and then Writes
 the bytes of the string
 
 #### func (*BigEndianWriter) WriteString64
@@ -252,7 +252,7 @@ the bytes of the string
 ```go
 func (e *BigEndianWriter) WriteString64(str string) (int, error)
 ```
-WriteString64 Writes the length of the string, using ReadUint64 and then reads
+WriteString64 Writes the length of the string, using ReadUint64 and then Writes
 the bytes of the string
 
 #### func (*BigEndianWriter) WriteString8
@@ -260,16 +260,16 @@ the bytes of the string
 ```go
 func (e *BigEndianWriter) WriteString8(str string) (int, error)
 ```
-WriteString8 Writes the length of the string, using ReadUint8 and then reads the
-bytes of the string
+WriteString8 Writes the length of the string, using ReadUint8 and then Writes
+the bytes of the string
 
 #### func (*BigEndianWriter) WriteStringX
 
 ```go
 func (e *BigEndianWriter) WriteStringX(str string) (int, error)
 ```
-WriteStringX Writes the length of the string, using ReadUintX and then reads the
-bytes of the string
+WriteStringX Writes the length of the string, using ReadUintX and then Writes
+the bytes of the string
 
 #### func (*BigEndianWriter) WriteUint16
 
@@ -445,7 +445,7 @@ ReadString Reads a string
 ```go
 func (e *LittleEndianReader) ReadString16() (string, int, error)
 ```
-ReadString16 Reads the length of the string, using ReadUint16 and then reads the
+ReadString16 Reads the length of the string, using ReadUint16 and then Reads the
 bytes of the string
 
 #### func (*LittleEndianReader) ReadString32
@@ -453,7 +453,7 @@ bytes of the string
 ```go
 func (e *LittleEndianReader) ReadString32() (string, int, error)
 ```
-ReadString32 Reads the length of the string, using ReadUint32 and then reads the
+ReadString32 Reads the length of the string, using ReadUint32 and then Reads the
 bytes of the string
 
 #### func (*LittleEndianReader) ReadString64
@@ -461,7 +461,7 @@ bytes of the string
 ```go
 func (e *LittleEndianReader) ReadString64() (string, int, error)
 ```
-ReadString64 Reads the length of the string, using ReadUint64 and then reads the
+ReadString64 Reads the length of the string, using ReadUint64 and then Reads the
 bytes of the string
 
 #### func (*LittleEndianReader) ReadString8
@@ -469,7 +469,7 @@ bytes of the string
 ```go
 func (e *LittleEndianReader) ReadString8() (string, int, error)
 ```
-ReadString8 Reads the length of the string, using ReadUint8 and then reads the
+ReadString8 Reads the length of the string, using ReadUint8 and then Reads the
 bytes of the string
 
 #### func (*LittleEndianReader) ReadStringX
@@ -477,7 +477,7 @@ bytes of the string
 ```go
 func (e *LittleEndianReader) ReadStringX() (string, int, error)
 ```
-ReadStringX Reads the length of the string, using ReadUintX and then reads the
+ReadStringX Reads the length of the string, using ReadUintX and then Reads the
 bytes of the string
 
 #### func (*LittleEndianReader) ReadUint16
@@ -595,7 +595,7 @@ WriteString Writes a string
 ```go
 func (e *LittleEndianWriter) WriteString16(str string) (int, error)
 ```
-WriteString16 Writes the length of the string, using ReadUint16 and then reads
+WriteString16 Writes the length of the string, using ReadUint16 and then Writes
 the bytes of the string
 
 #### func (*LittleEndianWriter) WriteString32
@@ -603,7 +603,7 @@ the bytes of the string
 ```go
 func (e *LittleEndianWriter) WriteString32(str string) (int, error)
 ```
-WriteString32 Writes the length of the string, using ReadUint32 and then reads
+WriteString32 Writes the length of the string, using ReadUint32 and then Writes
 the bytes of the string
 
 #### func (*LittleEndianWriter) WriteString64
@@ -611,7 +611,7 @@ the bytes of the string
 ```go
 func (e *LittleEndianWriter) WriteString64(str string) (int, error)
 ```
-WriteString64 Writes the length of the string, using ReadUint64 and then reads
+WriteString64 Writes the length of the string, using ReadUint64 and then Writes
 the bytes of the string
 
 #### func (*LittleEndianWriter) WriteString8
@@ -619,16 +619,16 @@ the bytes of the string
 ```go
 func (e *LittleEndianWriter) WriteString8(str string) (int, error)
 ```
-WriteString8 Writes the length of the string, using ReadUint8 and then reads the
-bytes of the string
+WriteString8 Writes the length of the string, using ReadUint8 and then Writes
+the bytes of the string
 
 #### func (*LittleEndianWriter) WriteStringX
 
 ```go
 func (e *LittleEndianWriter) WriteStringX(str string) (int, error)
 ```
-WriteStringX Writes the length of the string, using ReadUintX and then reads the
-bytes of the string
+WriteStringX Writes the length of the string, using ReadUintX and then Writes
+the bytes of the string
 
 #### func (*LittleEndianWriter) WriteUint16
 
@@ -760,7 +760,7 @@ ReadString Reads a string
 ```go
 func (e *StickyBigEndianReader) ReadString16() string
 ```
-ReadString16 Reads the length of the string, using ReadUint16 and then reads the
+ReadString16 Reads the length of the string, using ReadUint16 and then Reads the
 bytes of the string
 
 #### func (*StickyBigEndianReader) ReadString32
@@ -768,7 +768,7 @@ bytes of the string
 ```go
 func (e *StickyBigEndianReader) ReadString32() string
 ```
-ReadString32 Reads the length of the string, using ReadUint32 and then reads the
+ReadString32 Reads the length of the string, using ReadUint32 and then Reads the
 bytes of the string
 
 #### func (*StickyBigEndianReader) ReadString64
@@ -776,7 +776,7 @@ bytes of the string
 ```go
 func (e *StickyBigEndianReader) ReadString64() string
 ```
-ReadString64 Reads the length of the string, using ReadUint64 and then reads the
+ReadString64 Reads the length of the string, using ReadUint64 and then Reads the
 bytes of the string
 
 #### func (*StickyBigEndianReader) ReadString8
@@ -784,7 +784,7 @@ bytes of the string
 ```go
 func (e *StickyBigEndianReader) ReadString8() string
 ```
-ReadString8 Reads the length of the string, using ReadUint8 and then reads the
+ReadString8 Reads the length of the string, using ReadUint8 and then Reads the
 bytes of the string
 
 #### func (*StickyBigEndianReader) ReadStringX
@@ -792,7 +792,7 @@ bytes of the string
 ```go
 func (e *StickyBigEndianReader) ReadStringX() string
 ```
-ReadStringX Reads the length of the string, using ReadUintX and then reads the
+ReadStringX Reads the length of the string, using ReadUintX and then Reads the
 bytes of the string
 
 #### func (*StickyBigEndianReader) ReadUint16
@@ -930,7 +930,7 @@ WriteString Writes a string
 ```go
 func (e *StickyBigEndianWriter) WriteString16(str string)
 ```
-WriteString16 Writes the length of the string, using ReadUint16 and then reads
+WriteString16 Writes the length of the string, using ReadUint16 and then Writes
 the bytes of the string
 
 #### func (*StickyBigEndianWriter) WriteString32
@@ -938,7 +938,7 @@ the bytes of the string
 ```go
 func (e *StickyBigEndianWriter) WriteString32(str string)
 ```
-WriteString32 Writes the length of the string, using ReadUint32 and then reads
+WriteString32 Writes the length of the string, using ReadUint32 and then Writes
 the bytes of the string
 
 #### func (*StickyBigEndianWriter) WriteString64
@@ -946,7 +946,7 @@ the bytes of the string
 ```go
 func (e *StickyBigEndianWriter) WriteString64(str string)
 ```
-WriteString64 Writes the length of the string, using ReadUint64 and then reads
+WriteString64 Writes the length of the string, using ReadUint64 and then Writes
 the bytes of the string
 
 #### func (*StickyBigEndianWriter) WriteString8
@@ -954,16 +954,16 @@ the bytes of the string
 ```go
 func (e *StickyBigEndianWriter) WriteString8(str string)
 ```
-WriteString8 Writes the length of the string, using ReadUint8 and then reads the
-bytes of the string
+WriteString8 Writes the length of the string, using ReadUint8 and then Writes
+the bytes of the string
 
 #### func (*StickyBigEndianWriter) WriteStringX
 
 ```go
 func (e *StickyBigEndianWriter) WriteStringX(str string)
 ```
-WriteStringX Writes the length of the string, using ReadUintX and then reads the
-bytes of the string
+WriteStringX Writes the length of the string, using ReadUintX and then Writes
+the bytes of the string
 
 #### func (*StickyBigEndianWriter) WriteUint16
 
@@ -1159,7 +1159,7 @@ ReadString Reads a string
 ```go
 func (e *StickyLittleEndianReader) ReadString16() string
 ```
-ReadString16 Reads the length of the string, using ReadUint16 and then reads the
+ReadString16 Reads the length of the string, using ReadUint16 and then Reads the
 bytes of the string
 
 #### func (*StickyLittleEndianReader) ReadString32
@@ -1167,7 +1167,7 @@ bytes of the string
 ```go
 func (e *StickyLittleEndianReader) ReadString32() string
 ```
-ReadString32 Reads the length of the string, using ReadUint32 and then reads the
+ReadString32 Reads the length of the string, using ReadUint32 and then Reads the
 bytes of the string
 
 #### func (*StickyLittleEndianReader) ReadString64
@@ -1175,7 +1175,7 @@ bytes of the string
 ```go
 func (e *StickyLittleEndianReader) ReadString64() string
 ```
-ReadString64 Reads the length of the string, using ReadUint64 and then reads the
+ReadString64 Reads the length of the string, using ReadUint64 and then Reads the
 bytes of the string
 
 #### func (*StickyLittleEndianReader) ReadString8
@@ -1183,7 +1183,7 @@ bytes of the string
 ```go
 func (e *StickyLittleEndianReader) ReadString8() string
 ```
-ReadString8 Reads the length of the string, using ReadUint8 and then reads the
+ReadString8 Reads the length of the string, using ReadUint8 and then Reads the
 bytes of the string
 
 #### func (*StickyLittleEndianReader) ReadStringX
@@ -1191,7 +1191,7 @@ bytes of the string
 ```go
 func (e *StickyLittleEndianReader) ReadStringX() string
 ```
-ReadStringX Reads the length of the string, using ReadUintX and then reads the
+ReadStringX Reads the length of the string, using ReadUintX and then Reads the
 bytes of the string
 
 #### func (*StickyLittleEndianReader) ReadUint16
@@ -1329,7 +1329,7 @@ WriteString Writes a string
 ```go
 func (e *StickyLittleEndianWriter) WriteString16(str string)
 ```
-WriteString16 Writes the length of the string, using ReadUint16 and then reads
+WriteString16 Writes the length of the string, using ReadUint16 and then Writes
 the bytes of the string
 
 #### func (*StickyLittleEndianWriter) WriteString32
@@ -1337,7 +1337,7 @@ the bytes of the string
 ```go
 func (e *StickyLittleEndianWriter) WriteString32(str string)
 ```
-WriteString32 Writes the length of the string, using ReadUint32 and then reads
+WriteString32 Writes the length of the string, using ReadUint32 and then Writes
 the bytes of the string
 
 #### func (*StickyLittleEndianWriter) WriteString64
@@ -1345,7 +1345,7 @@ the bytes of the string
 ```go
 func (e *StickyLittleEndianWriter) WriteString64(str string)
 ```
-WriteString64 Writes the length of the string, using ReadUint64 and then reads
+WriteString64 Writes the length of the string, using ReadUint64 and then Writes
 the bytes of the string
 
 #### func (*StickyLittleEndianWriter) WriteString8
@@ -1353,16 +1353,16 @@ the bytes of the string
 ```go
 func (e *StickyLittleEndianWriter) WriteString8(str string)
 ```
-WriteString8 Writes the length of the string, using ReadUint8 and then reads the
-bytes of the string
+WriteString8 Writes the length of the string, using ReadUint8 and then Writes
+the bytes of the string
 
 #### func (*StickyLittleEndianWriter) WriteStringX
 
 ```go
 func (e *StickyLittleEndianWriter) WriteStringX(str string)
 ```
-WriteStringX Writes the length of the string, using ReadUintX and then reads the
-bytes of the string
+WriteStringX Writes the length of the string, using ReadUintX and then Writes
+the bytes of the string
 
 #### func (*StickyLittleEndianWriter) WriteUint16
 
