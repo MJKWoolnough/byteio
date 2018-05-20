@@ -15,7 +15,7 @@ func (e *BigEndianReader) ReadUintX() (uint64, int, error) {
 			return 0, n, err
 		}
 		val++
-		if n == 8 {
+		if n == 8 && c&0x80 > 0 {
 			val = (val << 8) | uint64(c)
 		} else {
 			val = (val << 7) | uint64(c&0x7f)
