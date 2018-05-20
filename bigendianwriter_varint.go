@@ -1,9 +1,11 @@
 package byteio
 
+const maxBENineByte = 0x80<<56 | 0x80<<49 | 0x80<<42 | 0x80<<35 | 0x80<<28 | 0x80<<21 | 0x80<<14 | 0x80<<7 | 0x7f
+
 // WriteUintX writes the unsigned integer using a variable number of bytes
 func (e *BigEndianWriter) WriteUintX(d uint64) (int, error) {
 	pos := 8
-	if d > 9295997013522923647 {
+	if d > maxBENineByte {
 		e.buffer[8] = byte(d)
 		d >>= 8
 	} else {
