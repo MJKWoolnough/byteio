@@ -60,14 +60,20 @@ HEREDOC
 				fi;
 
 				for t in "Int" "Uint" "Float"; do
-					types="8 16 32 64"
+					types="8 16 24 32 40 48 56 64"
 					if [ "$t" = "Float" ]; then
 						types="32 64";
 					fi;
 					for i in $types; do
-						tu="$(echo "$t" | tr A-Z a-z)$i";
+						ti=$i;
+						if [ $i -eq 24 ]; then
+							ti=32;
+						elif [ $i -gt 32 -a $i -lt 64 ]; then
+							ti=64;
+						fi;
+						tu="$(echo "$t" | tr A-Z a-z)$ti";
 						echo;
-						echo "// ${rw}${t}${i} ${rw}s a $tu using the underlying io.${rw}${er}";
+						echo "// ${rw}${t}${i} ${rw}s a $i bit $(echo "$t" | tr A-Z a-z) as a $tu using the underlying io.${rw}${er}";
 						if [ ! -z "$s" ]; then
 							echo "// Any errors and the running byte read count are stored instead or returned";
 						fi;
@@ -117,7 +123,7 @@ HEREDOC
 							echo -n "	return ";
 
 							if [ "$t" = "Int" ]; then
-								echo -n "int$i(";
+								echo -n "int$ti(";
 							elif [ "$t" = "Float" ]; then
 								echo -n "math.Float${i}frombits(";
 							fi;
@@ -130,7 +136,7 @@ HEREDOC
 									echo -n " | ";
 								fi;
 								if [ "$i" -ne 8 ]; then
-									echo -n "uint$i(";
+									echo -n "uint$ti(";
 								fi;
 								echo -n "e.buffer[$p]";
 								if [ "$i" -ne 8 ]; then
@@ -166,7 +172,7 @@ HEREDOC
 									echo "	c := math.Float${i}bits(d)";
 								elif [ "$t" = "Int" -o $i -ne 64 ]; then
 									var="c";
-									echo "	c := uint${i}(d)";
+									echo "	c := uint${ti}(d)";
 								fi;
 								echo "	*(*[$(( i / 8 ))]byte)(unsafe.Pointer(&e.buffer)) = [$(( i / 8 ))]byte{";
 
@@ -242,10 +248,14 @@ HEREDOC
 					fi;
 				fi;
 				echo "}";
-				for size in "X" 8 16 32 64; do
+				for size in "X" 8 16 24 32 40 48 56 64; do
 					tSize="$size";
 					if [ "$size" = "X" ]; then
 						tSize="64";
+					elif [ $size -eq 24 ]; then
+						tSize=32;
+					elif [ $size -gt 32 -a $size -lt 64 ]; then
+						tSize=64;
 					fi;
 					echo;
 					echo "// ${rw}String${size} ${rw}s the length of the string, using ReadUint${size} and then ${rw}s the bytes of the string";
