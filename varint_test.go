@@ -4,7 +4,7 @@ import (
 	"bytes"
 	"testing"
 
-	"github.com/MJKWoolnough/memio"
+	"vimagination.zapto.org/memio"
 )
 
 func TestLittleEndianVarUint(t *testing.T) {

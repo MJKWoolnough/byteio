@@ -1,5 +1,5 @@
 // Package byteio helps with writing number types in both big and little endian formats
-package byteio
+package byteio // import "vimagination.zapto.org/byteio"
 
 import "io"
 
