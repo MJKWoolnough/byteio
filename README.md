@@ -1,6 +1,6 @@
 # byteio
 --
-    import "github.com/MJKWoolnough/byteio"
+    import "vimagination.zapto.org/byteio"
 
 Package byteio helps with writing number types in both big and little endian
 ### formats
