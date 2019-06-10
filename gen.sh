@@ -14,10 +14,8 @@ for s in "" Sticky; do
 
 		for rw in Read Write; do
 			er="er";
-			import="";
 			if [ "$rw" = "Write" ]; then
 				er="r";
-				import="$(echo -e "\n	\"unsafe\"")";
 			fi;
 			(
 				cat <<HEREDOC
@@ -27,7 +25,7 @@ package byteio
 
 import (
 	"io"
-	"math"$import
+	"math"
 )
 
 // ${s}${e}Endian${rw}${er} wraps a io.${rw}${er} to provide methods
@@ -174,7 +172,7 @@ HEREDOC
 									var="c";
 									echo "	c := uint${ti}(d)";
 								fi;
-								echo "	*(*[$(( i / 8 ))]byte)(unsafe.Pointer(&e.buffer)) = [$(( i / 8 ))]byte{";
+								echo "	e.buffer = [9]byte{";
 
 								shift=0;
 

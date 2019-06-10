@@ -5,7 +5,6 @@ package byteio
 import (
 	"io"
 	"math"
-	"unsafe"
 )
 
 // StickyBigEndianWriter wraps a io.Writer to provide methods
@@ -47,7 +46,7 @@ func (e *StickyBigEndianWriter) WriteInt16(d int16) {
 		return
 	}
 	c := uint16(d)
-	*(*[2]byte)(unsafe.Pointer(&e.buffer)) = [2]byte{
+	e.buffer = [9]byte{
 		byte(c >> 8),
 		byte(c),
 	}
@@ -63,7 +62,7 @@ func (e *StickyBigEndianWriter) WriteInt24(d int32) {
 		return
 	}
 	c := uint32(d)
-	*(*[3]byte)(unsafe.Pointer(&e.buffer)) = [3]byte{
+	e.buffer = [9]byte{
 		byte(c >> 16),
 		byte(c >> 8),
 		byte(c),
@@ -80,7 +79,7 @@ func (e *StickyBigEndianWriter) WriteInt32(d int32) {
 		return
 	}
 	c := uint32(d)
-	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
+	e.buffer = [9]byte{
 		byte(c >> 24),
 		byte(c >> 16),
 		byte(c >> 8),
@@ -98,7 +97,7 @@ func (e *StickyBigEndianWriter) WriteInt40(d int64) {
 		return
 	}
 	c := uint64(d)
-	*(*[5]byte)(unsafe.Pointer(&e.buffer)) = [5]byte{
+	e.buffer = [9]byte{
 		byte(c >> 32),
 		byte(c >> 24),
 		byte(c >> 16),
@@ -117,7 +116,7 @@ func (e *StickyBigEndianWriter) WriteInt48(d int64) {
 		return
 	}
 	c := uint64(d)
-	*(*[6]byte)(unsafe.Pointer(&e.buffer)) = [6]byte{
+	e.buffer = [9]byte{
 		byte(c >> 40),
 		byte(c >> 32),
 		byte(c >> 24),
@@ -137,7 +136,7 @@ func (e *StickyBigEndianWriter) WriteInt56(d int64) {
 		return
 	}
 	c := uint64(d)
-	*(*[7]byte)(unsafe.Pointer(&e.buffer)) = [7]byte{
+	e.buffer = [9]byte{
 		byte(c >> 48),
 		byte(c >> 40),
 		byte(c >> 32),
@@ -158,7 +157,7 @@ func (e *StickyBigEndianWriter) WriteInt64(d int64) {
 		return
 	}
 	c := uint64(d)
-	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
+	e.buffer = [9]byte{
 		byte(c >> 56),
 		byte(c >> 48),
 		byte(c >> 40),
@@ -192,7 +191,7 @@ func (e *StickyBigEndianWriter) WriteUint16(d uint16) {
 		return
 	}
 	c := uint16(d)
-	*(*[2]byte)(unsafe.Pointer(&e.buffer)) = [2]byte{
+	e.buffer = [9]byte{
 		byte(c >> 8),
 		byte(c),
 	}
@@ -208,7 +207,7 @@ func (e *StickyBigEndianWriter) WriteUint24(d uint32) {
 		return
 	}
 	c := uint32(d)
-	*(*[3]byte)(unsafe.Pointer(&e.buffer)) = [3]byte{
+	e.buffer = [9]byte{
 		byte(c >> 16),
 		byte(c >> 8),
 		byte(c),
@@ -225,7 +224,7 @@ func (e *StickyBigEndianWriter) WriteUint32(d uint32) {
 		return
 	}
 	c := uint32(d)
-	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
+	e.buffer = [9]byte{
 		byte(c >> 24),
 		byte(c >> 16),
 		byte(c >> 8),
@@ -243,7 +242,7 @@ func (e *StickyBigEndianWriter) WriteUint40(d uint64) {
 		return
 	}
 	c := uint64(d)
-	*(*[5]byte)(unsafe.Pointer(&e.buffer)) = [5]byte{
+	e.buffer = [9]byte{
 		byte(c >> 32),
 		byte(c >> 24),
 		byte(c >> 16),
@@ -262,7 +261,7 @@ func (e *StickyBigEndianWriter) WriteUint48(d uint64) {
 		return
 	}
 	c := uint64(d)
-	*(*[6]byte)(unsafe.Pointer(&e.buffer)) = [6]byte{
+	e.buffer = [9]byte{
 		byte(c >> 40),
 		byte(c >> 32),
 		byte(c >> 24),
@@ -282,7 +281,7 @@ func (e *StickyBigEndianWriter) WriteUint56(d uint64) {
 		return
 	}
 	c := uint64(d)
-	*(*[7]byte)(unsafe.Pointer(&e.buffer)) = [7]byte{
+	e.buffer = [9]byte{
 		byte(c >> 48),
 		byte(c >> 40),
 		byte(c >> 32),
@@ -302,7 +301,7 @@ func (e *StickyBigEndianWriter) WriteUint64(d uint64) {
 	if e.Err != nil {
 		return
 	}
-	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
+	e.buffer = [9]byte{
 		byte(d >> 56),
 		byte(d >> 48),
 		byte(d >> 40),
@@ -324,7 +323,7 @@ func (e *StickyBigEndianWriter) WriteFloat32(d float32) {
 		return
 	}
 	c := math.Float32bits(d)
-	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
+	e.buffer = [9]byte{
 		byte(c >> 24),
 		byte(c >> 16),
 		byte(c >> 8),
@@ -342,7 +341,7 @@ func (e *StickyBigEndianWriter) WriteFloat64(d float64) {
 		return
 	}
 	c := math.Float64bits(d)
-	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
+	e.buffer = [9]byte{
 		byte(c >> 56),
 		byte(c >> 48),
 		byte(c >> 40),

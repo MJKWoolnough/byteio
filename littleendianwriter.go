@@ -5,7 +5,6 @@ package byteio
 import (
 	"io"
 	"math"
-	"unsafe"
 )
 
 // LittleEndianWriter wraps a io.Writer to provide methods
@@ -24,7 +23,7 @@ func (e *LittleEndianWriter) WriteInt8(d int8) (int, error) {
 // WriteInt16 Writes a 16 bit int as a int16 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteInt16(d int16) (int, error) {
 	c := uint16(d)
-	*(*[2]byte)(unsafe.Pointer(&e.buffer)) = [2]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 	}
@@ -34,7 +33,7 @@ func (e *LittleEndianWriter) WriteInt16(d int16) (int, error) {
 // WriteInt24 Writes a 24 bit int as a int32 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteInt24(d int32) (int, error) {
 	c := uint32(d)
-	*(*[3]byte)(unsafe.Pointer(&e.buffer)) = [3]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -45,7 +44,7 @@ func (e *LittleEndianWriter) WriteInt24(d int32) (int, error) {
 // WriteInt32 Writes a 32 bit int as a int32 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteInt32(d int32) (int, error) {
 	c := uint32(d)
-	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -57,7 +56,7 @@ func (e *LittleEndianWriter) WriteInt32(d int32) (int, error) {
 // WriteInt40 Writes a 40 bit int as a int64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteInt40(d int64) (int, error) {
 	c := uint64(d)
-	*(*[5]byte)(unsafe.Pointer(&e.buffer)) = [5]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -70,7 +69,7 @@ func (e *LittleEndianWriter) WriteInt40(d int64) (int, error) {
 // WriteInt48 Writes a 48 bit int as a int64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteInt48(d int64) (int, error) {
 	c := uint64(d)
-	*(*[6]byte)(unsafe.Pointer(&e.buffer)) = [6]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -84,7 +83,7 @@ func (e *LittleEndianWriter) WriteInt48(d int64) (int, error) {
 // WriteInt56 Writes a 56 bit int as a int64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteInt56(d int64) (int, error) {
 	c := uint64(d)
-	*(*[7]byte)(unsafe.Pointer(&e.buffer)) = [7]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -99,7 +98,7 @@ func (e *LittleEndianWriter) WriteInt56(d int64) (int, error) {
 // WriteInt64 Writes a 64 bit int as a int64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteInt64(d int64) (int, error) {
 	c := uint64(d)
-	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -121,7 +120,7 @@ func (e *LittleEndianWriter) WriteUint8(d uint8) (int, error) {
 // WriteUint16 Writes a 16 bit uint as a uint16 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteUint16(d uint16) (int, error) {
 	c := uint16(d)
-	*(*[2]byte)(unsafe.Pointer(&e.buffer)) = [2]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 	}
@@ -131,7 +130,7 @@ func (e *LittleEndianWriter) WriteUint16(d uint16) (int, error) {
 // WriteUint24 Writes a 24 bit uint as a uint32 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteUint24(d uint32) (int, error) {
 	c := uint32(d)
-	*(*[3]byte)(unsafe.Pointer(&e.buffer)) = [3]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -142,7 +141,7 @@ func (e *LittleEndianWriter) WriteUint24(d uint32) (int, error) {
 // WriteUint32 Writes a 32 bit uint as a uint32 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteUint32(d uint32) (int, error) {
 	c := uint32(d)
-	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -154,7 +153,7 @@ func (e *LittleEndianWriter) WriteUint32(d uint32) (int, error) {
 // WriteUint40 Writes a 40 bit uint as a uint64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteUint40(d uint64) (int, error) {
 	c := uint64(d)
-	*(*[5]byte)(unsafe.Pointer(&e.buffer)) = [5]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -167,7 +166,7 @@ func (e *LittleEndianWriter) WriteUint40(d uint64) (int, error) {
 // WriteUint48 Writes a 48 bit uint as a uint64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteUint48(d uint64) (int, error) {
 	c := uint64(d)
-	*(*[6]byte)(unsafe.Pointer(&e.buffer)) = [6]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -181,7 +180,7 @@ func (e *LittleEndianWriter) WriteUint48(d uint64) (int, error) {
 // WriteUint56 Writes a 56 bit uint as a uint64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteUint56(d uint64) (int, error) {
 	c := uint64(d)
-	*(*[7]byte)(unsafe.Pointer(&e.buffer)) = [7]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -195,7 +194,7 @@ func (e *LittleEndianWriter) WriteUint56(d uint64) (int, error) {
 
 // WriteUint64 Writes a 64 bit uint as a uint64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteUint64(d uint64) (int, error) {
-	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
+	e.buffer = [9]byte{
 		byte(d),
 		byte(d >> 8),
 		byte(d >> 16),
@@ -211,7 +210,7 @@ func (e *LittleEndianWriter) WriteUint64(d uint64) (int, error) {
 // WriteFloat32 Writes a 32 bit float as a float32 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteFloat32(d float32) (int, error) {
 	c := math.Float32bits(d)
-	*(*[4]byte)(unsafe.Pointer(&e.buffer)) = [4]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
@@ -223,7 +222,7 @@ func (e *LittleEndianWriter) WriteFloat32(d float32) (int, error) {
 // WriteFloat64 Writes a 64 bit float as a float64 using the underlying io.Writer
 func (e *LittleEndianWriter) WriteFloat64(d float64) (int, error) {
 	c := math.Float64bits(d)
-	*(*[8]byte)(unsafe.Pointer(&e.buffer)) = [8]byte{
+	e.buffer = [9]byte{
 		byte(c),
 		byte(c >> 8),
 		byte(c >> 16),
