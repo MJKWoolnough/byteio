@@ -168,7 +168,7 @@ HEREDOC
 								if [ "$t" = "Float" ]; then
 									var="c";
 									echo "	c := math.Float${i}bits(d)";
-								elif [ "$t" = "Int" -o $i -ne 64 ]; then
+								elif [ "$t" = "Int" ]; then
 									var="c";
 									echo "	c := uint${ti}(d)";
 								fi;
