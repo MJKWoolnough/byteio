@@ -54,7 +54,42 @@ func (e *${s}${e}Endian${rw}${er}) ${rw}(p []byte) (int, error) {
 	e.Count += int64(n)
 	return n, e.Err
 }
+
 HEREDOC
+				else
+					echo;
+				fi;
+
+				echo "// ${rw}Bool ${rw}s a boolean";
+				echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}Bool(";
+				if [ "${rw}" = "Write" ]; then
+					echo -n "b bool";
+					ret="";
+					if [ -z "$s" ]; then
+						echo -n ") (int, error"
+						ret="return ";
+					fi;
+					echo ") {"
+					cat <<HEREDOC
+	if b {
+		${ret}e.WriteUint8(1)
+	} else {
+		${ret}e.WriteUint8(0)
+	}
+}
+HEREDOC
+				else
+					echo -n ") "
+					if [ -z "$s" ]; then
+						echo "(bool, int, error) {"
+						echo "	b, n, err := e.ReadUint8()";
+						echo "	return b != 0, n, err";
+						echo "}";
+					else
+						echo "bool {"
+						echo "	return e.ReadUint8() != 0";
+						echo "}";
+					fi;
 				fi;
 
 				for t in "Int" "Uint" "Float"; do
