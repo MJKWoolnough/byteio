@@ -8,6 +8,7 @@ import "io"
 type EndianReader interface {
 	io.Reader
 	io.ByteReader
+	ReadBool() (bool, int, error)
 	ReadUint8() (uint8, int, error)
 	ReadInt8() (int8, int, error)
 	ReadUint16() (uint16, int, error)
@@ -33,6 +34,7 @@ type EndianReader interface {
 type EndianWriter interface {
 	io.Writer
 	io.ByteWriter
+	WriteBool(bool) (int, error)
 	WriteUint8(uint8) (int, error)
 	WriteInt8(int8) (int, error)
 	WriteUint16(uint16) (int, error)
@@ -58,6 +60,7 @@ type EndianWriter interface {
 type StickyEndianReader interface {
 	io.Reader
 	io.ByteReader
+	ReadBool() bool
 	ReadUint8() uint8
 	ReadInt8() int8
 	ReadUint16() uint16
@@ -83,6 +86,7 @@ type StickyEndianReader interface {
 type StickyEndianWriter interface {
 	io.Writer
 	io.ByteWriter
+	WriteBool(bool)
 	WriteUint8(uint8)
 	WriteInt8(int8)
 	WriteUint16(uint16)
