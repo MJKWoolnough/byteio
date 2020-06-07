@@ -190,10 +190,9 @@ func (e *StickyBigEndianWriter) WriteUint16(d uint16) {
 	if e.Err != nil {
 		return
 	}
-	c := uint16(d)
 	e.buffer = [9]byte{
-		byte(c >> 8),
-		byte(c),
+		byte(d >> 8),
+		byte(d),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:2])
@@ -206,11 +205,10 @@ func (e *StickyBigEndianWriter) WriteUint24(d uint32) {
 	if e.Err != nil {
 		return
 	}
-	c := uint32(d)
 	e.buffer = [9]byte{
-		byte(c >> 16),
-		byte(c >> 8),
-		byte(c),
+		byte(d >> 16),
+		byte(d >> 8),
+		byte(d),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:3])
@@ -223,12 +221,11 @@ func (e *StickyBigEndianWriter) WriteUint32(d uint32) {
 	if e.Err != nil {
 		return
 	}
-	c := uint32(d)
 	e.buffer = [9]byte{
-		byte(c >> 24),
-		byte(c >> 16),
-		byte(c >> 8),
-		byte(c),
+		byte(d >> 24),
+		byte(d >> 16),
+		byte(d >> 8),
+		byte(d),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:4])
@@ -241,13 +238,12 @@ func (e *StickyBigEndianWriter) WriteUint40(d uint64) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
 	e.buffer = [9]byte{
-		byte(c >> 32),
-		byte(c >> 24),
-		byte(c >> 16),
-		byte(c >> 8),
-		byte(c),
+		byte(d >> 32),
+		byte(d >> 24),
+		byte(d >> 16),
+		byte(d >> 8),
+		byte(d),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:5])
@@ -260,14 +256,13 @@ func (e *StickyBigEndianWriter) WriteUint48(d uint64) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
 	e.buffer = [9]byte{
-		byte(c >> 40),
-		byte(c >> 32),
-		byte(c >> 24),
-		byte(c >> 16),
-		byte(c >> 8),
-		byte(c),
+		byte(d >> 40),
+		byte(d >> 32),
+		byte(d >> 24),
+		byte(d >> 16),
+		byte(d >> 8),
+		byte(d),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:6])
@@ -280,15 +275,14 @@ func (e *StickyBigEndianWriter) WriteUint56(d uint64) {
 	if e.Err != nil {
 		return
 	}
-	c := uint64(d)
 	e.buffer = [9]byte{
-		byte(c >> 48),
-		byte(c >> 40),
-		byte(c >> 32),
-		byte(c >> 24),
-		byte(c >> 16),
-		byte(c >> 8),
-		byte(c),
+		byte(d >> 48),
+		byte(d >> 40),
+		byte(d >> 32),
+		byte(d >> 24),
+		byte(d >> 16),
+		byte(d >> 8),
+		byte(d),
 	}
 	var n int
 	n, e.Err = e.Writer.Write(e.buffer[:7])
