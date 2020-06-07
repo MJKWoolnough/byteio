@@ -27,6 +27,11 @@ func (e *StickyBigEndianReader) Read(p []byte) (int, error) {
 	return n, e.Err
 }
 
+// ReadBool Reads a boolean
+func (e *StickyBigEndianReader) ReadBool() bool {
+	return e.ReadUint8() != 0
+}
+
 // ReadInt8 Reads a 8 bit int as a int8 using the underlying io.Reader
 // Any errors and the running byte read count are stored instead or returned
 func (e *StickyBigEndianReader) ReadInt8() int8 {
