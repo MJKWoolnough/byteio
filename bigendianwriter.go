@@ -14,6 +14,15 @@ type BigEndianWriter struct {
 	buffer [9]byte
 }
 
+// WriteBool Writes a boolean
+func (e *BigEndianWriter) WriteBool(b bool) (int, error) {
+	if b {
+		return e.WriteUint8(1)
+	} else {
+		return e.WriteUint8(0)
+	}
+}
+
 // WriteInt8 Writes a 8 bit int as a int8 using the underlying io.Writer
 func (e *BigEndianWriter) WriteInt8(d int8) (int, error) {
 	e.buffer[0] = byte(d)

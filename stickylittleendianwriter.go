@@ -27,6 +27,15 @@ func (e *StickyLittleEndianWriter) Write(p []byte) (int, error) {
 	return n, e.Err
 }
 
+// WriteBool Writes a boolean
+func (e *StickyLittleEndianWriter) WriteBool(b bool) {
+	if b {
+		e.WriteUint8(1)
+	} else {
+		e.WriteUint8(0)
+	}
+}
+
 // WriteInt8 Writes a 8 bit int as a int8 using the underlying io.Writer
 // Any errors and the running byte read count are stored instead or returned
 func (e *StickyLittleEndianWriter) WriteInt8(d int8) {

@@ -14,6 +14,12 @@ type BigEndianReader struct {
 	buffer [9]byte
 }
 
+// ReadBool Reads a boolean
+func (e *BigEndianReader) ReadBool() (bool, int, error) {
+	b, n, err := e.ReadUint8()
+	return b != 0, n, err
+}
+
 // ReadInt8 Reads a 8 bit int as a int8 using the underlying io.Reader
 func (e *BigEndianReader) ReadInt8() (int8, int, error) {
 	n, err := io.ReadFull(e.Reader, e.buffer[:1])
