@@ -415,3 +415,16 @@ func (e *StickyBigEndianReader) ReadString56() string {
 func (e *StickyBigEndianReader) ReadString64() string {
 	return e.ReadString(int(e.ReadUint64()))
 }
+
+// ReadString0 Reads the bytes of the string until a 0 byte is read
+func (e *StickyBigEndianReader) ReadString0() string {
+	var d []byte
+	for {
+		p := e.ReadUint8()
+		if p == 0 {
+			break
+		}
+		d = append(d, p)
+	}
+	return string(d)
+}

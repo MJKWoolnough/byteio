@@ -488,3 +488,9 @@ func (e *StickyLittleEndianWriter) WriteString64(p string) {
 	e.WriteUint64(uint64(len(p)))
 	e.WriteString(p)
 }
+
+// WriteString0 Writes the bytes of the string ending with a 0 byte
+func (e *StickyLittleEndianWriter) WriteString0(p string) {
+	e.WriteString(p)
+	e.WriteUint8(0)
+}

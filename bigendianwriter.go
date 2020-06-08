@@ -427,3 +427,14 @@ func (e *BigEndianWriter) WriteString64(p string) (int, error) {
 	m, err := e.WriteString(p)
 	return n + m, err
 }
+
+// WriteString0 Writes the bytes of the string ending with a 0 byte
+func (e *BigEndianWriter) WriteString0(p string) (int, error) {
+	n, err := e.WriteString(p)
+	if err == nil {
+		var m int
+		m, err = e.WriteUint8(0)
+		n += m
+	}
+	return n, err
+}

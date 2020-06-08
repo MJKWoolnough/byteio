@@ -375,3 +375,25 @@ func (e *LittleEndianReader) ReadString64() (string, int, error) {
 	p, m, err := e.ReadString(int(size))
 	return p, n + m, err
 }
+
+// ReadString0 Reads the bytes of the string until a 0 byte is read
+func (e *LittleEndianReader) ReadString0() (string, int, error) {
+	var (
+		n   int
+		err error
+		d   []byte
+	)
+	for {
+		var (
+			m int
+			p byte
+		)
+		p, m, err = e.ReadUint8()
+		n += m
+		if err != nil || p == 0 {
+			break
+		}
+		d = append(d, p)
+	}
+	return string(d), n, err
+}
