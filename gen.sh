@@ -351,6 +351,64 @@ HEREDOC
 					done;
 					type="string";
 				done;
+				echo;
+				echo -n "// ${rw}String0 ${rw}s the bytes of the string ";
+				if [ "$rw" = "Write" ]; then
+					echo "ending with a 0 byte";
+				else
+					echo "until a 0 byte is read";
+				fi;
+				echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}String0(";
+				if [ "$rw" = "Write" ]; then
+					if [ -z "$s" ]; then
+						echo "p string) (int, error) {";
+						echo "	n, err := e.WriteString(p)";
+						echo "	if err == nil {";
+						echo "		var m int";
+						echo "		m, err = e.WriteUint8(0)";
+						echo "		n += m";
+						echo "	}";
+						echo "	return n, err";
+					else
+						echo "p string) {";
+						echo "	e.WriteString(p)";
+						echo "	e.WriteUint8(0)";
+					fi;
+				else
+					if [ -z "$s" ]; then
+						echo ") (string, int, error) {";
+						echo "	var (";
+						echo "		n int";
+						echo "		err error";
+						echo "		d []byte";
+						echo "	)";
+						echo "	for {";
+						echo "		var (";
+						echo "			m int";
+						echo "			p byte";
+						echo "		)";
+						echo "		p, m, err = e.ReadUint8()";
+						echo "		n += m";
+						echo "		if err != nil || p == 0 {";
+						echo "			break";
+						echo "		}";
+						echo "		d = append(d, p)";
+						echo "	}";
+						echo "	return string(d), n, err";
+					else
+						echo ") string {";
+						echo "	var d []byte";
+						echo "	for {";
+						echo "		p := e.ReadUint8()";
+						echo "		if p == 0 {";
+						echo "			break";
+						echo "		}";
+						echo "		d = append(d, p)";
+						echo "	}";
+						echo "	return string(d)";
+					fi;
+				fi;
+				echo "}";
 			) > "$(echo "${s}${e}Endian${rw}${er}" | tr A-Z a-z).go";
 		done;
 	done;
