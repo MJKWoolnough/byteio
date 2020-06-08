@@ -245,83 +245,111 @@ HEREDOC
 						echo "}";
 					done;
 				done;
-				echo;
-				echo "// ${rw}String ${rw}s a string";
-				echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}String(";
-				if [ "$rw" = "Write" ]; then
-					echo "str string) (int, error) {";
-					if [ -z "$s" ]; then
-						echo "	return io.WriteString(e.Writer, str)";
-					else
-						echo "	if e.Err != nil {";
-						echo "		return 0, e.Err";
-						echo "	}";
-						echo "	var n int";
-						echo "	n, e.Err = io.WriteString(e.Writer, str)";
-						echo "	e.Count += int64(n)";
-						echo "	return n, e.Err";
-					fi;
-				else
-					echo -n "size int) ";
-					if [ -z "$s" ]; then
-						echo "(string, int, error) {";
-						echo "	buf := make([]byte, size)";
-						echo "	n, err := io.ReadFull(e, buf)";
-						echo "	return string(buf[:n]), n, err";
-					else
-						echo "string {";
-						echo "	if e.Err != nil {";
-						echo "		return \"\"";
-						echo "	}";
-						echo "	buf := make([]byte, size)";
-						echo "	var n int";
-						echo "	n, e.Err = io.ReadFull(e.Reader, buf)";
-						echo "	e.Count += int64(n)";
-						echo "	return string(buf[:n])";
-					fi;
-				fi;
-				echo "}";
-				for size in "X" 8 16 24 32 40 48 56 64; do
-					tSize="$size";
-					if [ "$size" = "X" ]; then
-						tSize="64";
-					elif [ $size -eq 24 ]; then
-						tSize=32;
-					elif [ $size -gt 32 -a $size -lt 64 ]; then
-						tSize=64;
-					fi;
+				type="[]byte";
+				for t in Bytes String; do
 					echo;
-					echo "// ${rw}String${size} ${rw}s the length of the string, using ReadUint${size} and then ${rw}s the bytes of the string";
-					echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}String${size}(";
+					echo "// ${rw}${t} ${rw}s a ${type}";
+					echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}(";
 					if [ "$rw" = "Write" ]; then
+						echo "d ${type}) (int, error) {";
 						if [ -z "$s" ]; then
-							echo "str string) (int, error) {";
-							echo "	n, err := e.WriteUint${size}(uint${tSize}(len(str)))";
-							echo "	if err != nil {";
-							echo "		return n, err";
-							echo "	}";
-							echo "	m, err := e.WriteString(str)";
-							echo "	return n + m, err";
+							if [ "$t" = "String" ]; then
+								echo "	return io.WriteString(e.Writer, d)";
+							else
+								echo "	return e.Write(d)";
+							fi;
 						else
-							echo "str string) {";
-							echo "	e.WriteUint${size}(uint${tSize}(len(str)))";
-							echo "	e.WriteString(str)"
+							echo "	if e.Err != nil {";
+							echo "		return 0, e.Err";
+							echo "	}";
+							echo "	var n int";
+							if [ "$t" = "String" ]; then
+								echo "	n, e.Err = io.WriteString(e.Writer, d)";
+							else
+								echo "	n, e.Err = e.Write(d)";
+							fi;
+							echo "	e.Count += int64(n)";
+							echo "	return n, e.Err";
 						fi;
 					else
+						echo -n "size int) ";
 						if [ -z "$s" ]; then
-							echo ") (string, int, error) {";
-							echo "	size, n, err := e.ReadUint${size}()";
-							echo "	if err != nil {"
-							echo "		return \"\", n, err";
-							echo "	}";
-							echo "	str, m, err := e.ReadString(int(size))"
-							echo "	return str, n + m, err";
+							echo "(${type}, int, error) {";
+							echo "	buf := make([]byte, size)";
+							echo "	n, err := io.ReadFull(e, buf)";
+							if [ "$t" = "String" ]; then
+								echo "	return string(buf[:n]), n, err";
+							else
+								echo "	return buf[:n], n, err";
+							fi;
 						else
-							echo ") string {";
-							echo "	return e.ReadString(int(e.ReadUint${size}()))";
+							echo "${type} {";
+							echo "	if e.Err != nil {";
+							if [ "$t" = "String" ]; then
+								echo "		return \"\"";
+							else
+								echo "		return nil";
+							fi;
+							echo "	}";
+							echo "	buf := make([]byte, size)";
+							echo "	var n int";
+							echo "	n, e.Err = io.ReadFull(e.Reader, buf)";
+							echo "	e.Count += int64(n)";
+							if [ "$t" = "String" ]; then
+								echo "	return string(buf[:n])";
+							else
+								echo "	return buf[:n]";
+							fi;
 						fi;
 					fi;
 					echo "}";
+					for size in "X" 8 16 24 32 40 48 56 64; do
+						tSize="$size";
+						if [ "$size" = "X" ]; then
+							tSize="64";
+						elif [ $size -eq 24 ]; then
+							tSize=32;
+						elif [ $size -gt 32 -a $size -lt 64 ]; then
+							tSize=64;
+						fi;
+						echo;
+						echo "// ${rw}${t}${size} ${rw}s the length of the ${t}, using ReadUint${size} and then ${rw}s the bytes";
+						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}${size}(";
+						if [ "$rw" = "Write" ]; then
+							if [ -z "$s" ]; then
+								echo "p ${type}) (int, error) {";
+								echo "	n, err := e.WriteUint${size}(uint${tSize}(len(p)))";
+								echo "	if err != nil {";
+								echo "		return n, err";
+								echo "	}";
+								echo "	m, err := e.Write${t}(p)";
+								echo "	return n + m, err";
+							else
+								echo "p ${type}) {";
+								echo "	e.WriteUint${size}(uint${tSize}(len(p)))";
+								echo "	e.Write${t}(p)"
+							fi;
+						else
+							if [ -z "$s" ]; then
+								echo ") (${type}, int, error) {";
+								echo "	size, n, err := e.ReadUint${size}()";
+								echo "	if err != nil {"
+								if [ "$t" = "String" ]; then
+									echo "		return \"\", n, err";
+								else
+									echo "		return nil, n, err";
+								fi;
+								echo "	}";
+								echo "	p, m, err := e.Read${t}(int(size))"
+								echo "	return p, n + m, err";
+							else
+								echo ") ${type} {";
+								echo "	return e.Read${t}(int(e.ReadUint${size}()))";
+							fi;
+						fi;
+						echo "}";
+					done;
+					type="string";
 				done;
 			) > "$(echo "${s}${e}Endian${rw}${er}" | tr A-Z a-z).go";
 		done;
