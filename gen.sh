@@ -378,9 +378,9 @@ HEREDOC
 					if [ -z "$s" ]; then
 						echo ") (string, int, error) {";
 						echo "	var (";
-						echo "		n int";
+						echo "		n   int";
 						echo "		err error";
-						echo "		d []byte";
+						echo "		d   []byte";
 						echo "	)";
 						echo "	for {";
 						echo "		var (";
