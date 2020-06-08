@@ -189,92 +189,189 @@ func (e *LittleEndianReader) ReadString(size int) (string, int, error) {
 	return string(buf[:n]), n, err
 }
 
-// ReadStringX Reads the length of the string, using ReadUintX and then Reads the bytes of the string
+// ReadStringX Reads the length of the String, using ReadUintX and then Reads the bytes
 func (e *LittleEndianReader) ReadStringX() (string, int, error) {
 	size, n, err := e.ReadUintX()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
 }
 
-// ReadString8 Reads the length of the string, using ReadUint8 and then Reads the bytes of the string
+// ReadString8 Reads the length of the String, using ReadUint8 and then Reads the bytes
 func (e *LittleEndianReader) ReadString8() (string, int, error) {
 	size, n, err := e.ReadUint8()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
 }
 
-// ReadString16 Reads the length of the string, using ReadUint16 and then Reads the bytes of the string
+// ReadString16 Reads the length of the String, using ReadUint16 and then Reads the bytes
 func (e *LittleEndianReader) ReadString16() (string, int, error) {
 	size, n, err := e.ReadUint16()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
 }
 
-// ReadString24 Reads the length of the string, using ReadUint24 and then Reads the bytes of the string
+// ReadString24 Reads the length of the String, using ReadUint24 and then Reads the bytes
 func (e *LittleEndianReader) ReadString24() (string, int, error) {
 	size, n, err := e.ReadUint24()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
 }
 
-// ReadString32 Reads the length of the string, using ReadUint32 and then Reads the bytes of the string
+// ReadString32 Reads the length of the String, using ReadUint32 and then Reads the bytes
 func (e *LittleEndianReader) ReadString32() (string, int, error) {
 	size, n, err := e.ReadUint32()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
 }
 
-// ReadString40 Reads the length of the string, using ReadUint40 and then Reads the bytes of the string
+// ReadString40 Reads the length of the String, using ReadUint40 and then Reads the bytes
 func (e *LittleEndianReader) ReadString40() (string, int, error) {
 	size, n, err := e.ReadUint40()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
 }
 
-// ReadString48 Reads the length of the string, using ReadUint48 and then Reads the bytes of the string
+// ReadString48 Reads the length of the String, using ReadUint48 and then Reads the bytes
 func (e *LittleEndianReader) ReadString48() (string, int, error) {
 	size, n, err := e.ReadUint48()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
 }
 
-// ReadString56 Reads the length of the string, using ReadUint56 and then Reads the bytes of the string
+// ReadString56 Reads the length of the String, using ReadUint56 and then Reads the bytes
 func (e *LittleEndianReader) ReadString56() (string, int, error) {
 	size, n, err := e.ReadUint56()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
 }
 
-// ReadString64 Reads the length of the string, using ReadUint64 and then Reads the bytes of the string
+// ReadString64 Reads the length of the String, using ReadUint64 and then Reads the bytes
 func (e *LittleEndianReader) ReadString64() (string, int, error) {
 	size, n, err := e.ReadUint64()
 	if err != nil {
 		return "", n, err
 	}
-	str, m, err := e.ReadString(int(size))
-	return str, n + m, err
+	p, m, err := e.ReadString(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes Reads a []byte
+func (e *LittleEndianReader) ReadBytes(size int) ([]byte, int, error) {
+	buf := make([]byte, size)
+	n, err := io.ReadFull(e, buf)
+	return buf[:n], n, err
+}
+
+// ReadBytesX Reads the length of the Bytes, using ReadUintX and then Reads the bytes
+func (e *LittleEndianReader) ReadBytesX() ([]byte, int, error) {
+	size, n, err := e.ReadUintX()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes8 Reads the length of the Bytes, using ReadUint8 and then Reads the bytes
+func (e *LittleEndianReader) ReadBytes8() ([]byte, int, error) {
+	size, n, err := e.ReadUint8()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes16 Reads the length of the Bytes, using ReadUint16 and then Reads the bytes
+func (e *LittleEndianReader) ReadBytes16() ([]byte, int, error) {
+	size, n, err := e.ReadUint16()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes24 Reads the length of the Bytes, using ReadUint24 and then Reads the bytes
+func (e *LittleEndianReader) ReadBytes24() ([]byte, int, error) {
+	size, n, err := e.ReadUint24()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes32 Reads the length of the Bytes, using ReadUint32 and then Reads the bytes
+func (e *LittleEndianReader) ReadBytes32() ([]byte, int, error) {
+	size, n, err := e.ReadUint32()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes40 Reads the length of the Bytes, using ReadUint40 and then Reads the bytes
+func (e *LittleEndianReader) ReadBytes40() ([]byte, int, error) {
+	size, n, err := e.ReadUint40()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes48 Reads the length of the Bytes, using ReadUint48 and then Reads the bytes
+func (e *LittleEndianReader) ReadBytes48() ([]byte, int, error) {
+	size, n, err := e.ReadUint48()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes56 Reads the length of the Bytes, using ReadUint56 and then Reads the bytes
+func (e *LittleEndianReader) ReadBytes56() ([]byte, int, error) {
+	size, n, err := e.ReadUint56()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
+}
+
+// ReadBytes64 Reads the length of the Bytes, using ReadUint64 and then Reads the bytes
+func (e *LittleEndianReader) ReadBytes64() ([]byte, int, error) {
+	size, n, err := e.ReadUint64()
+	if err != nil {
+		return nil, n, err
+	}
+	p, m, err := e.ReadBytes(int(size))
+	return p, n + m, err
 }
