@@ -108,7 +108,7 @@ HEREDOC
 						echo;
 						echo "// ${rw}${t}${i} ${rw}s a $i bit $(echo "$t" | tr A-Z a-z) as a $tu using the underlying io.${rw}${er}";
 						if [ ! -z "$s" ]; then
-							echo "// Any errors and the running byte read count are stored instead or returned";
+							echo "// Any errors and the running byte read count are stored instead of being returned";
 						fi;
 						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}${i}(";
 						if [ "$rw" = "Write" ]; then
