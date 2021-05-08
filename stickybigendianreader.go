@@ -33,7 +33,7 @@ func (e *StickyBigEndianReader) ReadBool() bool {
 }
 
 // ReadInt8 Reads a 8 bit int as a int8 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadInt8() int8 {
 	if e.Err != nil {
 		return 0
@@ -48,7 +48,7 @@ func (e *StickyBigEndianReader) ReadInt8() int8 {
 }
 
 // ReadInt16 Reads a 16 bit int as a int16 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadInt16() int16 {
 	if e.Err != nil {
 		return 0
@@ -63,7 +63,7 @@ func (e *StickyBigEndianReader) ReadInt16() int16 {
 }
 
 // ReadInt24 Reads a 24 bit int as a int32 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadInt24() int32 {
 	if e.Err != nil {
 		return 0
@@ -78,7 +78,7 @@ func (e *StickyBigEndianReader) ReadInt24() int32 {
 }
 
 // ReadInt32 Reads a 32 bit int as a int32 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadInt32() int32 {
 	if e.Err != nil {
 		return 0
@@ -93,7 +93,7 @@ func (e *StickyBigEndianReader) ReadInt32() int32 {
 }
 
 // ReadInt40 Reads a 40 bit int as a int64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadInt40() int64 {
 	if e.Err != nil {
 		return 0
@@ -108,7 +108,7 @@ func (e *StickyBigEndianReader) ReadInt40() int64 {
 }
 
 // ReadInt48 Reads a 48 bit int as a int64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadInt48() int64 {
 	if e.Err != nil {
 		return 0
@@ -123,7 +123,7 @@ func (e *StickyBigEndianReader) ReadInt48() int64 {
 }
 
 // ReadInt56 Reads a 56 bit int as a int64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadInt56() int64 {
 	if e.Err != nil {
 		return 0
@@ -138,7 +138,7 @@ func (e *StickyBigEndianReader) ReadInt56() int64 {
 }
 
 // ReadInt64 Reads a 64 bit int as a int64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadInt64() int64 {
 	if e.Err != nil {
 		return 0
@@ -153,7 +153,7 @@ func (e *StickyBigEndianReader) ReadInt64() int64 {
 }
 
 // ReadUint8 Reads a 8 bit uint as a uint8 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadUint8() uint8 {
 	if e.Err != nil {
 		return 0
@@ -168,7 +168,7 @@ func (e *StickyBigEndianReader) ReadUint8() uint8 {
 }
 
 // ReadUint16 Reads a 16 bit uint as a uint16 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadUint16() uint16 {
 	if e.Err != nil {
 		return 0
@@ -183,7 +183,7 @@ func (e *StickyBigEndianReader) ReadUint16() uint16 {
 }
 
 // ReadUint24 Reads a 24 bit uint as a uint32 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadUint24() uint32 {
 	if e.Err != nil {
 		return 0
@@ -198,7 +198,7 @@ func (e *StickyBigEndianReader) ReadUint24() uint32 {
 }
 
 // ReadUint32 Reads a 32 bit uint as a uint32 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadUint32() uint32 {
 	if e.Err != nil {
 		return 0
@@ -213,7 +213,7 @@ func (e *StickyBigEndianReader) ReadUint32() uint32 {
 }
 
 // ReadUint40 Reads a 40 bit uint as a uint64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadUint40() uint64 {
 	if e.Err != nil {
 		return 0
@@ -228,7 +228,7 @@ func (e *StickyBigEndianReader) ReadUint40() uint64 {
 }
 
 // ReadUint48 Reads a 48 bit uint as a uint64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadUint48() uint64 {
 	if e.Err != nil {
 		return 0
@@ -243,7 +243,7 @@ func (e *StickyBigEndianReader) ReadUint48() uint64 {
 }
 
 // ReadUint56 Reads a 56 bit uint as a uint64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadUint56() uint64 {
 	if e.Err != nil {
 		return 0
@@ -258,7 +258,7 @@ func (e *StickyBigEndianReader) ReadUint56() uint64 {
 }
 
 // ReadUint64 Reads a 64 bit uint as a uint64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadUint64() uint64 {
 	if e.Err != nil {
 		return 0
@@ -273,7 +273,7 @@ func (e *StickyBigEndianReader) ReadUint64() uint64 {
 }
 
 // ReadFloat32 Reads a 32 bit float as a float32 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadFloat32() float32 {
 	if e.Err != nil {
 		return 0
@@ -288,7 +288,7 @@ func (e *StickyBigEndianReader) ReadFloat32() float32 {
 }
 
 // ReadFloat64 Reads a 64 bit float as a float64 using the underlying io.Reader
-// Any errors and the running byte read count are stored instead or returned
+// Any errors and the running byte read count are stored instead of being returned
 func (e *StickyBigEndianReader) ReadFloat64() float64 {
 	if e.Err != nil {
 		return 0
