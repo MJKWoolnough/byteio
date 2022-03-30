@@ -3,12 +3,10 @@ package byteio
 import (
 	"bytes"
 	"testing"
-
-	"vimagination.zapto.org/memio"
 )
 
 func TestLittleEndianVarUint(t *testing.T) {
-	buf := make(memio.Buffer, 0, 9)
+	buf := bytes.NewBuffer(make([]byte, 0, 9))
 	for n, test := range [...]struct {
 		Input  uint64
 		Output []byte
@@ -42,13 +40,14 @@ func TestLittleEndianVarUint(t *testing.T) {
 		{17179869184, []byte{128, 255, 254, 254, 62}},
 		{18446744073709551615, []byte{255, 254, 254, 254, 254, 254, 254, 254, 254}},
 	} {
-		buf = buf[:0]
-		(&LittleEndianWriter{Writer: &buf}).WriteUintX(test.Input)
-		if !bytes.Equal(buf, test.Output) {
+		buf.Reset()
+		(&LittleEndianWriter{Writer: buf}).WriteUintX(test.Input)
+		if !bytes.Equal(buf.Bytes(), test.Output) {
 			t.Errorf("test %d.1: expecting %v, got %v", n+1, test.Output, buf)
-			//buf = append(buf[:0], test.Output...)
+			buf.Reset()
+			buf.Write(test.Output)
 		}
-		num, _, _ := (&LittleEndianReader{Reader: &buf}).ReadUintX()
+		num, _, _ := (&LittleEndianReader{Reader: buf}).ReadUintX()
 		if num != test.Input {
 			t.Errorf("test %d.2: expecting %d, got %d", n+1, test.Input, num)
 		}
@@ -56,7 +55,7 @@ func TestLittleEndianVarUint(t *testing.T) {
 }
 
 func TestBigEndianVarUint(t *testing.T) {
-	buf := make(memio.Buffer, 0, 9)
+	buf := bytes.NewBuffer(make([]byte, 0, 9))
 	for n, test := range [...]struct {
 		Input  uint64
 		Output []byte
@@ -91,13 +90,14 @@ func TestBigEndianVarUint(t *testing.T) {
 		{9295997013522923648, []byte{191, 191, 191, 191, 191, 191, 191, 191, 128}},
 		{9295997013522923649, []byte{191, 191, 191, 191, 191, 191, 191, 191, 129}},
 	} {
-		buf = buf[:0]
-		(&BigEndianWriter{Writer: &buf}).WriteUintX(test.Input)
-		if !bytes.Equal(buf, test.Output) {
+		buf.Reset()
+		(&BigEndianWriter{Writer: buf}).WriteUintX(test.Input)
+		if !bytes.Equal(buf.Bytes(), test.Output) {
 			t.Errorf("test %d.1: expecting %v, got %v", n+1, test.Output, buf)
-			buf = append(buf[:0], test.Output...)
+			buf.Reset()
+			buf.Write(test.Output)
 		}
-		num, _, _ := (&BigEndianReader{Reader: &buf}).ReadUintX()
+		num, _, _ := (&BigEndianReader{Reader: buf}).ReadUintX()
 		if num != test.Input {
 			t.Errorf("test %d.2: expecting %d, got %d", n+1, test.Input, num)
 		}
