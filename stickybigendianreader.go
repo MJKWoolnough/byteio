@@ -22,7 +22,7 @@ func (e *StickyBigEndianReader) Read(p []byte) (int, error) {
 		return 0, e.Err
 	}
 	var n int
-	n, e.Err = e.Reader.Read(p)
+	n, e.Err = io.ReadFull(e.Reader, p)
 	e.Count += int64(n)
 	return n, e.Err
 }
