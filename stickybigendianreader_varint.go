@@ -5,8 +5,7 @@ package byteio
 func (e *StickyBigEndianReader) ReadUintX() uint64 {
 	c, _ := e.ReadByte()
 	val := uint64(c) & 0x7f
-	n := 1
-	for ; c&0x80 != 0 && n < 9; n++ {
+	for n := 1; c&0x80 != 0 && n < 9; n++ {
 		c, _ = e.ReadByte()
 		val++
 		if n == 8 {
