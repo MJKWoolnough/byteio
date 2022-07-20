@@ -50,7 +50,13 @@ func (e *${s}${e}Endian${rw}${er}) ${rw}(p []byte) (int, error) {
 		return 0, e.Err
 	}
 	var n int
-	n, e.Err = e.${rw}${er}.$rw(p)
+HEREDOC
+					if [ "$rw" = "Read" ]; then
+						echo "	n, e.Err = io.ReadFull(e.Reader, p)";
+					else
+						echo "	n, e.Err = e.Writer.Write(p)";
+					fi;
+					cat <<HEREDOC
 	e.Count += int64(n)
 	return n, e.Err
 }
