@@ -12,7 +12,7 @@ func (e *LittleEndianReader) ReadUintX() (uint64, int, error) {
 		if err != nil {
 			return 0, n, err
 		}
-		val |= uint64(c&0x7f) << uint(n*7)
+		val += uint64(c) << uint(n*7)
 		n++
 		if c&0x80 == 0 {
 			break
