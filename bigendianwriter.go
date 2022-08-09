@@ -238,18 +238,13 @@ func (e *BigEndianWriter) WriteFloat64(d float64) (int, error) {
 	return e.Writer.Write(e.buffer[:8])
 }
 
-// WriteBytes Writes a []byte
-func (e *BigEndianWriter) WriteBytes(d []byte) (int, error) {
-	return e.Write(d)
-}
-
 // WriteBytesX Writes the length of the Bytes, using ReadUintX and then Writes the bytes
 func (e *BigEndianWriter) WriteBytesX(p []byte) (int, error) {
 	n, err := e.WriteUintX(uint64(len(p)))
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 
@@ -259,7 +254,7 @@ func (e *BigEndianWriter) WriteBytes8(p []byte) (int, error) {
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 
@@ -269,7 +264,7 @@ func (e *BigEndianWriter) WriteBytes16(p []byte) (int, error) {
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 
@@ -279,7 +274,7 @@ func (e *BigEndianWriter) WriteBytes24(p []byte) (int, error) {
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 
@@ -289,7 +284,7 @@ func (e *BigEndianWriter) WriteBytes32(p []byte) (int, error) {
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 
@@ -299,7 +294,7 @@ func (e *BigEndianWriter) WriteBytes40(p []byte) (int, error) {
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 
@@ -309,7 +304,7 @@ func (e *BigEndianWriter) WriteBytes48(p []byte) (int, error) {
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 
@@ -319,7 +314,7 @@ func (e *BigEndianWriter) WriteBytes56(p []byte) (int, error) {
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 
@@ -329,7 +324,7 @@ func (e *BigEndianWriter) WriteBytes64(p []byte) (int, error) {
 	if err != nil {
 		return n, err
 	}
-	m, err := e.WriteBytes(p)
+	m, err := e.Write(p)
 	return n + m, err
 }
 

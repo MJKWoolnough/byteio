@@ -359,69 +359,58 @@ func (e *StickyBigEndianWriter) WriteFloat64(d float64) {
 	e.Count += int64(n)
 }
 
-// WriteBytes Writes a []byte
-func (e *StickyBigEndianWriter) WriteBytes(d []byte) (int, error) {
-	if e.Err != nil {
-		return 0, e.Err
-	}
-	var n int
-	n, e.Err = e.Write(d)
-	e.Count += int64(n)
-	return n, e.Err
-}
-
 // WriteBytesX Writes the length of the Bytes, using ReadUintX and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytesX(p []byte) {
 	e.WriteUintX(uint64(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteBytes8 Writes the length of the Bytes, using ReadUint8 and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytes8(p []byte) {
 	e.WriteUint8(uint8(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteBytes16 Writes the length of the Bytes, using ReadUint16 and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytes16(p []byte) {
 	e.WriteUint16(uint16(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteBytes24 Writes the length of the Bytes, using ReadUint24 and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytes24(p []byte) {
 	e.WriteUint24(uint32(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteBytes32 Writes the length of the Bytes, using ReadUint32 and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytes32(p []byte) {
 	e.WriteUint32(uint32(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteBytes40 Writes the length of the Bytes, using ReadUint40 and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytes40(p []byte) {
 	e.WriteUint40(uint64(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteBytes48 Writes the length of the Bytes, using ReadUint48 and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytes48(p []byte) {
 	e.WriteUint48(uint64(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteBytes56 Writes the length of the Bytes, using ReadUint56 and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytes56(p []byte) {
 	e.WriteUint56(uint64(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteBytes64 Writes the length of the Bytes, using ReadUint64 and then Writes the bytes
 func (e *StickyBigEndianWriter) WriteBytes64(p []byte) {
 	e.WriteUint64(uint64(len(p)))
-	e.WriteBytes(p)
+	e.Write(p)
 }
 
 // WriteString Writes a string
