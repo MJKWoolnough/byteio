@@ -363,13 +363,6 @@ func (e *BigEndianWriter) WriteByte(c byte) error
 ```
 WriteByte implements the io.ByteWriter interface
 
-#### func (*BigEndianWriter) WriteBytes
-
-```go
-func (e *BigEndianWriter) WriteBytes(d []byte) (int, error)
-```
-WriteBytes Writes a []byte
-
 #### func (*BigEndianWriter) WriteBytes16
 
 ```go
@@ -1086,13 +1079,6 @@ func (e *LittleEndianWriter) WriteByte(c byte) error
 ```
 WriteByte implements the io.ByteWriter interface
 
-#### func (*LittleEndianWriter) WriteBytes
-
-```go
-func (e *LittleEndianWriter) WriteBytes(d []byte) (int, error)
-```
-WriteBytes Writes a []byte
-
 #### func (*LittleEndianWriter) WriteBytes16
 
 ```go
@@ -1797,13 +1783,6 @@ WriteBool Writes a boolean
 func (e *StickyBigEndianWriter) WriteByte(c byte) error
 ```
 WriteByte implements the io.ByteWriter interface
-
-#### func (*StickyBigEndianWriter) WriteBytes
-
-```go
-func (e *StickyBigEndianWriter) WriteBytes(d []byte) (int, error)
-```
-WriteBytes Writes a []byte
 
 #### func (*StickyBigEndianWriter) WriteBytes16
 
@@ -2576,13 +2555,6 @@ WriteBool Writes a boolean
 func (e *StickyLittleEndianWriter) WriteByte(c byte) error
 ```
 WriteByte implements the io.ByteWriter interface
-
-#### func (*StickyLittleEndianWriter) WriteBytes
-
-```go
-func (e *StickyLittleEndianWriter) WriteBytes(d []byte) (int, error)
-```
-WriteBytes Writes a []byte
 
 #### func (*StickyLittleEndianWriter) WriteBytes16
 
