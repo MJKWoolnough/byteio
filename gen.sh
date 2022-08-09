@@ -253,62 +253,68 @@ HEREDOC
 				done;
 				type="[]byte";
 				for t in Bytes String; do
-					echo;
-					echo "// ${rw}${t} ${rw}s a ${type}";
-					echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}(";
-					if [ "$rw" = "Write" ]; then
-						echo "d ${type}) (int, error) {";
-						if [ -z "$s" ]; then
-							if [ "$t" = "String" ]; then
-								echo "	return io.WriteString(e.Writer, d)";
-							else
-								echo "	return e.Write(d)";
-							fi;
-						else
-							echo "	if e.Err != nil {";
-							echo "		return 0, e.Err";
-							echo "	}";
-							echo "	var n int";
-							if [ "$t" = "String" ]; then
-								echo "	n, e.Err = io.WriteString(e.Writer, d)";
-							else
-								echo "	n, e.Err = e.Write(d)";
-							fi;
-							echo "	e.Count += int64(n)";
-							echo "	return n, e.Err";
-						fi;
-					else
-						echo -n "size int) ";
-						if [ -z "$s" ]; then
-							echo "(${type}, int, error) {";
-							echo "	buf := make([]byte, size)";
-							echo "	n, err := io.ReadFull(e, buf)";
-							if [ "$t" = "String" ]; then
-								echo "	return string(buf[:n]), n, err";
-							else
-								echo "	return buf[:n], n, err";
-							fi;
-						else
-							echo "${type} {";
-							echo "	if e.Err != nil {";
-							if [ "$t" = "String" ]; then
-								echo "		return \"\"";
-							else
-								echo "		return nil";
-							fi;
-							echo "	}";
-							echo "	buf := make([]byte, size)";
-							echo "	var n int";
-							echo "	n, e.Err = io.ReadFull(e.Reader, buf)";
-							echo "	e.Count += int64(n)";
-							if [ "$t" = "String" ]; then
-								echo "	return string(buf[:n])";
-							else
-								echo "	return buf[:n]";
-							fi;
-						fi;
+					tt="$t";
+					if [ "$tt" = "Bytes" ]; then
+						tt="";
 					fi;
-					echo "}";
+					if [ "$t" = "String" ] || [ "$rw" = "Read" ]; then
+						echo;
+						echo "// ${rw}${t} ${rw}s a ${type}";
+						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}(";
+						if [ "$rw" = "Write" ]; then
+							echo "d ${type}) (int, error) {";
+							if [ -z "$s" ]; then
+								if [ "$t" = "String" ]; then
+									echo "	return io.WriteString(e.Writer, d)";
+								else
+									echo "	return e.Write(d)";
+								fi;
+							else
+								echo "	if e.Err != nil {";
+								echo "		return 0, e.Err";
+								echo "	}";
+								echo "	var n int";
+								if [ "$t" = "String" ]; then
+									echo "	n, e.Err = io.WriteString(e.Writer, d)";
+								else
+									echo "	n, e.Err = e.Write(d)";
+								fi;
+								echo "	e.Count += int64(n)";
+								echo "	return n, e.Err";
+							fi;
+						else
+							echo -n "size int) ";
+							if [ -z "$s" ]; then
+								echo "(${type}, int, error) {";
+								echo "	buf := make([]byte, size)";
+								echo "	n, err := io.ReadFull(e, buf)";
+								if [ "$t" = "String" ]; then
+									echo "	return string(buf[:n]), n, err";
+								else
+									echo "	return buf[:n], n, err";
+								fi;
+							else
+								echo "${type} {";
+								echo "	if e.Err != nil {";
+								if [ "$t" = "String" ]; then
+									echo "		return \"\"";
+								else
+									echo "		return nil";
+								fi;
+								echo "	}";
+								echo "	buf := make([]byte, size)";
+								echo "	var n int";
+								echo "	n, e.Err = io.ReadFull(e.Reader, buf)";
+								echo "	e.Count += int64(n)";
+								if [ "$t" = "String" ]; then
+									echo "	return string(buf[:n])";
+								else
+									echo "	return buf[:n]";
+								fi;
+							fi;
+						fi;
+						echo "}";
+					fi;
 					for size in "X" 8 16 24 32 40 48 56 64; do
 						tSize="$size";
 						if [ "$size" = "X" ]; then
@@ -328,12 +334,12 @@ HEREDOC
 								echo "	if err != nil {";
 								echo "		return n, err";
 								echo "	}";
-								echo "	m, err := e.Write${t}(p)";
+								echo "	m, err := e.Write${tt}(p)";
 								echo "	return n + m, err";
 							else
 								echo "p ${type}) {";
 								echo "	e.WriteUint${size}(uint${tSize}(len(p)))";
-								echo "	e.Write${t}(p)"
+								echo "	e.Write${tt}(p)"
 							fi;
 						else
 							if [ -z "$s" ]; then
