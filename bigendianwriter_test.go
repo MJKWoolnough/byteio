@@ -2,7 +2,7 @@ package byteio
 
 import (
 	"bytes"
-	"io/ioutil"
+	"io"
 	"testing"
 )
 
@@ -37,7 +37,7 @@ func TestWriteBigEndian(t *testing.T) {
 }
 
 func BenchmarkWriteBigUint8(b *testing.B) {
-	w := BigEndianWriter{Writer: ioutil.Discard}
+	w := BigEndianWriter{Writer: io.Discard}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		w.WriteUint8(1)
@@ -45,7 +45,7 @@ func BenchmarkWriteBigUint8(b *testing.B) {
 }
 
 func BenchmarkWriteBigInt8(b *testing.B) {
-	w := BigEndianWriter{Writer: ioutil.Discard}
+	w := BigEndianWriter{Writer: io.Discard}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		w.WriteInt8(1)
@@ -53,7 +53,7 @@ func BenchmarkWriteBigInt8(b *testing.B) {
 }
 
 func BenchmarkWriteBigUint16(b *testing.B) {
-	w := BigEndianWriter{Writer: ioutil.Discard}
+	w := BigEndianWriter{Writer: io.Discard}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		w.WriteUint16(1)
@@ -61,7 +61,7 @@ func BenchmarkWriteBigUint16(b *testing.B) {
 }
 
 func BenchmarkWriteBigInt16(b *testing.B) {
-	w := BigEndianWriter{Writer: ioutil.Discard}
+	w := BigEndianWriter{Writer: io.Discard}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		w.WriteInt16(1)
@@ -69,7 +69,7 @@ func BenchmarkWriteBigInt16(b *testing.B) {
 }
 
 func BenchmarkWriteBigUint32(b *testing.B) {
-	w := BigEndianWriter{Writer: ioutil.Discard}
+	w := BigEndianWriter{Writer: io.Discard}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		w.WriteUint32(1)
@@ -77,7 +77,7 @@ func BenchmarkWriteBigUint32(b *testing.B) {
 }
 
 func BenchmarkWriteBigInt32(b *testing.B) {
-	w := BigEndianWriter{Writer: ioutil.Discard}
+	w := BigEndianWriter{Writer: io.Discard}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		w.WriteInt32(1)
@@ -85,7 +85,7 @@ func BenchmarkWriteBigInt32(b *testing.B) {
 }
 
 func BenchmarkWriteBigUint64(b *testing.B) {
-	w := BigEndianWriter{Writer: ioutil.Discard}
+	w := BigEndianWriter{Writer: io.Discard}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		w.WriteUint64(1)
@@ -93,7 +93,7 @@ func BenchmarkWriteBigUint64(b *testing.B) {
 }
 
 func BenchmarkWriteBigInt64(b *testing.B) {
-	w := BigEndianWriter{Writer: ioutil.Discard}
+	w := BigEndianWriter{Writer: io.Discard}
 	b.ResetTimer()
 	for i := 0; i < b.N; i++ {
 		w.WriteInt64(1)
