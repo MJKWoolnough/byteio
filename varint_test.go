@@ -54,6 +54,22 @@ func TestLittleEndianVarUint(t *testing.T) {
 	}
 }
 
+func FuzzLittleEndianVarInt(f *testing.F) {
+	for _, seed := range []uint64{0, 127, 128, 255, 256, 1024, 16512, 134217728, 18446744073709551615} {
+		f.Add(seed)
+	}
+
+	f.Fuzz(func(t *testing.T, in uint64) {
+		var buf bytes.Buffer
+		(&LittleEndianWriter{Writer: &buf}).WriteUintX(in)
+		num, _, _ := (&LittleEndianReader{Reader: &buf}).ReadUintX()
+
+		if num != in {
+			t.Errorf("failed on %d", in)
+		}
+	})
+}
+
 func TestBigEndianVarUint(t *testing.T) {
 	buf := bytes.NewBuffer(make([]byte, 0, 9))
 	for n, test := range [...]struct {
