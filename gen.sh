@@ -21,7 +21,7 @@ for s in "" Sticky; do
 				cat <<HEREDOC
 package byteio
 
-// File automatically generated with ./gen.sh
+// File automatically generated with ./gen.sh.
 
 import (
 	"io"
@@ -29,7 +29,7 @@ import (
 )
 
 // ${s}${e}Endian${rw}${er} wraps a io.${rw}${er} to provide methods
-// to make it easier to $rw fundamental types
+// to make it easier to $rw fundamental types.
 type ${s}${e}Endian${rw}${er} struct {
 	io.${rw}${er}
 	buffer [9]byte
@@ -44,11 +44,12 @@ HEREDOC
 				if [ ! -z "$s" ]; then
 					cat <<HEREDOC
 
-// ${rw} implements the io.${rw}${er} interface
+// ${rw} implements the io.${rw}${er} interface.
 func (e *${s}${e}Endian${rw}${er}) ${rw}(p []byte) (int, error) {
 	if e.Err != nil {
 		return 0, e.Err
 	}
+
 	var n int
 HEREDOC
 					if [ "$rw" = "Read" ]; then
@@ -58,6 +59,7 @@ HEREDOC
 					fi;
 					cat <<HEREDOC
 	e.Count += int64(n)
+
 	return n, e.Err
 }
 
@@ -66,7 +68,7 @@ HEREDOC
 					echo;
 				fi;
 
-				echo "// ${rw}Bool ${rw}s a boolean";
+				echo "// ${rw}Bool ${rw}s a boolean.";
 				echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}Bool(";
 				if [ "${rw}" = "Write" ]; then
 					echo -n "b bool";
@@ -79,9 +81,9 @@ HEREDOC
 					cat <<HEREDOC
 	if b {
 		${ret}e.WriteUint8(1)
-	} else {
-		${ret}e.WriteUint8(0)
 	}
+
+	${ret}e.WriteUint8(0)
 }
 HEREDOC
 				else
@@ -89,6 +91,7 @@ HEREDOC
 					if [ -z "$s" ]; then
 						echo "(bool, int, error) {"
 						echo "	b, n, err := e.ReadUint8()";
+						echo;
 						echo "	return b != 0, n, err";
 						echo "}";
 					else
@@ -112,9 +115,9 @@ HEREDOC
 						fi;
 						tu="$(echo "$t" | tr A-Z a-z)$ti";
 						echo;
-						echo "// ${rw}${t}${i} ${rw}s a $i bit $(echo "$t" | tr A-Z a-z) as a $tu using the underlying io.${rw}${er}";
+						echo "// ${rw}${t}${i} ${rw}s a $i bit $(echo "$t" | tr A-Z a-z) as a $tu using the underlying io.${rw}${er}.";
 						if [ ! -z "$s" ]; then
-							echo "// Any errors and the running byte read count are stored instead of being returned";
+							echo "// Any errors and the running byte read count are stored instead of being returned.";
 						fi;
 						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}${i}(";
 						if [ "$rw" = "Write" ]; then
@@ -144,21 +147,26 @@ HEREDOC
 							fi;
 							echo;
 							echo "	}";
+							echo;
 						fi;
 						if [ "$rw" = "Read" ]; then
 							echo "	n, err := io.ReadFull(e.Reader, e.buffer[:$(( $i / 8 ))])";
 							if [ ! -z "$s" ]; then
+								echo;
 								echo "	e.Count += int64(n)";
+								echo;
 							fi;
 							echo "	if err != nil {";
 							if [ -z "$s" ]; then
 								echo "		return 0, n, err";
 							else
 								echo "		e.Err = err";
+								echo;
 								echo "		return 0";
 							fi;
 					
 							echo "	}";
+							echo ;
 							echo -n "	return ";
 
 							if [ "$t" = "Int" ]; then
@@ -235,9 +243,12 @@ HEREDOC
 							fi;
 
 							if [ -z "$s" ]; then
+								echo;
 								echo -n "	return ";
 							else
+								echo;
 								echo "	var n int";
+								echo;
 								echo -n "	n, e.Err = ";
 							fi;
 							
@@ -259,7 +270,7 @@ HEREDOC
 					fi;
 					if [ "$t" = "String" ] || [ "$rw" = "Read" ]; then
 						echo;
-						echo "// ${rw}${t} ${rw}s a ${type}";
+						echo "// ${rw}${t} ${rw}s a ${type}.";
 						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}(";
 						if [ "$rw" = "Write" ]; then
 							echo "d ${type}) (int, error) {";
@@ -273,6 +284,7 @@ HEREDOC
 								echo "	if e.Err != nil {";
 								echo "		return 0, e.Err";
 								echo "	}";
+								echo;
 								echo "	var n int";
 								if [ "$t" = "String" ]; then
 									echo "	n, e.Err = io.WriteString(e.Writer, d)";
@@ -280,6 +292,7 @@ HEREDOC
 									echo "	n, e.Err = e.Write(d)";
 								fi;
 								echo "	e.Count += int64(n)";
+								echo;
 								echo "	return n, e.Err";
 							fi;
 						else
@@ -288,6 +301,7 @@ HEREDOC
 								echo "(${type}, int, error) {";
 								echo "	buf := make([]byte, size)";
 								echo "	n, err := io.ReadFull(e, buf)";
+								echo;
 								if [ "$t" = "String" ]; then
 									echo "	return string(buf[:n]), n, err";
 								else
@@ -302,10 +316,13 @@ HEREDOC
 									echo "		return nil";
 								fi;
 								echo "	}";
+								echo;
 								echo "	buf := make([]byte, size)";
+								echo;
 								echo "	var n int";
 								echo "	n, e.Err = io.ReadFull(e.Reader, buf)";
 								echo "	e.Count += int64(n)";
+								echo;
 								if [ "$t" = "String" ]; then
 									echo "	return string(buf[:n])";
 								else
@@ -325,7 +342,7 @@ HEREDOC
 							tSize=64;
 						fi;
 						echo;
-						echo "// ${rw}${t}${size} ${rw}s the length of the ${t}, using ReadUint${size} and then ${rw}s the bytes";
+						echo "// ${rw}${t}${size} ${rw}s the length of the ${t}, using ReadUint${size} and then ${rw}s the bytes.";
 						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}${size}(";
 						if [ "$rw" = "Write" ]; then
 							if [ -z "$s" ]; then
@@ -334,7 +351,9 @@ HEREDOC
 								echo "	if err != nil {";
 								echo "		return n, err";
 								echo "	}";
+								echo;
 								echo "	m, err := e.Write${tt}(p)";
+								echo;
 								echo "	return n + m, err";
 							else
 								echo "p ${type}) {";
@@ -352,7 +371,9 @@ HEREDOC
 									echo "		return nil, n, err";
 								fi;
 								echo "	}";
+								echo;
 								echo "	p, m, err := e.Read${t}(int(size))"
+								echo;
 								echo "	return p, n + m, err";
 							else
 								echo ") ${type} {";
@@ -366,9 +387,9 @@ HEREDOC
 				echo;
 				echo -n "// ${rw}String0 ${rw}s the bytes of the string ";
 				if [ "$rw" = "Write" ]; then
-					echo "ending with a 0 byte";
+					echo "ending with a 0 byte.";
 				else
-					echo "until a 0 byte is read";
+					echo "until a 0 byte is read.";
 				fi;
 				echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}String0(";
 				if [ "$rw" = "Write" ]; then
@@ -380,6 +401,7 @@ HEREDOC
 						echo "		m, err = e.WriteUint8(0)";
 						echo "		n += m";
 						echo "	}";
+						echo;
 						echo "	return n, err";
 					else
 						echo "p string) {";
@@ -394,29 +416,37 @@ HEREDOC
 						echo "		err error";
 						echo "		d   []byte";
 						echo "	)";
+						echo;
 						echo "	for {";
 						echo "		var (";
 						echo "			m int";
 						echo "			p byte";
 						echo "		)";
+						echo;
 						echo "		p, m, err = e.ReadUint8()";
 						echo "		n += m";
+						echo;
 						echo "		if err != nil || p == 0 {";
 						echo "			break";
 						echo "		}";
+						echo;
 						echo "		d = append(d, p)";
 						echo "	}";
+						echo;
 						echo "	return string(d), n, err";
 					else
 						echo ") string {";
 						echo "	var d []byte";
+						echo;
 						echo "	for {";
 						echo "		p := e.ReadUint8()";
 						echo "		if p == 0 {";
 						echo "			break";
 						echo "		}";
+						echo;
 						echo "		d = append(d, p)";
 						echo "	}";
+						echo;
 						echo "	return string(d)";
 					fi;
 				fi;
