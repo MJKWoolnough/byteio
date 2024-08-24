@@ -3,7 +3,7 @@
     import "vimagination.zapto.org/byteio"
 
 Package byteio helps with writing number types in both big and little endian
-### formats
+formats.
 
 ## Usage
 
@@ -690,7 +690,7 @@ type EndianReader interface {
 ```
 
 EndianReader is an interface that reads various types with a particular
-endianness
+endianness.
 
 #### type EndianWriter
 
@@ -721,7 +721,7 @@ type EndianWriter interface {
 ```
 
 EndianWriter is an interface that writes various types with a particular
-endianness
+endianness.
 
 #### type LittleEndianReader
 
@@ -2129,7 +2129,7 @@ type StickyEndianReader interface {
 ```
 
 StickyEndianReader is an interface that reads various types with a particular
-endianness and stores the Read return values
+endianness and stores the Read return values.
 
 #### type StickyEndianWriter
 
@@ -2160,7 +2160,7 @@ type StickyEndianWriter interface {
 ```
 
 StickyEndianWriter is an interface that writes various types with a particular
-endianness and stores the Write return values
+endianness and stores the Write return values.
 
 #### type StickyLittleEndianReader
 
