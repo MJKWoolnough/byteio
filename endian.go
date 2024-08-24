@@ -1,10 +1,10 @@
-// Package byteio helps with writing number types in both big and little endian formats
+// Package byteio helps with writing number types in both big and little endian formats.
 package byteio // import "vimagination.zapto.org/byteio"
 
 import "io"
 
 // EndianReader is an interface that reads various types with a particular
-// endianness
+// endianness.
 type EndianReader interface {
 	io.Reader
 	io.ByteReader
@@ -30,7 +30,7 @@ type EndianReader interface {
 }
 
 // EndianWriter is an interface that writes various types with a particular
-// endianness
+// endianness.
 type EndianWriter interface {
 	io.Writer
 	io.ByteWriter
@@ -56,7 +56,7 @@ type EndianWriter interface {
 }
 
 // StickyEndianReader is an interface that reads various types with a
-// particular endianness and stores the Read return values
+// particular endianness and stores the Read return values.
 type StickyEndianReader interface {
 	io.Reader
 	io.ByteReader
@@ -82,7 +82,7 @@ type StickyEndianReader interface {
 }
 
 // StickyEndianWriter is an interface that writes various types with a
-// particular endianness and stores the Write return values
+// particular endianness and stores the Write return values.
 type StickyEndianWriter interface {
 	io.Writer
 	io.ByteWriter
