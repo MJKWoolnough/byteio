@@ -1,6 +1,6 @@
 package byteio
 
-// ReadUintX reads an unsinged integer that was encoded using a variable number
+// ReadUintX reads an unsigned integer that was encoded using a variable number
 // of bytes.
 func (e *BigEndianReader) ReadUintX() (uint64, int, error) {
 	c, err := e.ReadByte()
