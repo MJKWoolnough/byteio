@@ -335,7 +335,7 @@ ReadUint8 Reads a 8 bit uint as a uint8 using the underlying io.Reader.
 ```go
 func (e *BigEndianReader) ReadUintX() (uint64, int, error)
 ```
-ReadUintX reads an unsinged integer that was encoded using a variable number of
+ReadUintX reads an unsigned integer that was encoded using a variable number of
 bytes.
 
 #### type BigEndianWriter
@@ -1051,7 +1051,7 @@ ReadUint8 Reads a 8 bit uint as a uint8 using the underlying io.Reader.
 ```go
 func (e *LittleEndianReader) ReadUintX() (uint64, int, error)
 ```
-ReadUintX reads an unsinged integer that was encoded using a variable number of
+ReadUintX reads an unsigned integer that was encoded using a variable number of
 bytes.
 
 #### type LittleEndianWriter
@@ -1746,7 +1746,7 @@ errors and the running byte read count are stored instead of being returned.
 ```go
 func (e *StickyBigEndianReader) ReadUintX() uint64
 ```
-ReadUintX reads an unsinged integer that was encoded using a variable number of
+ReadUintX reads an unsigned integer that was encoded using a variable number of
 bytes.
 
 #### type StickyBigEndianWriter
@@ -2518,7 +2518,7 @@ errors and the running byte read count are stored instead of being returned.
 ```go
 func (e *StickyLittleEndianReader) ReadUintX() uint64
 ```
-ReadUintX reads an unsinged integer that was encoded using a variable number of
+ReadUintX reads an unsigned integer that was encoded using a variable number of
 bytes.
 
 #### type StickyLittleEndianWriter
