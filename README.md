@@ -363,12 +363,19 @@ func (e *BigEndianWriter) WriteByte(c byte) error
 ```
 WriteByte implements the io.ByteWriter interface.
 
+#### func (*BigEndianWriter) WriteBytes
+
+```go
+func (e *BigEndianWriter) WriteBytes(d []byte) (int, error)
+```
+WriteBytes Writes a []byte.
+
 #### func (*BigEndianWriter) WriteBytes16
 
 ```go
 func (e *BigEndianWriter) WriteBytes16(p []byte) (int, error)
 ```
-WriteBytes16 Writes the length of the Bytes, using ReadUint16 and then Writes
+WriteBytes16 Writes the length of the Bytes, using WriteUint16 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteBytes24
@@ -376,7 +383,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteBytes24(p []byte) (int, error)
 ```
-WriteBytes24 Writes the length of the Bytes, using ReadUint24 and then Writes
+WriteBytes24 Writes the length of the Bytes, using WriteUint24 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteBytes32
@@ -384,7 +391,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteBytes32(p []byte) (int, error)
 ```
-WriteBytes32 Writes the length of the Bytes, using ReadUint32 and then Writes
+WriteBytes32 Writes the length of the Bytes, using WriteUint32 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteBytes40
@@ -392,7 +399,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteBytes40(p []byte) (int, error)
 ```
-WriteBytes40 Writes the length of the Bytes, using ReadUint40 and then Writes
+WriteBytes40 Writes the length of the Bytes, using WriteUint40 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteBytes48
@@ -400,7 +407,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteBytes48(p []byte) (int, error)
 ```
-WriteBytes48 Writes the length of the Bytes, using ReadUint48 and then Writes
+WriteBytes48 Writes the length of the Bytes, using WriteUint48 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteBytes56
@@ -408,7 +415,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteBytes56(p []byte) (int, error)
 ```
-WriteBytes56 Writes the length of the Bytes, using ReadUint56 and then Writes
+WriteBytes56 Writes the length of the Bytes, using WriteUint56 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteBytes64
@@ -416,7 +423,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteBytes64(p []byte) (int, error)
 ```
-WriteBytes64 Writes the length of the Bytes, using ReadUint64 and then Writes
+WriteBytes64 Writes the length of the Bytes, using WriteUint64 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteBytes8
@@ -424,7 +431,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteBytes8(p []byte) (int, error)
 ```
-WriteBytes8 Writes the length of the Bytes, using ReadUint8 and then Writes the
+WriteBytes8 Writes the length of the Bytes, using WriteUint8 and then Writes the
 bytes.
 
 #### func (*BigEndianWriter) WriteBytesX
@@ -432,7 +439,7 @@ bytes.
 ```go
 func (e *BigEndianWriter) WriteBytesX(p []byte) (int, error)
 ```
-WriteBytesX Writes the length of the Bytes, using ReadUintX and then Writes the
+WriteBytesX Writes the length of the Bytes, using WriteUintX and then Writes the
 bytes.
 
 #### func (*BigEndianWriter) WriteFloat32
@@ -531,7 +538,7 @@ WriteString0 Writes the bytes of the string ending with a 0 byte.
 ```go
 func (e *BigEndianWriter) WriteString16(p string) (int, error)
 ```
-WriteString16 Writes the length of the String, using ReadUint16 and then Writes
+WriteString16 Writes the length of the String, using WriteUint16 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteString24
@@ -539,7 +546,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteString24(p string) (int, error)
 ```
-WriteString24 Writes the length of the String, using ReadUint24 and then Writes
+WriteString24 Writes the length of the String, using WriteUint24 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteString32
@@ -547,7 +554,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteString32(p string) (int, error)
 ```
-WriteString32 Writes the length of the String, using ReadUint32 and then Writes
+WriteString32 Writes the length of the String, using WriteUint32 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteString40
@@ -555,7 +562,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteString40(p string) (int, error)
 ```
-WriteString40 Writes the length of the String, using ReadUint40 and then Writes
+WriteString40 Writes the length of the String, using WriteUint40 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteString48
@@ -563,7 +570,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteString48(p string) (int, error)
 ```
-WriteString48 Writes the length of the String, using ReadUint48 and then Writes
+WriteString48 Writes the length of the String, using WriteUint48 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteString56
@@ -571,7 +578,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteString56(p string) (int, error)
 ```
-WriteString56 Writes the length of the String, using ReadUint56 and then Writes
+WriteString56 Writes the length of the String, using WriteUint56 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteString64
@@ -579,7 +586,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteString64(p string) (int, error)
 ```
-WriteString64 Writes the length of the String, using ReadUint64 and then Writes
+WriteString64 Writes the length of the String, using WriteUint64 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteString8
@@ -587,7 +594,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteString8(p string) (int, error)
 ```
-WriteString8 Writes the length of the String, using ReadUint8 and then Writes
+WriteString8 Writes the length of the String, using WriteUint8 and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteStringX
@@ -595,7 +602,7 @@ the bytes.
 ```go
 func (e *BigEndianWriter) WriteStringX(p string) (int, error)
 ```
-WriteStringX Writes the length of the String, using ReadUintX and then Writes
+WriteStringX Writes the length of the String, using WriteUintX and then Writes
 the bytes.
 
 #### func (*BigEndianWriter) WriteUint16
@@ -672,19 +679,42 @@ type EndianReader interface {
 	ReadInt8() (int8, int, error)
 	ReadUint16() (uint16, int, error)
 	ReadInt16() (int16, int, error)
+	ReadUint24() (uint32, int, error)
+	ReadInt24() (int32, int, error)
 	ReadUint32() (uint32, int, error)
 	ReadInt32() (int32, int, error)
+	ReadUint40() (uint64, int, error)
+	ReadInt40() (int64, int, error)
+	ReadUint48() (uint64, int, error)
+	ReadInt48() (int64, int, error)
+	ReadUint56() (uint64, int, error)
+	ReadInt56() (int64, int, error)
 	ReadUint64() (uint64, int, error)
 	ReadInt64() (int64, int, error)
 	ReadFloat32() (float32, int, error)
 	ReadFloat64() (float64, int, error)
 	ReadUintX() (uint64, int, error)
 	ReadIntX() (int64, int, error)
+	ReadBytes(int) ([]byte, int, error)
+	ReadBytesX() ([]byte, int, error)
+	ReadBytes8() ([]byte, int, error)
+	ReadBytes16() ([]byte, int, error)
+	ReadBytes24() ([]byte, int, error)
+	ReadBytes32() ([]byte, int, error)
+	ReadBytes40() ([]byte, int, error)
+	ReadBytes48() ([]byte, int, error)
+	ReadBytes56() ([]byte, int, error)
+	ReadBytes64() ([]byte, int, error)
 	ReadString(int) (string, int, error)
 	ReadStringX() (string, int, error)
+	ReadString0() (string, int, error)
 	ReadString8() (string, int, error)
 	ReadString16() (string, int, error)
+	ReadString24() (string, int, error)
 	ReadString32() (string, int, error)
+	ReadString40() (string, int, error)
+	ReadString48() (string, int, error)
+	ReadString56() (string, int, error)
 	ReadString64() (string, int, error)
 }
 ```
@@ -698,24 +728,47 @@ endianness.
 type EndianWriter interface {
 	io.Writer
 	io.ByteWriter
+	io.StringWriter
 	WriteBool(bool) (int, error)
 	WriteUint8(uint8) (int, error)
 	WriteInt8(int8) (int, error)
 	WriteUint16(uint16) (int, error)
 	WriteInt16(int16) (int, error)
+	WriteUint24(uint32) (int, error)
+	WriteInt24(int32) (int, error)
 	WriteUint32(uint32) (int, error)
 	WriteInt32(int32) (int, error)
+	WriteUint40(uint64) (int, error)
+	WriteInt40(int64) (int, error)
+	WriteUint48(uint64) (int, error)
+	WriteInt48(int64) (int, error)
+	WriteUint56(uint64) (int, error)
+	WriteInt56(int64) (int, error)
 	WriteUint64(uint64) (int, error)
 	WriteInt64(int64) (int, error)
 	WriteFloat32(float32) (int, error)
 	WriteFloat64(float64) (int, error)
 	WriteUintX(uint64) (int, error)
 	WriteIntX(int64) (int, error)
-	WriteString(string) (int, error)
+	WriteBytes([]byte) (int, error)
+	WriteBytesX([]byte) (int, error)
+	WriteBytes8([]byte) (int, error)
+	WriteBytes16([]byte) (int, error)
+	WriteBytes24([]byte) (int, error)
+	WriteBytes32([]byte) (int, error)
+	WriteBytes40([]byte) (int, error)
+	WriteBytes48([]byte) (int, error)
+	WriteBytes56([]byte) (int, error)
+	WriteBytes64([]byte) (int, error)
 	WriteStringX(string) (int, error)
+	WriteString0(string) (int, error)
 	WriteString8(string) (int, error)
 	WriteString16(string) (int, error)
+	WriteString24(string) (int, error)
 	WriteString32(string) (int, error)
+	WriteString40(string) (int, error)
+	WriteString48(string) (int, error)
+	WriteString56(string) (int, error)
 	WriteString64(string) (int, error)
 }
 ```
@@ -1079,12 +1132,19 @@ func (e *LittleEndianWriter) WriteByte(c byte) error
 ```
 WriteByte implements the io.ByteWriter interface.
 
+#### func (*LittleEndianWriter) WriteBytes
+
+```go
+func (e *LittleEndianWriter) WriteBytes(d []byte) (int, error)
+```
+WriteBytes Writes a []byte.
+
 #### func (*LittleEndianWriter) WriteBytes16
 
 ```go
 func (e *LittleEndianWriter) WriteBytes16(p []byte) (int, error)
 ```
-WriteBytes16 Writes the length of the Bytes, using ReadUint16 and then Writes
+WriteBytes16 Writes the length of the Bytes, using WriteUint16 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteBytes24
@@ -1092,7 +1152,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteBytes24(p []byte) (int, error)
 ```
-WriteBytes24 Writes the length of the Bytes, using ReadUint24 and then Writes
+WriteBytes24 Writes the length of the Bytes, using WriteUint24 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteBytes32
@@ -1100,7 +1160,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteBytes32(p []byte) (int, error)
 ```
-WriteBytes32 Writes the length of the Bytes, using ReadUint32 and then Writes
+WriteBytes32 Writes the length of the Bytes, using WriteUint32 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteBytes40
@@ -1108,7 +1168,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteBytes40(p []byte) (int, error)
 ```
-WriteBytes40 Writes the length of the Bytes, using ReadUint40 and then Writes
+WriteBytes40 Writes the length of the Bytes, using WriteUint40 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteBytes48
@@ -1116,7 +1176,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteBytes48(p []byte) (int, error)
 ```
-WriteBytes48 Writes the length of the Bytes, using ReadUint48 and then Writes
+WriteBytes48 Writes the length of the Bytes, using WriteUint48 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteBytes56
@@ -1124,7 +1184,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteBytes56(p []byte) (int, error)
 ```
-WriteBytes56 Writes the length of the Bytes, using ReadUint56 and then Writes
+WriteBytes56 Writes the length of the Bytes, using WriteUint56 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteBytes64
@@ -1132,7 +1192,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteBytes64(p []byte) (int, error)
 ```
-WriteBytes64 Writes the length of the Bytes, using ReadUint64 and then Writes
+WriteBytes64 Writes the length of the Bytes, using WriteUint64 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteBytes8
@@ -1140,7 +1200,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteBytes8(p []byte) (int, error)
 ```
-WriteBytes8 Writes the length of the Bytes, using ReadUint8 and then Writes the
+WriteBytes8 Writes the length of the Bytes, using WriteUint8 and then Writes the
 bytes.
 
 #### func (*LittleEndianWriter) WriteBytesX
@@ -1148,7 +1208,7 @@ bytes.
 ```go
 func (e *LittleEndianWriter) WriteBytesX(p []byte) (int, error)
 ```
-WriteBytesX Writes the length of the Bytes, using ReadUintX and then Writes the
+WriteBytesX Writes the length of the Bytes, using WriteUintX and then Writes the
 bytes.
 
 #### func (*LittleEndianWriter) WriteFloat32
@@ -1247,7 +1307,7 @@ WriteString0 Writes the bytes of the string ending with a 0 byte.
 ```go
 func (e *LittleEndianWriter) WriteString16(p string) (int, error)
 ```
-WriteString16 Writes the length of the String, using ReadUint16 and then Writes
+WriteString16 Writes the length of the String, using WriteUint16 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteString24
@@ -1255,7 +1315,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteString24(p string) (int, error)
 ```
-WriteString24 Writes the length of the String, using ReadUint24 and then Writes
+WriteString24 Writes the length of the String, using WriteUint24 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteString32
@@ -1263,7 +1323,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteString32(p string) (int, error)
 ```
-WriteString32 Writes the length of the String, using ReadUint32 and then Writes
+WriteString32 Writes the length of the String, using WriteUint32 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteString40
@@ -1271,7 +1331,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteString40(p string) (int, error)
 ```
-WriteString40 Writes the length of the String, using ReadUint40 and then Writes
+WriteString40 Writes the length of the String, using WriteUint40 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteString48
@@ -1279,7 +1339,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteString48(p string) (int, error)
 ```
-WriteString48 Writes the length of the String, using ReadUint48 and then Writes
+WriteString48 Writes the length of the String, using WriteUint48 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteString56
@@ -1287,7 +1347,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteString56(p string) (int, error)
 ```
-WriteString56 Writes the length of the String, using ReadUint56 and then Writes
+WriteString56 Writes the length of the String, using WriteUint56 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteString64
@@ -1295,7 +1355,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteString64(p string) (int, error)
 ```
-WriteString64 Writes the length of the String, using ReadUint64 and then Writes
+WriteString64 Writes the length of the String, using WriteUint64 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteString8
@@ -1303,7 +1363,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteString8(p string) (int, error)
 ```
-WriteString8 Writes the length of the String, using ReadUint8 and then Writes
+WriteString8 Writes the length of the String, using WriteUint8 and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteStringX
@@ -1311,7 +1371,7 @@ the bytes.
 ```go
 func (e *LittleEndianWriter) WriteStringX(p string) (int, error)
 ```
-WriteStringX Writes the length of the String, using ReadUintX and then Writes
+WriteStringX Writes the length of the String, using WriteUintX and then Writes
 the bytes.
 
 #### func (*LittleEndianWriter) WriteUint16
@@ -1784,12 +1844,19 @@ func (e *StickyBigEndianWriter) WriteByte(c byte) error
 ```
 WriteByte implements the io.ByteWriter interface.
 
+#### func (*StickyBigEndianWriter) WriteBytes
+
+```go
+func (e *StickyBigEndianWriter) WriteBytes(d []byte)
+```
+WriteBytes Writes a []byte.
+
 #### func (*StickyBigEndianWriter) WriteBytes16
 
 ```go
 func (e *StickyBigEndianWriter) WriteBytes16(p []byte)
 ```
-WriteBytes16 Writes the length of the Bytes, using ReadUint16 and then Writes
+WriteBytes16 Writes the length of the Bytes, using WriteUint16 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteBytes24
@@ -1797,7 +1864,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteBytes24(p []byte)
 ```
-WriteBytes24 Writes the length of the Bytes, using ReadUint24 and then Writes
+WriteBytes24 Writes the length of the Bytes, using WriteUint24 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteBytes32
@@ -1805,7 +1872,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteBytes32(p []byte)
 ```
-WriteBytes32 Writes the length of the Bytes, using ReadUint32 and then Writes
+WriteBytes32 Writes the length of the Bytes, using WriteUint32 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteBytes40
@@ -1813,7 +1880,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteBytes40(p []byte)
 ```
-WriteBytes40 Writes the length of the Bytes, using ReadUint40 and then Writes
+WriteBytes40 Writes the length of the Bytes, using WriteUint40 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteBytes48
@@ -1821,7 +1888,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteBytes48(p []byte)
 ```
-WriteBytes48 Writes the length of the Bytes, using ReadUint48 and then Writes
+WriteBytes48 Writes the length of the Bytes, using WriteUint48 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteBytes56
@@ -1829,7 +1896,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteBytes56(p []byte)
 ```
-WriteBytes56 Writes the length of the Bytes, using ReadUint56 and then Writes
+WriteBytes56 Writes the length of the Bytes, using WriteUint56 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteBytes64
@@ -1837,7 +1904,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteBytes64(p []byte)
 ```
-WriteBytes64 Writes the length of the Bytes, using ReadUint64 and then Writes
+WriteBytes64 Writes the length of the Bytes, using WriteUint64 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteBytes8
@@ -1845,7 +1912,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteBytes8(p []byte)
 ```
-WriteBytes8 Writes the length of the Bytes, using ReadUint8 and then Writes the
+WriteBytes8 Writes the length of the Bytes, using WriteUint8 and then Writes the
 bytes.
 
 #### func (*StickyBigEndianWriter) WriteBytesX
@@ -1853,7 +1920,7 @@ bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteBytesX(p []byte)
 ```
-WriteBytesX Writes the length of the Bytes, using ReadUintX and then Writes the
+WriteBytesX Writes the length of the Bytes, using WriteUintX and then Writes the
 bytes.
 
 #### func (*StickyBigEndianWriter) WriteFloat32
@@ -1962,7 +2029,7 @@ WriteString0 Writes the bytes of the string ending with a 0 byte.
 ```go
 func (e *StickyBigEndianWriter) WriteString16(p string)
 ```
-WriteString16 Writes the length of the String, using ReadUint16 and then Writes
+WriteString16 Writes the length of the String, using WriteUint16 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteString24
@@ -1970,7 +2037,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteString24(p string)
 ```
-WriteString24 Writes the length of the String, using ReadUint24 and then Writes
+WriteString24 Writes the length of the String, using WriteUint24 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteString32
@@ -1978,7 +2045,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteString32(p string)
 ```
-WriteString32 Writes the length of the String, using ReadUint32 and then Writes
+WriteString32 Writes the length of the String, using WriteUint32 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteString40
@@ -1986,7 +2053,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteString40(p string)
 ```
-WriteString40 Writes the length of the String, using ReadUint40 and then Writes
+WriteString40 Writes the length of the String, using WriteUint40 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteString48
@@ -1994,7 +2061,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteString48(p string)
 ```
-WriteString48 Writes the length of the String, using ReadUint48 and then Writes
+WriteString48 Writes the length of the String, using WriteUint48 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteString56
@@ -2002,7 +2069,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteString56(p string)
 ```
-WriteString56 Writes the length of the String, using ReadUint56 and then Writes
+WriteString56 Writes the length of the String, using WriteUint56 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteString64
@@ -2010,7 +2077,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteString64(p string)
 ```
-WriteString64 Writes the length of the String, using ReadUint64 and then Writes
+WriteString64 Writes the length of the String, using WriteUint64 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteString8
@@ -2018,7 +2085,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteString8(p string)
 ```
-WriteString8 Writes the length of the String, using ReadUint8 and then Writes
+WriteString8 Writes the length of the String, using WriteUint8 and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteStringX
@@ -2026,7 +2093,7 @@ the bytes.
 ```go
 func (e *StickyBigEndianWriter) WriteStringX(p string)
 ```
-WriteStringX Writes the length of the String, using ReadUintX and then Writes
+WriteStringX Writes the length of the String, using WriteUintX and then Writes
 the bytes.
 
 #### func (*StickyBigEndianWriter) WriteUint16
@@ -2111,6 +2178,8 @@ type StickyEndianReader interface {
 	ReadInt8() int8
 	ReadUint16() uint16
 	ReadInt16() int16
+	ReadUint24() uint32
+	ReadInt24() int32
 	ReadUint32() uint32
 	ReadInt32() int32
 	ReadUint64() uint64
@@ -2119,11 +2188,26 @@ type StickyEndianReader interface {
 	ReadFloat64() float64
 	ReadUintX() uint64
 	ReadIntX() int64
+	ReadBytes(int) []byte
+	ReadBytesX() []byte
+	ReadBytes8() []byte
+	ReadBytes16() []byte
+	ReadBytes24() []byte
+	ReadBytes32() []byte
+	ReadBytes40() []byte
+	ReadBytes48() []byte
+	ReadBytes56() []byte
+	ReadBytes64() []byte
 	ReadString(int) string
 	ReadStringX() string
+	ReadString0() string
 	ReadString8() string
 	ReadString16() string
+	ReadString24() string
 	ReadString32() string
+	ReadString40() string
+	ReadString48() string
+	ReadString56() string
 	ReadString64() string
 }
 ```
@@ -2137,24 +2221,47 @@ endianness and stores the Read return values.
 type StickyEndianWriter interface {
 	io.Writer
 	io.ByteWriter
+	io.StringWriter
 	WriteBool(bool)
 	WriteUint8(uint8)
 	WriteInt8(int8)
 	WriteUint16(uint16)
 	WriteInt16(int16)
+	WriteUint24(uint32)
+	WriteInt24(int32)
 	WriteUint32(uint32)
 	WriteInt32(int32)
+	WriteUint40(uint64)
+	WriteInt40(int64)
+	WriteUint48(uint64)
+	WriteInt48(int64)
+	WriteUint56(uint64)
+	WriteInt56(int64)
 	WriteUint64(uint64)
 	WriteInt64(int64)
 	WriteFloat32(float32)
 	WriteFloat64(float64)
 	WriteUintX(uint64)
 	WriteIntX(int64)
-	WriteString(string) (int, error)
+	WriteBytes([]byte)
+	WriteBytesX([]byte)
+	WriteBytes8([]byte)
+	WriteBytes16([]byte)
+	WriteBytes24([]byte)
+	WriteBytes32([]byte)
+	WriteBytes40([]byte)
+	WriteBytes48([]byte)
+	WriteBytes56([]byte)
+	WriteBytes64([]byte)
+	WriteString0(string)
 	WriteStringX(string)
 	WriteString8(string)
 	WriteString16(string)
+	WriteString24(string)
 	WriteString32(string)
+	WriteString40(string)
+	WriteString48(string)
+	WriteString56(string)
 	WriteString64(string)
 }
 ```
@@ -2556,12 +2663,19 @@ func (e *StickyLittleEndianWriter) WriteByte(c byte) error
 ```
 WriteByte implements the io.ByteWriter interface.
 
+#### func (*StickyLittleEndianWriter) WriteBytes
+
+```go
+func (e *StickyLittleEndianWriter) WriteBytes(d []byte)
+```
+WriteBytes Writes a []byte.
+
 #### func (*StickyLittleEndianWriter) WriteBytes16
 
 ```go
 func (e *StickyLittleEndianWriter) WriteBytes16(p []byte)
 ```
-WriteBytes16 Writes the length of the Bytes, using ReadUint16 and then Writes
+WriteBytes16 Writes the length of the Bytes, using WriteUint16 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteBytes24
@@ -2569,7 +2683,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteBytes24(p []byte)
 ```
-WriteBytes24 Writes the length of the Bytes, using ReadUint24 and then Writes
+WriteBytes24 Writes the length of the Bytes, using WriteUint24 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteBytes32
@@ -2577,7 +2691,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteBytes32(p []byte)
 ```
-WriteBytes32 Writes the length of the Bytes, using ReadUint32 and then Writes
+WriteBytes32 Writes the length of the Bytes, using WriteUint32 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteBytes40
@@ -2585,7 +2699,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteBytes40(p []byte)
 ```
-WriteBytes40 Writes the length of the Bytes, using ReadUint40 and then Writes
+WriteBytes40 Writes the length of the Bytes, using WriteUint40 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteBytes48
@@ -2593,7 +2707,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteBytes48(p []byte)
 ```
-WriteBytes48 Writes the length of the Bytes, using ReadUint48 and then Writes
+WriteBytes48 Writes the length of the Bytes, using WriteUint48 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteBytes56
@@ -2601,7 +2715,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteBytes56(p []byte)
 ```
-WriteBytes56 Writes the length of the Bytes, using ReadUint56 and then Writes
+WriteBytes56 Writes the length of the Bytes, using WriteUint56 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteBytes64
@@ -2609,7 +2723,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteBytes64(p []byte)
 ```
-WriteBytes64 Writes the length of the Bytes, using ReadUint64 and then Writes
+WriteBytes64 Writes the length of the Bytes, using WriteUint64 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteBytes8
@@ -2617,7 +2731,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteBytes8(p []byte)
 ```
-WriteBytes8 Writes the length of the Bytes, using ReadUint8 and then Writes the
+WriteBytes8 Writes the length of the Bytes, using WriteUint8 and then Writes the
 bytes.
 
 #### func (*StickyLittleEndianWriter) WriteBytesX
@@ -2625,7 +2739,7 @@ bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteBytesX(p []byte)
 ```
-WriteBytesX Writes the length of the Bytes, using ReadUintX and then Writes the
+WriteBytesX Writes the length of the Bytes, using WriteUintX and then Writes the
 bytes.
 
 #### func (*StickyLittleEndianWriter) WriteFloat32
@@ -2734,7 +2848,7 @@ WriteString0 Writes the bytes of the string ending with a 0 byte.
 ```go
 func (e *StickyLittleEndianWriter) WriteString16(p string)
 ```
-WriteString16 Writes the length of the String, using ReadUint16 and then Writes
+WriteString16 Writes the length of the String, using WriteUint16 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteString24
@@ -2742,7 +2856,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteString24(p string)
 ```
-WriteString24 Writes the length of the String, using ReadUint24 and then Writes
+WriteString24 Writes the length of the String, using WriteUint24 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteString32
@@ -2750,7 +2864,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteString32(p string)
 ```
-WriteString32 Writes the length of the String, using ReadUint32 and then Writes
+WriteString32 Writes the length of the String, using WriteUint32 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteString40
@@ -2758,7 +2872,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteString40(p string)
 ```
-WriteString40 Writes the length of the String, using ReadUint40 and then Writes
+WriteString40 Writes the length of the String, using WriteUint40 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteString48
@@ -2766,7 +2880,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteString48(p string)
 ```
-WriteString48 Writes the length of the String, using ReadUint48 and then Writes
+WriteString48 Writes the length of the String, using WriteUint48 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteString56
@@ -2774,7 +2888,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteString56(p string)
 ```
-WriteString56 Writes the length of the String, using ReadUint56 and then Writes
+WriteString56 Writes the length of the String, using WriteUint56 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteString64
@@ -2782,7 +2896,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteString64(p string)
 ```
-WriteString64 Writes the length of the String, using ReadUint64 and then Writes
+WriteString64 Writes the length of the String, using WriteUint64 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteString8
@@ -2790,7 +2904,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteString8(p string)
 ```
-WriteString8 Writes the length of the String, using ReadUint8 and then Writes
+WriteString8 Writes the length of the String, using WriteUint8 and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteStringX
@@ -2798,7 +2912,7 @@ the bytes.
 ```go
 func (e *StickyLittleEndianWriter) WriteStringX(p string)
 ```
-WriteStringX Writes the length of the String, using ReadUintX and then Writes
+WriteStringX Writes the length of the String, using WriteUintX and then Writes
 the bytes.
 
 #### func (*StickyLittleEndianWriter) WriteUint16
@@ -2882,7 +2996,7 @@ type StickyReader struct {
 }
 ```
 
-StickyReader will wrap an EndianReader and record all bytes read and errors
+StickyReader will wrap an EndianReader and count all byte handled and errors
 received. Byte counts and errors will not be returned from any method (except
 Read so it still counts as an io.Reader), but can be retrieved from this type.
 All methods will be a no-op after an error has been returned, returning 0,
@@ -2895,75 +3009,306 @@ func (s *StickyReader) Read(b []byte) (int, error)
 ```
 Read will do a simple byte read from the underlying io.Reader.
 
+#### func (*StickyReader) ReadBool
+
+```go
+func (s *StickyReader) ReadBool() bool
+```
+Read will Read a boolean with the underlying io.Reader.
+
+#### func (*StickyReader) ReadByte
+
+```go
+func (s *StickyReader) ReadByte() (byte, error)
+```
+Read will Read a byte read with the underlying io.Reader.
+
+#### func (*StickyReader) ReadBytes
+
+```go
+func (s *StickyReader) ReadBytes(p int) []byte
+```
+ReadBytes will read a bytes using the underlying ReadBytes method.
+
+#### func (*StickyReader) ReadBytes16
+
+```go
+func (s *StickyReader) ReadBytes16() []byte
+```
+ReadBytes16 will read a bytes using the underlying ReadBytes16 method.
+
+#### func (*StickyReader) ReadBytes24
+
+```go
+func (s *StickyReader) ReadBytes24() []byte
+```
+ReadBytes24 will read a bytes using the underlying ReadBytes24 method.
+
+#### func (*StickyReader) ReadBytes32
+
+```go
+func (s *StickyReader) ReadBytes32() []byte
+```
+ReadBytes32 will read a bytes using the underlying ReadBytes32 method.
+
+#### func (*StickyReader) ReadBytes40
+
+```go
+func (s *StickyReader) ReadBytes40() []byte
+```
+ReadBytes40 will read a bytes using the underlying ReadBytes40 method.
+
+#### func (*StickyReader) ReadBytes48
+
+```go
+func (s *StickyReader) ReadBytes48() []byte
+```
+ReadBytes48 will read a bytes using the underlying ReadBytes48 method.
+
+#### func (*StickyReader) ReadBytes56
+
+```go
+func (s *StickyReader) ReadBytes56() []byte
+```
+ReadBytes56 will read a bytes using the underlying ReadBytes56 method.
+
+#### func (*StickyReader) ReadBytes64
+
+```go
+func (s *StickyReader) ReadBytes64() []byte
+```
+ReadBytes64 will read a bytes using the underlying ReadBytes64 method.
+
+#### func (*StickyReader) ReadBytes8
+
+```go
+func (s *StickyReader) ReadBytes8() []byte
+```
+ReadBytes8 will read a bytes using the underlying ReadBytes8 method.
+
+#### func (*StickyReader) ReadBytesX
+
+```go
+func (s *StickyReader) ReadBytesX() []byte
+```
+ReadBytesX will read a bytes using the underlying ReadBytesX method.
+
 #### func (*StickyReader) ReadFloat32
 
 ```go
 func (s *StickyReader) ReadFloat32() float32
 ```
-ReadFloat32 will read a float32 from the underlying reader.
+ReadFloat32 will read a float32 using the underlying reader.
 
 #### func (*StickyReader) ReadFloat64
 
 ```go
 func (s *StickyReader) ReadFloat64() float64
 ```
-ReadFloat64 will read a float64 from the underlying reader.
+ReadFloat64 will read a float64 using the underlying reader.
 
 #### func (*StickyReader) ReadInt16
 
 ```go
 func (s *StickyReader) ReadInt16() int16
 ```
-ReadInt16 will read a int16 from the underlying reader.
+ReadInt16 will read a int16 using the underlying reader.
+
+#### func (*StickyReader) ReadInt24
+
+```go
+func (s *StickyReader) ReadInt24() int32
+```
+ReadInt24 will read a int24 using the underlying reader.
 
 #### func (*StickyReader) ReadInt32
 
 ```go
 func (s *StickyReader) ReadInt32() int32
 ```
-ReadInt32 will read a int32 from the underlying reader.
+ReadInt32 will read a int32 using the underlying reader.
+
+#### func (*StickyReader) ReadInt40
+
+```go
+func (s *StickyReader) ReadInt40() int64
+```
+ReadInt40 will read a int40 using the underlying reader.
+
+#### func (*StickyReader) ReadInt48
+
+```go
+func (s *StickyReader) ReadInt48() int64
+```
+ReadInt48 will read a int48 using the underlying reader.
+
+#### func (*StickyReader) ReadInt56
+
+```go
+func (s *StickyReader) ReadInt56() int64
+```
+ReadInt56 will read a int56 using the underlying reader.
 
 #### func (*StickyReader) ReadInt64
 
 ```go
 func (s *StickyReader) ReadInt64() int64
 ```
-ReadInt64 will read a int64 from the underlying reader.
+ReadInt64 will read a int64 using the underlying reader.
 
 #### func (*StickyReader) ReadInt8
 
 ```go
 func (s *StickyReader) ReadInt8() int8
 ```
-ReadInt8 will read a int8 from the underlying reader.
+ReadInt8 will read a int8 using the underlying reader.
+
+#### func (*StickyReader) ReadIntX
+
+```go
+func (s *StickyReader) ReadIntX() int64
+```
+ReadIntX will read a 64-bit var-int using the underlying ReadIntX method.
+
+#### func (*StickyReader) ReadString
+
+```go
+func (s *StickyReader) ReadString(p int) string
+```
+ReadString will read a string using the underlying ReadString method.
+
+#### func (*StickyReader) ReadString0
+
+```go
+func (s *StickyReader) ReadString0() string
+```
+ReadString0 will read a string using the underlying ReadString0 method.
+
+#### func (*StickyReader) ReadString16
+
+```go
+func (s *StickyReader) ReadString16() string
+```
+ReadString16 will read a string using the underlying ReadString16 method.
+
+#### func (*StickyReader) ReadString24
+
+```go
+func (s *StickyReader) ReadString24() string
+```
+ReadString24 will read a string using the underlying ReadString24 method.
+
+#### func (*StickyReader) ReadString32
+
+```go
+func (s *StickyReader) ReadString32() string
+```
+ReadString32 will read a string using the underlying ReadString32 method.
+
+#### func (*StickyReader) ReadString40
+
+```go
+func (s *StickyReader) ReadString40() string
+```
+ReadString40 will read a string using the underlying ReadString40 method.
+
+#### func (*StickyReader) ReadString48
+
+```go
+func (s *StickyReader) ReadString48() string
+```
+ReadString48 will read a string using the underlying ReadString48 method.
+
+#### func (*StickyReader) ReadString56
+
+```go
+func (s *StickyReader) ReadString56() string
+```
+ReadString56 will read a string using the underlying ReadString56 method.
+
+#### func (*StickyReader) ReadString64
+
+```go
+func (s *StickyReader) ReadString64() string
+```
+ReadString64 will read a string using the underlying ReadString64 method.
+
+#### func (*StickyReader) ReadString8
+
+```go
+func (s *StickyReader) ReadString8() string
+```
+ReadString8 will read a string using the underlying ReadString8 method.
+
+#### func (*StickyReader) ReadStringX
+
+```go
+func (s *StickyReader) ReadStringX() string
+```
+ReadStringX will read a string using the underlying ReadStringX method.
 
 #### func (*StickyReader) ReadUint16
 
 ```go
 func (s *StickyReader) ReadUint16() uint16
 ```
-ReadUint16 will read a uint16 from the underlying reader.
+ReadUint16 will read a uint16 using the underlying reader.
+
+#### func (*StickyReader) ReadUint24
+
+```go
+func (s *StickyReader) ReadUint24() uint32
+```
+ReadUint24 will read a uint24 using the underlying reader.
 
 #### func (*StickyReader) ReadUint32
 
 ```go
 func (s *StickyReader) ReadUint32() uint32
 ```
-ReadUint32 will read a uint32 from the underlying reader.
+ReadUint32 will read a uint32 using the underlying reader.
+
+#### func (*StickyReader) ReadUint40
+
+```go
+func (s *StickyReader) ReadUint40() uint64
+```
+ReadUint40 will read a uint40 using the underlying reader.
+
+#### func (*StickyReader) ReadUint48
+
+```go
+func (s *StickyReader) ReadUint48() uint64
+```
+ReadUint48 will read a uint48 using the underlying reader.
+
+#### func (*StickyReader) ReadUint56
+
+```go
+func (s *StickyReader) ReadUint56() uint64
+```
+ReadUint56 will read a uint56 using the underlying reader.
 
 #### func (*StickyReader) ReadUint64
 
 ```go
 func (s *StickyReader) ReadUint64() uint64
 ```
-ReadUint64 will read a uint64 from the underlying reader.
+ReadUint64 will read a uint64 using the underlying reader.
 
 #### func (*StickyReader) ReadUint8
 
 ```go
 func (s *StickyReader) ReadUint8() uint8
 ```
-ReadUint8 will read a uint8 from the underlying reader.
+ReadUint8 will read a uint8 using the underlying reader.
+
+#### func (*StickyReader) ReadUintX
+
+```go
+func (s *StickyReader) ReadUintX() uint64
+```
+ReadUintX will read a 64-bit var-uint using the underlying ReadUintX method.
 
 #### type StickyWriter
 
@@ -2975,85 +3320,316 @@ type StickyWriter struct {
 }
 ```
 
-StickyWriter will wrap an EndianWriter and record all bytes written and errors
+StickyWriter will wrap an EndianWriter and count all byte handled and errors
 received. Byte counts and errors will not be returned from any method (except
-Write, so it still counts as an io.Writer), but can be retrieved from this type.
-All methods will be a no-op after an error has been returned, unless that error
-is cleared on the type.
+Write so it still counts as an io.Writer), but can be retrieved from this type.
+All methods will be a no-op after an error has been returned, returning 0,
+unless that error is cleared on the type.
 
 #### func (*StickyWriter) Write
 
 ```go
-func (s *StickyWriter) Write(p []byte) (int, error)
+func (s *StickyWriter) Write(b []byte) (int, error)
 ```
-Write will do a simple byte write to the underlying io.Writer.
+Write will do a simple byte write from the underlying io.Writer.
+
+#### func (*StickyWriter) WriteBool
+
+```go
+func (s *StickyWriter) WriteBool(b bool)
+```
+Write will Write a boolean with the underlying io.Writer.
+
+#### func (*StickyWriter) WriteByte
+
+```go
+func (s *StickyWriter) WriteByte(b byte) error
+```
+Write will Write a byte write with the underlying io.Writer.
+
+#### func (*StickyWriter) WriteBytes
+
+```go
+func (s *StickyWriter) WriteBytes(p []byte)
+```
+WriteBytes will write a bytes using the underlying WriteBytes method.
+
+#### func (*StickyWriter) WriteBytes16
+
+```go
+func (s *StickyWriter) WriteBytes16(p []byte)
+```
+WriteBytes16 will write a bytes using the underlying WriteBytes16 method.
+
+#### func (*StickyWriter) WriteBytes24
+
+```go
+func (s *StickyWriter) WriteBytes24(p []byte)
+```
+WriteBytes24 will write a bytes using the underlying WriteBytes24 method.
+
+#### func (*StickyWriter) WriteBytes32
+
+```go
+func (s *StickyWriter) WriteBytes32(p []byte)
+```
+WriteBytes32 will write a bytes using the underlying WriteBytes32 method.
+
+#### func (*StickyWriter) WriteBytes40
+
+```go
+func (s *StickyWriter) WriteBytes40(p []byte)
+```
+WriteBytes40 will write a bytes using the underlying WriteBytes40 method.
+
+#### func (*StickyWriter) WriteBytes48
+
+```go
+func (s *StickyWriter) WriteBytes48(p []byte)
+```
+WriteBytes48 will write a bytes using the underlying WriteBytes48 method.
+
+#### func (*StickyWriter) WriteBytes56
+
+```go
+func (s *StickyWriter) WriteBytes56(p []byte)
+```
+WriteBytes56 will write a bytes using the underlying WriteBytes56 method.
+
+#### func (*StickyWriter) WriteBytes64
+
+```go
+func (s *StickyWriter) WriteBytes64(p []byte)
+```
+WriteBytes64 will write a bytes using the underlying WriteBytes64 method.
+
+#### func (*StickyWriter) WriteBytes8
+
+```go
+func (s *StickyWriter) WriteBytes8(p []byte)
+```
+WriteBytes8 will write a bytes using the underlying WriteBytes8 method.
+
+#### func (*StickyWriter) WriteBytesX
+
+```go
+func (s *StickyWriter) WriteBytesX(p []byte)
+```
+WriteBytesX will write a bytes using the underlying WriteBytesX method.
 
 #### func (*StickyWriter) WriteFloat32
 
 ```go
 func (s *StickyWriter) WriteFloat32(i float32)
 ```
-WriteFloat32 will write a float32 to the underlying writer.
+WriteFloat32 will write a float32 using the underlying writer.
 
 #### func (*StickyWriter) WriteFloat64
 
 ```go
 func (s *StickyWriter) WriteFloat64(i float64)
 ```
-WriteFloat64 will write a float64 to the underlying writer.
+WriteFloat64 will write a float64 using the underlying writer.
 
 #### func (*StickyWriter) WriteInt16
 
 ```go
 func (s *StickyWriter) WriteInt16(i int16)
 ```
-WriteInt16 will write a int16 to the underlying writer.
+WriteInt16 will write a int16 using the underlying writer.
+
+#### func (*StickyWriter) WriteInt24
+
+```go
+func (s *StickyWriter) WriteInt24(i int32)
+```
+WriteInt24 will write a int24 using the underlying writer.
 
 #### func (*StickyWriter) WriteInt32
 
 ```go
 func (s *StickyWriter) WriteInt32(i int32)
 ```
-WriteInt32 will write a int32 to the underlying writer.
+WriteInt32 will write a int32 using the underlying writer.
+
+#### func (*StickyWriter) WriteInt40
+
+```go
+func (s *StickyWriter) WriteInt40(i int64)
+```
+WriteInt40 will write a int40 using the underlying writer.
+
+#### func (*StickyWriter) WriteInt48
+
+```go
+func (s *StickyWriter) WriteInt48(i int64)
+```
+WriteInt48 will write a int48 using the underlying writer.
+
+#### func (*StickyWriter) WriteInt56
+
+```go
+func (s *StickyWriter) WriteInt56(i int64)
+```
+WriteInt56 will write a int56 using the underlying writer.
 
 #### func (*StickyWriter) WriteInt64
 
 ```go
 func (s *StickyWriter) WriteInt64(i int64)
 ```
-WriteInt64 will write a int64 to the underlying writer.
+WriteInt64 will write a int64 using the underlying writer.
 
 #### func (*StickyWriter) WriteInt8
 
 ```go
 func (s *StickyWriter) WriteInt8(i int8)
 ```
-WriteInt8 will write a int8 to the underlying writer.
+WriteInt8 will write a int8 using the underlying writer.
+
+#### func (*StickyWriter) WriteIntX
+
+```go
+func (s *StickyWriter) WriteIntX(i int64)
+```
+WriteIntX will write a 64-bit var-int using the underlying WriteIntX method.
+
+#### func (*StickyWriter) WriteString
+
+```go
+func (s *StickyWriter) WriteString(p string) (int, error)
+```
+WriteString will write a string using the underlying WriteString method.
+
+#### func (*StickyWriter) WriteString0
+
+```go
+func (s *StickyWriter) WriteString0(p string)
+```
+WriteString0 will write a string using the underlying WriteString0 method.
+
+#### func (*StickyWriter) WriteString16
+
+```go
+func (s *StickyWriter) WriteString16(p string)
+```
+WriteString16 will write a string using the underlying WriteString16 method.
+
+#### func (*StickyWriter) WriteString24
+
+```go
+func (s *StickyWriter) WriteString24(p string)
+```
+WriteString24 will write a string using the underlying WriteString24 method.
+
+#### func (*StickyWriter) WriteString32
+
+```go
+func (s *StickyWriter) WriteString32(p string)
+```
+WriteString32 will write a string using the underlying WriteString32 method.
+
+#### func (*StickyWriter) WriteString40
+
+```go
+func (s *StickyWriter) WriteString40(p string)
+```
+WriteString40 will write a string using the underlying WriteString40 method.
+
+#### func (*StickyWriter) WriteString48
+
+```go
+func (s *StickyWriter) WriteString48(p string)
+```
+WriteString48 will write a string using the underlying WriteString48 method.
+
+#### func (*StickyWriter) WriteString56
+
+```go
+func (s *StickyWriter) WriteString56(p string)
+```
+WriteString56 will write a string using the underlying WriteString56 method.
+
+#### func (*StickyWriter) WriteString64
+
+```go
+func (s *StickyWriter) WriteString64(p string)
+```
+WriteString64 will write a string using the underlying WriteString64 method.
+
+#### func (*StickyWriter) WriteString8
+
+```go
+func (s *StickyWriter) WriteString8(p string)
+```
+WriteString8 will write a string using the underlying WriteString8 method.
+
+#### func (*StickyWriter) WriteStringX
+
+```go
+func (s *StickyWriter) WriteStringX(p string)
+```
+WriteStringX will write a string using the underlying WriteStringX method.
 
 #### func (*StickyWriter) WriteUint16
 
 ```go
 func (s *StickyWriter) WriteUint16(i uint16)
 ```
-WriteUint16 will write a uint16 to the underlying writer.
+WriteUint16 will write a uint16 using the underlying writer.
+
+#### func (*StickyWriter) WriteUint24
+
+```go
+func (s *StickyWriter) WriteUint24(i uint32)
+```
+WriteUint24 will write a uint24 using the underlying writer.
 
 #### func (*StickyWriter) WriteUint32
 
 ```go
 func (s *StickyWriter) WriteUint32(i uint32)
 ```
-WriteUint32 will write a uint32 to the underlying writer.
+WriteUint32 will write a uint32 using the underlying writer.
+
+#### func (*StickyWriter) WriteUint40
+
+```go
+func (s *StickyWriter) WriteUint40(i uint64)
+```
+WriteUint40 will write a uint40 using the underlying writer.
+
+#### func (*StickyWriter) WriteUint48
+
+```go
+func (s *StickyWriter) WriteUint48(i uint64)
+```
+WriteUint48 will write a uint48 using the underlying writer.
+
+#### func (*StickyWriter) WriteUint56
+
+```go
+func (s *StickyWriter) WriteUint56(i uint64)
+```
+WriteUint56 will write a uint56 using the underlying writer.
 
 #### func (*StickyWriter) WriteUint64
 
 ```go
 func (s *StickyWriter) WriteUint64(i uint64)
 ```
-WriteUint64 will write a uint64 to the underlying writer.
+WriteUint64 will write a uint64 using the underlying writer.
 
 #### func (*StickyWriter) WriteUint8
 
 ```go
 func (s *StickyWriter) WriteUint8(i uint8)
 ```
-WriteUint8 will write a uint8 to the underlying writer.
+WriteUint8 will write a uint8 using the underlying writer.
+
+#### func (*StickyWriter) WriteUintX
+
+```go
+func (s *StickyWriter) WriteUintX(i uint64)
+```
+WriteUintX will write a 64-bit var-uint using the underlying WriteUintX method.
