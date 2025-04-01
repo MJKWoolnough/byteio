@@ -526,3 +526,133 @@ HEREDOC
 		done;
 	done;
 done;
+
+(
+	cat <<HEREDOC
+package byteio
+
+// File automatically generated with ./gen.sh.
+HEREDOC
+
+
+	readWrite | while read rw er; do
+		declare r="${rw/Write/}"
+		declare w="${rw/Read/}"
+
+		cat <<HEREDOC
+
+// Sticky$rw$er will wrap an Endian$rw$er and count all byte handled and errors
+// received.
+// Byte counts and errors will not be returned from any method (except $rw so
+// it still counts as an io.$rw$er), but can be retrieved from this type.
+// All methods will be a no-op after an error has been returned, returning 0,
+// unless that error is cleared on the type.
+type Sticky$rw$er struct {
+	$rw$er Endian${rw}${er}
+	Err    error
+	Count  int64
+}
+
+// $rw will do a simple byte ${rw@L} from the underlying io.$rw$er.
+func (s *Sticky$rw$er) $rw(b []byte) (int, error) {
+	if s.Err != nil {
+		return 0, s.Err
+	}
+
+	n, err := s.$rw$er.$rw(b)
+	s.Err = err
+	s.Count += int64(n)
+
+	return n, err
+}
+
+// $rw will $rw a byte ${rw@L} with the underlying io.$rw$er.
+func (s *Sticky$rw$er) ${rw}Byte(${w:+b byte}) ${r:+(byte, error)}${w:+error} {
+	if s.Err != nil {
+		return ${r:+0, }s.Err
+	}
+
+	${r:+b, }err := s.$rw$er.${rw}Byte(${w:+b})
+	s.Err = err
+	s.Count++
+
+	return ${r:+b, }err
+}
+
+// $rw will $rw a boolean with the underlying io.$rw$er.
+func (s *Sticky$rw$er) ${rw}Bool(${w:+b bool})${r:+ bool} {
+	if s.Err != nil {
+		return${r:+ false}
+	}
+
+	${r:+b, }n, err := s.$rw$er.${rw}Bool(${w:+b})
+	s.Err = err
+	s.Count += int64(n)${r:+$(echo -e "\n\n\t")return b}
+}
+HEREDOC
+		numberTypes | while read t i ti; do
+			cat <<HEREDOC
+
+// $rw$t$i will ${rw@L} a ${t@L}$i using the underlying ${rw@L}$er.
+func (s *Sticky$rw$er) $rw$t$i(${w:+i ${t@L}$ti})${r:+ ${t@L}$ti} {
+	if s.Err != nil {
+		return${r:+ 0}
+	}
+
+	${r:+i, }n, err := s.$rw$er.$rw$t$i(${w:+i})
+	s.Err = err
+	s.Count += int64(n)${r:+$(echo -e "\n\n\t")return i}
+}
+HEREDOC
+		done;
+
+		for i in Int Uint; do 
+			cat <<HEREDOC
+
+// $rw${i}X will ${rw@L} a 64-bit var-${i@L} using the underlying $rw${i}X method.
+func (s *Sticky$rw$er) $rw${i}X(${w:+i ${i@L}64})${r:+ ${i@L}64} {
+	if s.Err != nil {
+		return${r:+ 0}
+	}
+
+	${r:+i, }n, err := s.$rw$er.$rw${i}X(${w:+i})
+	s.Err = err
+	s.Count += int64(n)${r:+$(echo -e "\n\n\t")return i}
+}
+HEREDOC
+		done;
+
+		bytesStrings | while read t type empty tt; do
+			for size in "" "0" "X" 8 16 24 32 40 48 56 64; do
+				declare ptype="$type";
+				declare x="";
+
+				if [ "$size" = "0" -a "$t" = "Bytes" ]; then
+					continue
+				elif [ "$size" = "" -a "$rw" = "Read" ]; then
+					ptype="int"
+					w="1"
+				elif [ "$size" = "" -a "$rw" = "Write" -a "$t" = "String" ]; then
+					x="1";
+				fi;
+
+				cat <<HEREDOC
+
+// $rw$t$size will ${rw@L} a ${t@L} using the underlying $rw$t$size method.
+func (s *Sticky$rw$er) $rw$t$size(${w:+p $ptype})${r:+ $type}${x:+ (int, error)} {
+	if s.Err != nil {
+		return${r:+ $empty}${x:+ 0, s.Err}
+	}
+
+	${r:+r, }n, err := s.$rw$er.$rw$t$size(${w:+p})
+	s.Err = err
+	s.Count += int64(n)${r:+$(echo -e "\n\n\t")return r}${x:+$(echo -e "\n\n\t")return n, err}
+}
+HEREDOC
+
+				w="${rw/Read/}"
+				r="${rw/Write/}"
+			done;
+		done
+	done;
+) > "sticky.go"
