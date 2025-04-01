@@ -314,7 +314,7 @@ HEREDOC
 						echo -n "d ${type})"
 
 						if [ -z "$s" ]; then
-							echo "(int, error) {";
+							echo " (int, error) {";
 
 							if [ "$t" = "String" ]; then
 								echo "	return io.WriteString(e.Writer, d)";

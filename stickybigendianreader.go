@@ -22,8 +22,8 @@ func (e *StickyBigEndianReader) Read(p []byte) (int, error) {
 		return 0, e.Err
 	}
 
-	var n int
-	n, e.Err = io.ReadFull(e.Reader, p)
+	n, err := io.ReadFull(e.Reader, p)
+	e.Err = err
 	e.Count += int64(n)
 
 	return n, e.Err
@@ -42,7 +42,6 @@ func (e *StickyBigEndianReader) ReadInt8() int8 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:1])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -62,7 +61,6 @@ func (e *StickyBigEndianReader) ReadInt16() int16 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:2])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -82,7 +80,6 @@ func (e *StickyBigEndianReader) ReadInt24() int32 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:3])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -102,7 +99,6 @@ func (e *StickyBigEndianReader) ReadInt32() int32 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:4])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -122,7 +118,6 @@ func (e *StickyBigEndianReader) ReadInt40() int64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:5])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -142,7 +137,6 @@ func (e *StickyBigEndianReader) ReadInt48() int64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:6])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -162,7 +156,6 @@ func (e *StickyBigEndianReader) ReadInt56() int64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:7])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -182,7 +175,6 @@ func (e *StickyBigEndianReader) ReadInt64() int64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:8])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -202,7 +194,6 @@ func (e *StickyBigEndianReader) ReadUint8() uint8 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:1])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -222,7 +213,6 @@ func (e *StickyBigEndianReader) ReadUint16() uint16 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:2])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -242,7 +232,6 @@ func (e *StickyBigEndianReader) ReadUint24() uint32 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:3])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -262,7 +251,6 @@ func (e *StickyBigEndianReader) ReadUint32() uint32 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:4])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -282,7 +270,6 @@ func (e *StickyBigEndianReader) ReadUint40() uint64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:5])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -302,7 +289,6 @@ func (e *StickyBigEndianReader) ReadUint48() uint64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:6])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -322,7 +308,6 @@ func (e *StickyBigEndianReader) ReadUint56() uint64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:7])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -342,7 +327,6 @@ func (e *StickyBigEndianReader) ReadUint64() uint64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:8])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -362,7 +346,6 @@ func (e *StickyBigEndianReader) ReadFloat32() float32 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:4])
-
 	e.Count += int64(n)
 
 	if err != nil {
@@ -382,7 +365,6 @@ func (e *StickyBigEndianReader) ReadFloat64() float64 {
 	}
 
 	n, err := io.ReadFull(e.Reader, e.buffer[:8])
-
 	e.Count += int64(n)
 
 	if err != nil {

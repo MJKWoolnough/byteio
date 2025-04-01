@@ -18,9 +18,9 @@ type LittleEndianWriter struct {
 func (e *LittleEndianWriter) WriteBool(b bool) (int, error) {
 	if b {
 		return e.WriteUint8(1)
+	} else {
+		return e.WriteUint8(0)
 	}
-
-	return e.WriteUint8(0)
 }
 
 // WriteInt8 Writes a 8 bit int as a int8 using the underlying io.Writer.
@@ -256,7 +256,12 @@ func (e *LittleEndianWriter) WriteFloat64(d float64) (int, error) {
 	return e.Writer.Write(e.buffer[:8])
 }
 
-// WriteBytesX Writes the length of the Bytes, using ReadUintX and then Writes the bytes.
+// WriteBytes Writes a []byte.
+func (e *LittleEndianWriter) WriteBytes(d []byte) (int, error) {
+	return e.Write(d)
+}
+
+// WriteBytesX Writes the length of the Bytes, using WriteUintX and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytesX(p []byte) (int, error) {
 	n, err := e.WriteUintX(uint64(len(p)))
 	if err != nil {
@@ -268,7 +273,7 @@ func (e *LittleEndianWriter) WriteBytesX(p []byte) (int, error) {
 	return n + m, err
 }
 
-// WriteBytes8 Writes the length of the Bytes, using ReadUint8 and then Writes the bytes.
+// WriteBytes8 Writes the length of the Bytes, using WriteUint8 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytes8(p []byte) (int, error) {
 	n, err := e.WriteUint8(uint8(len(p)))
 	if err != nil {
@@ -280,7 +285,7 @@ func (e *LittleEndianWriter) WriteBytes8(p []byte) (int, error) {
 	return n + m, err
 }
 
-// WriteBytes16 Writes the length of the Bytes, using ReadUint16 and then Writes the bytes.
+// WriteBytes16 Writes the length of the Bytes, using WriteUint16 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytes16(p []byte) (int, error) {
 	n, err := e.WriteUint16(uint16(len(p)))
 	if err != nil {
@@ -292,7 +297,7 @@ func (e *LittleEndianWriter) WriteBytes16(p []byte) (int, error) {
 	return n + m, err
 }
 
-// WriteBytes24 Writes the length of the Bytes, using ReadUint24 and then Writes the bytes.
+// WriteBytes24 Writes the length of the Bytes, using WriteUint24 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytes24(p []byte) (int, error) {
 	n, err := e.WriteUint24(uint32(len(p)))
 	if err != nil {
@@ -304,7 +309,7 @@ func (e *LittleEndianWriter) WriteBytes24(p []byte) (int, error) {
 	return n + m, err
 }
 
-// WriteBytes32 Writes the length of the Bytes, using ReadUint32 and then Writes the bytes.
+// WriteBytes32 Writes the length of the Bytes, using WriteUint32 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytes32(p []byte) (int, error) {
 	n, err := e.WriteUint32(uint32(len(p)))
 	if err != nil {
@@ -316,7 +321,7 @@ func (e *LittleEndianWriter) WriteBytes32(p []byte) (int, error) {
 	return n + m, err
 }
 
-// WriteBytes40 Writes the length of the Bytes, using ReadUint40 and then Writes the bytes.
+// WriteBytes40 Writes the length of the Bytes, using WriteUint40 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytes40(p []byte) (int, error) {
 	n, err := e.WriteUint40(uint64(len(p)))
 	if err != nil {
@@ -328,7 +333,7 @@ func (e *LittleEndianWriter) WriteBytes40(p []byte) (int, error) {
 	return n + m, err
 }
 
-// WriteBytes48 Writes the length of the Bytes, using ReadUint48 and then Writes the bytes.
+// WriteBytes48 Writes the length of the Bytes, using WriteUint48 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytes48(p []byte) (int, error) {
 	n, err := e.WriteUint48(uint64(len(p)))
 	if err != nil {
@@ -340,7 +345,7 @@ func (e *LittleEndianWriter) WriteBytes48(p []byte) (int, error) {
 	return n + m, err
 }
 
-// WriteBytes56 Writes the length of the Bytes, using ReadUint56 and then Writes the bytes.
+// WriteBytes56 Writes the length of the Bytes, using WriteUint56 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytes56(p []byte) (int, error) {
 	n, err := e.WriteUint56(uint64(len(p)))
 	if err != nil {
@@ -352,7 +357,7 @@ func (e *LittleEndianWriter) WriteBytes56(p []byte) (int, error) {
 	return n + m, err
 }
 
-// WriteBytes64 Writes the length of the Bytes, using ReadUint64 and then Writes the bytes.
+// WriteBytes64 Writes the length of the Bytes, using WriteUint64 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteBytes64(p []byte) (int, error) {
 	n, err := e.WriteUint64(uint64(len(p)))
 	if err != nil {
@@ -369,7 +374,7 @@ func (e *LittleEndianWriter) WriteString(d string) (int, error) {
 	return io.WriteString(e.Writer, d)
 }
 
-// WriteStringX Writes the length of the String, using ReadUintX and then Writes the bytes.
+// WriteStringX Writes the length of the String, using WriteUintX and then Writes the bytes.
 func (e *LittleEndianWriter) WriteStringX(p string) (int, error) {
 	n, err := e.WriteUintX(uint64(len(p)))
 	if err != nil {
@@ -381,7 +386,7 @@ func (e *LittleEndianWriter) WriteStringX(p string) (int, error) {
 	return n + m, err
 }
 
-// WriteString8 Writes the length of the String, using ReadUint8 and then Writes the bytes.
+// WriteString8 Writes the length of the String, using WriteUint8 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteString8(p string) (int, error) {
 	n, err := e.WriteUint8(uint8(len(p)))
 	if err != nil {
@@ -393,7 +398,7 @@ func (e *LittleEndianWriter) WriteString8(p string) (int, error) {
 	return n + m, err
 }
 
-// WriteString16 Writes the length of the String, using ReadUint16 and then Writes the bytes.
+// WriteString16 Writes the length of the String, using WriteUint16 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteString16(p string) (int, error) {
 	n, err := e.WriteUint16(uint16(len(p)))
 	if err != nil {
@@ -405,7 +410,7 @@ func (e *LittleEndianWriter) WriteString16(p string) (int, error) {
 	return n + m, err
 }
 
-// WriteString24 Writes the length of the String, using ReadUint24 and then Writes the bytes.
+// WriteString24 Writes the length of the String, using WriteUint24 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteString24(p string) (int, error) {
 	n, err := e.WriteUint24(uint32(len(p)))
 	if err != nil {
@@ -417,7 +422,7 @@ func (e *LittleEndianWriter) WriteString24(p string) (int, error) {
 	return n + m, err
 }
 
-// WriteString32 Writes the length of the String, using ReadUint32 and then Writes the bytes.
+// WriteString32 Writes the length of the String, using WriteUint32 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteString32(p string) (int, error) {
 	n, err := e.WriteUint32(uint32(len(p)))
 	if err != nil {
@@ -429,7 +434,7 @@ func (e *LittleEndianWriter) WriteString32(p string) (int, error) {
 	return n + m, err
 }
 
-// WriteString40 Writes the length of the String, using ReadUint40 and then Writes the bytes.
+// WriteString40 Writes the length of the String, using WriteUint40 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteString40(p string) (int, error) {
 	n, err := e.WriteUint40(uint64(len(p)))
 	if err != nil {
@@ -441,7 +446,7 @@ func (e *LittleEndianWriter) WriteString40(p string) (int, error) {
 	return n + m, err
 }
 
-// WriteString48 Writes the length of the String, using ReadUint48 and then Writes the bytes.
+// WriteString48 Writes the length of the String, using WriteUint48 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteString48(p string) (int, error) {
 	n, err := e.WriteUint48(uint64(len(p)))
 	if err != nil {
@@ -453,7 +458,7 @@ func (e *LittleEndianWriter) WriteString48(p string) (int, error) {
 	return n + m, err
 }
 
-// WriteString56 Writes the length of the String, using ReadUint56 and then Writes the bytes.
+// WriteString56 Writes the length of the String, using WriteUint56 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteString56(p string) (int, error) {
 	n, err := e.WriteUint56(uint64(len(p)))
 	if err != nil {
@@ -465,7 +470,7 @@ func (e *LittleEndianWriter) WriteString56(p string) (int, error) {
 	return n + m, err
 }
 
-// WriteString64 Writes the length of the String, using ReadUint64 and then Writes the bytes.
+// WriteString64 Writes the length of the String, using WriteUint64 and then Writes the bytes.
 func (e *LittleEndianWriter) WriteString64(p string) (int, error) {
 	n, err := e.WriteUint64(uint64(len(p)))
 	if err != nil {
