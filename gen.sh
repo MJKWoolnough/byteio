@@ -27,6 +27,11 @@ readWrite() {
 	echo "Write r";
 }
 
+bytesStrings() {
+	echo "Bytes []byte nil";
+	echo "String string \"\" String";
+}
+
 for s in "" Sticky; do
 	for e in Big Little; do
 		declare startP;
@@ -41,6 +46,8 @@ for s in "" Sticky; do
 		fi;
 
 		readWrite | while read rw er; do
+			declare r="${rw/Write/}"
+			declare w="${rw/Read/}"
 			(
 				cat <<HEREDOC
 package byteio
@@ -56,15 +63,9 @@ import (
 // to make it easier to $rw fundamental types.
 type ${s}${e}Endian${rw}${er} struct {
 	io.${rw}${er}
-	buffer [9]byte
+	buffer [9]byte${s:+$(echo -e "\n\tErr    error\n\tCount  int64")}
+}
 HEREDOC
-				if [ ! -z "$s" ]; then
-					echo "	Err    error";
-					echo "	Count  int64";
-				fi;
-
-				echo "}";
-
 				if [ ! -z "$s" ]; then
 					cat <<HEREDOC
 
@@ -74,15 +75,15 @@ func (e *${s}${e}Endian${rw}${er}) ${rw}(p []byte) (int, error) {
 		return 0, e.Err
 	}
 
-	var n int
 HEREDOC
 					if [ "$rw" = "Read" ]; then
-						echo "	n, e.Err = io.ReadFull(e.Reader, p)";
+						echo "	n, err := io.ReadFull(e.Reader, p)";
 					else
-						echo "	n, e.Err = e.Writer.Write(p)";
+						echo "	n, err := e.Writer.Write(p)";
 					fi;
 
 					cat <<HEREDOC
+	e.Err = err
 	e.Count += int64(n)
 
 	return n, e.Err
@@ -111,9 +112,9 @@ HEREDOC
 					cat <<HEREDOC
 	if b {
 		${ret}e.WriteUint8(1)
+	} else {
+		${ret}e.WriteUint8(0)
 	}
-
-	${ret}e.WriteUint8(0)
 }
 HEREDOC
 				else
@@ -126,7 +127,7 @@ HEREDOC
 						echo "	return b != 0, n, err";
 						echo "}";
 					else
-						echo "bool {"a;
+						echo "bool {";
 						echo "	return e.ReadUint8() != 0";
 						echo "}";
 					fi;
@@ -182,7 +183,6 @@ HEREDOC
 						echo "	n, err := io.ReadFull(e.Reader, e.buffer[:$(( $i / 8 ))])";
 
 						if [ ! -z "$s" ]; then
-							echo;
 							echo "	e.Count += int64(n)";
 							echo;
 						fi;
@@ -305,89 +305,91 @@ HEREDOC
 					echo "}";
 				done;
 
-				declare type="[]byte";
+				bytesStrings | while read t type empty tt; do
+					echo;
+					echo "// ${rw}${t} ${rw}s a ${type}.";
+					echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}(";
 
-				for t in Bytes String; do
-					declare tt="$t";
+					if [ "$rw" = "Write" ]; then
+						echo -n "d ${type})"
 
-					if [ "$tt" = "Bytes" ]; then
-						tt="";
-					fi;
+						if [ -z "$s" ]; then
+							echo "(int, error) {";
 
-					if [ "$t" = "String" ] || [ "$rw" = "Read" ]; then
-						echo;
-						echo "// ${rw}${t} ${rw}s a ${type}.";
-						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}(";
-
-						if [ "$rw" = "Write" ]; then
-							echo "d ${type}) (int, error) {";
-
-							if [ -z "$s" ]; then
-								if [ "$t" = "String" ]; then
-									echo "	return io.WriteString(e.Writer, d)";
-								else
-									echo "	return e.Write(d)";
-								fi;
+							if [ "$t" = "String" ]; then
+								echo "	return io.WriteString(e.Writer, d)";
 							else
-								echo "	if e.Err != nil {";
-								echo "		return 0, e.Err";
-								echo "	}";
-								echo;
-								echo "	var n int";
-
-								if [ "$t" = "String" ]; then
-									echo "	n, e.Err = io.WriteString(e.Writer, d)";
-								else
-									echo "	n, e.Err = e.Write(d)";
-								fi;
-
-								echo "	e.Count += int64(n)";
-								echo;
-								echo "	return n, e.Err";
+								echo "	return e.Write(d)";
 							fi;
 						else
-							echo -n "size int) ";
-
-							if [ -z "$s" ]; then
-								echo "(${type}, int, error) {";
-								echo "	buf := make([]byte, size)";
-								echo "	n, err := io.ReadFull(e, buf)";
-								echo;
-
-								if [ "$t" = "String" ]; then
-									echo "	return string(buf[:n]), n, err";
-								else
-									echo "	return buf[:n], n, err";
-								fi;
+							if [ "$t" = "String" ]; then
+								echo " (int, error) {";
 							else
-								echo "${type} {";
-								echo "	if e.Err != nil {";
+								echo " {";
+							fi;
 
-								if [ "$t" = "String" ]; then
-									echo "		return \"\"";
-								else
-									echo "		return nil";
-								fi;
+							echo "	if e.Err != nil {";
 
-								echo "	}";
-								echo;
-								echo "	buf := make([]byte, size)";
-								echo;
-								echo "	var n int";
-								echo "	n, e.Err = io.ReadFull(e.Reader, buf)";
-								echo "	e.Count += int64(n)";
-								echo;
+							if [ "$t" = "String" ]; then
+							echo "		return 0, e.Err";
+							else
+							echo "		return";
+							fi;
 
-								if [ "$t" = "String" ]; then
-									echo "	return string(buf[:n])";
-								else
-									echo "	return buf[:n]";
-								fi;
+							echo "	}";
+							echo;
+
+							if [ "$t" = "String" ]; then
+								echo "	n, err := io.WriteString(e.Writer, d)";
+							else
+								echo "	n, err := e.Write(d)";
+							fi;
+
+							echo "	e.Count += int64(n)";
+							echo "	e.Err = err";
+
+							if [ "$t" = "String" ]; then
+								echo;
+								echo "	return n, err";
 							fi;
 						fi;
+					else
+						echo -n "size int) ";
 
-						echo "}";
+						if [ -z "$s" ]; then
+							echo "(${type}, int, error) {";
+
+							echo "	buf := make([]byte, size)";
+							echo "	n, err := io.ReadFull(e, buf)";
+							echo;
+
+							if [ "$t" = "String" ]; then
+								echo "	return string(buf[:n]), n, err";
+							else
+								echo "	return buf[:n], n, err";
+							fi;
+						else
+							echo "${type} {";
+							echo "	if e.Err != nil {";
+							echo "		return $empty";
+							echo "	}";
+							echo;
+							echo "	buf := make([]byte, size)";
+							echo;
+							echo "	var n int";
+							echo "	n, e.Err = io.ReadFull(e.Reader, buf)";
+							echo "	e.Count += int64(n)";
+							echo;
+
+							if [ "$t" = "String" ]; then
+								echo "	return string(buf[:n])";
+							else
+								echo "	return buf[:n]";
+							fi;
+						fi;
 					fi;
+
+					echo "}";
 
 					for size in "X" 8 16 24 32 40 48 56 64; do
 						tSize="$size";
@@ -401,7 +403,7 @@ HEREDOC
 						fi;
 
 						echo;
-						echo "// ${rw}${t}${size} ${rw}s the length of the ${t}, using ReadUint${size} and then ${rw}s the bytes.";
+						echo "// ${rw}${t}${size} ${rw}s the length of the ${t}, using ${rw}Uint${size} and then ${rw}s the bytes.";
 						echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}${size}(";
 
 						if [ "$rw" = "Write" ]; then
