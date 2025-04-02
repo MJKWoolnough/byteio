@@ -115,6 +115,12 @@ type StickyEndianReader interface {
 	ReadInt24() int32
 	ReadUint32() uint32
 	ReadInt32() int32
+	ReadUint40() uint64
+	ReadInt40() int64
+	ReadUint48() uint64
+	ReadInt48() int64
+	ReadUint56() uint64
+	ReadInt56() int64
 	ReadUint64() uint64
 	ReadInt64() int64
 	ReadFloat32() float32
