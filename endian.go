@@ -106,6 +106,8 @@ type EndianWriter interface {
 type StickyEndianReader interface {
 	io.Reader
 	io.ByteReader
+	GetError() error
+	GetCount() int64
 	ReadBool() bool
 	ReadUint8() uint8
 	ReadInt8() int8
@@ -156,6 +158,8 @@ type StickyEndianWriter interface {
 	io.Writer
 	io.ByteWriter
 	io.StringWriter
+	GetError() error
+	GetCount() int64
 	WriteBool(bool)
 	WriteUint8(uint8)
 	WriteInt8(int8)
