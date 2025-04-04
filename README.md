@@ -1464,6 +1464,20 @@ type StickyBigEndianReader struct {
 StickyBigEndianReader wraps a io.Reader to provide methods to make it easier to
 Read fundamental types.
 
+#### func (*StickyBigEndianReader) GetCount
+
+```go
+func (e *StickyBigEndianReader) GetCount() int64
+```
+GetCount returns the number of bytes read.
+
+#### func (*StickyBigEndianReader) GetError
+
+```go
+func (e *StickyBigEndianReader) GetError() error
+```
+GetCount returns any error received.
+
 #### func (*StickyBigEndianReader) Read
 
 ```go
@@ -1823,6 +1837,20 @@ type StickyBigEndianWriter struct {
 StickyBigEndianWriter wraps a io.Writer to provide methods to make it easier to
 Write fundamental types.
 
+#### func (*StickyBigEndianWriter) GetCount
+
+```go
+func (e *StickyBigEndianWriter) GetCount() int64
+```
+GetCount returns the number of bytes written.
+
+#### func (*StickyBigEndianWriter) GetError
+
+```go
+func (e *StickyBigEndianWriter) GetError() error
+```
+GetCount returns any error received.
+
 #### func (*StickyBigEndianWriter) Write
 
 ```go
@@ -2173,6 +2201,8 @@ WriteUintX writes the unsigned integer using a variable number of bytes.
 type StickyEndianReader interface {
 	io.Reader
 	io.ByteReader
+	GetError() error
+	GetCount() int64
 	ReadBool() bool
 	ReadUint8() uint8
 	ReadInt8() int8
@@ -2228,6 +2258,8 @@ type StickyEndianWriter interface {
 	io.Writer
 	io.ByteWriter
 	io.StringWriter
+	GetError() error
+	GetCount() int64
 	WriteBool(bool)
 	WriteUint8(uint8)
 	WriteInt8(int8)
@@ -2288,6 +2320,20 @@ type StickyLittleEndianReader struct {
 
 StickyLittleEndianReader wraps a io.Reader to provide methods to make it easier
 to Read fundamental types.
+
+#### func (*StickyLittleEndianReader) GetCount
+
+```go
+func (e *StickyLittleEndianReader) GetCount() int64
+```
+GetCount returns the number of bytes read.
+
+#### func (*StickyLittleEndianReader) GetError
+
+```go
+func (e *StickyLittleEndianReader) GetError() error
+```
+GetCount returns any error received.
 
 #### func (*StickyLittleEndianReader) Read
 
@@ -2647,6 +2693,20 @@ type StickyLittleEndianWriter struct {
 
 StickyLittleEndianWriter wraps a io.Writer to provide methods to make it easier
 to Write fundamental types.
+
+#### func (*StickyLittleEndianWriter) GetCount
+
+```go
+func (e *StickyLittleEndianWriter) GetCount() int64
+```
+GetCount returns the number of bytes written.
+
+#### func (*StickyLittleEndianWriter) GetError
+
+```go
+func (e *StickyLittleEndianWriter) GetError() error
+```
+GetCount returns any error received.
 
 #### func (*StickyLittleEndianWriter) Write
 
@@ -3008,6 +3068,20 @@ Read so it still counts as an io.Reader), but can be retrieved from this type.
 All methods will be a no-op after an error has been returned, returning 0,
 unless that error is cleared on the type.
 
+#### func (*StickyReader) GetCount
+
+```go
+func (s *StickyReader) GetCount() int64
+```
+GetCount returns the number of bytes read.
+
+#### func (*StickyReader) GetError
+
+```go
+func (s *StickyReader) GetError() error
+```
+GetCount returns any error received.
+
 #### func (*StickyReader) Read
 
 ```go
@@ -3331,6 +3405,20 @@ received. Byte counts and errors will not be returned from any method (except
 Write so it still counts as an io.Writer), but can be retrieved from this type.
 All methods will be a no-op after an error has been returned, returning 0,
 unless that error is cleared on the type.
+
+#### func (*StickyWriter) GetCount
+
+```go
+func (s *StickyWriter) GetCount() int64
+```
+GetCount returns the number of bytes written.
+
+#### func (*StickyWriter) GetError
+
+```go
+func (s *StickyWriter) GetError() error
+```
+GetCount returns any error received.
 
 #### func (*StickyWriter) Write
 
