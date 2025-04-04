@@ -1,3 +1,3 @@
 module vimagination.zapto.org/byteio
 
-go 1.18
+go 1.22
