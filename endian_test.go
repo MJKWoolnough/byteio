@@ -16,10 +16,12 @@ var (
 	testUints = [][]uint64{
 		{0, 1, 15, 16, 31, 32, 63, 65, 127, 128, 255},
 		{256, 32767, 32768, 65535},
+		{65536, 8388607, 8388608, 16777215},
 	}
 	testInts = [][]int64{
 		{-128, -64, -1, 0, 1, 15, 16, 31, 32, 63, 64, 127},
 		{-32768, -255, 256, 32767},
+		{-8388608, -65536, -65536, 65535, 65536, 8388607},
 	}
 	testBytes = []byte{1, 2, 3, 4, 5, 6, 7, 8}
 )
@@ -58,46 +60,46 @@ func testReadWrite(t *testing.T, numBytes int, rw readWrite, little, big uint64)
 
 			buf.Reset()
 
-			for i, n := range uints {
-				rw.writeU(test.StickyEndianWriter, n)
+			for i, d := range uints {
+				rw.writeU(test.StickyEndianWriter, d)
 
 				if buf.Len() != numBytes {
-					t.Errorf("%sUint (%d.%d): expected to write %d byte, wrote %d", name, n+1, i+1, numBytes, buf.Len())
-				} else if got := rw.readU(test.StickyEndianReader); got != n {
-					t.Errorf("%sUint (%d.%d): wanted %d, got %d", name, n+1, i+1, n, got)
+					t.Errorf("%sUint%d (%d.%d): expected to write %d byte, wrote %d", name, 8*numBytes, n+1, i+1, numBytes, buf.Len())
+				} else if got := rw.readU(test.StickyEndianReader); got != d {
+					t.Errorf("%sUint%d (%d.%d): wanted %d, got %d", name, 8*numBytes, n+1, i+1, d, got)
 				} else if buf.Len() != 0 {
-					t.Errorf("%sUint (%d.%d): expected to have read all bytes, %d remain", name, n+1, i+1, buf.Len())
+					t.Errorf("%sUint%d (%d.%d): expected to have read all bytes, %d remain", name, 8*numBytes, n+1, i+1, buf.Len())
 				}
 			}
 
 			expectedReadWrite += int64(len(uints) * numBytes)
 
 			if written := test.StickyEndianWriter.GetCount(); written != expectedReadWrite {
-				t.Errorf("%s (%d.1): expected to write %d bytes, read %d", name, n+1, expectedReadWrite, written)
+				t.Errorf("%s%d (%d.1): expected to write %d bytes, read %d", name, 8*numBytes, n+1, expectedReadWrite, written)
 			} else if read := test.StickyEndianReader.GetCount(); read != expectedReadWrite {
-				t.Errorf("%s (%d.1): expected to read %d bytes, read %d", name, n+1, expectedReadWrite, read)
+				t.Errorf("%s%d (%d.1): expected to read %d bytes, read %d", name, 8*numBytes, n+1, expectedReadWrite, read)
 			}
 
 			buf.Reset()
 
-			for i, n := range ints {
-				rw.writeI(test.StickyEndianWriter, n)
+			for i, d := range ints {
+				rw.writeI(test.StickyEndianWriter, d)
 
 				if buf.Len() != numBytes {
-					t.Errorf("%sInt (%d.%d): expected to write %d byte, wrote %d", name, n+1, i+1, numBytes, buf.Len())
-				} else if got := rw.readI(test.StickyEndianReader); got != n {
-					t.Errorf("%sInt (%d.%d): wanted %d, got %d", name, n+1, i+1, n, got)
+					t.Errorf("%sInt%d (%d.%d): expected to write %d byte, wrote %d", name, 8*numBytes, n+1, i+1, numBytes, buf.Len())
+				} else if got := rw.readI(test.StickyEndianReader); got != d {
+					t.Errorf("%sInt%d (%d.%d): wanted %d, got %d", name, 8*numBytes, n+1, i+1, d, got)
 				} else if buf.Len() != 0 {
-					t.Errorf("%sInt (%d.%d): expected to have read all bytes, %d remain", name, n+1, i+1, buf.Len())
+					t.Errorf("%sInt%d (%d.%d): expected to have read all bytes, %d remain", name, 8*numBytes, n+1, i+1, buf.Len())
 				}
 			}
 
 			expectedReadWrite += int64(len(ints) * numBytes)
 
 			if written := test.StickyEndianWriter.GetCount(); written != expectedReadWrite {
-				t.Errorf("%s (%d.2): expected to write %d bytes, read %d", name, n+1, expectedReadWrite, written)
+				t.Errorf("%s%d (%d.2): expected to write %d bytes, read %d", name, 8*numBytes, n+1, expectedReadWrite, written)
 			} else if read := test.StickyEndianReader.GetCount(); read != expectedReadWrite {
-				t.Errorf("%s (%d.2): expected to read %d bytes, read %d", name, n+1, expectedReadWrite, read)
+				t.Errorf("%s%d (%d.2): expected to read %d bytes, read %d", name, 8*numBytes, n+1, expectedReadWrite, read)
 			}
 		}
 	}
@@ -105,13 +107,13 @@ func testReadWrite(t *testing.T, numBytes int, rw readWrite, little, big uint64)
 	buf.Write(testBytes[:numBytes])
 
 	if read := rw.readU(&StickyLittleEndianReader{Reader: &buf}); read != little {
-		t.Errorf("LittleEndian: expected to read value %d, got %d", little, read)
+		t.Errorf("LittleEndian%d: expected to read value %d, got %d", 8*numBytes, little, read)
 	}
 
 	buf.Write(testBytes[:numBytes])
 
 	if read := rw.readU(&StickyBigEndianReader{Reader: &buf}); read != big {
-		t.Errorf("BigEndian: expected to read value %d, got %d", big, read)
+		t.Errorf("BigEndian%d: expected to read value %d, got %d", 8*numBytes, big, read)
 	}
 }
 
@@ -147,4 +149,21 @@ func Test16(t *testing.T) {
 			s.WriteInt16(int16(n))
 		},
 	}, 513, 258)
+}
+
+func Test24(t *testing.T) {
+	testReadWrite(t, 3, readWrite{
+		readU: func(s StickyEndianReader) uint64 {
+			return uint64(s.ReadUint24())
+		},
+		readI: func(s StickyEndianReader) int64 {
+			return int64(s.ReadInt24())
+		},
+		writeU: func(s StickyEndianWriter, n uint64) {
+			s.WriteUint24(uint32(n))
+		},
+		writeI: func(s StickyEndianWriter, n int64) {
+			s.WriteInt24(int32(n))
+		},
+	}, 197121, 66051)
 }
