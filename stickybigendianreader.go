@@ -16,6 +16,16 @@ type StickyBigEndianReader struct {
 	Count  int64
 }
 
+// GetCount returns any error received.
+func (e *StickyBigEndianReader) GetError() error {
+	return e.Err
+}
+
+// GetCount returns the number of bytes read.
+func (e *StickyBigEndianReader) GetCount() int64 {
+	return e.Count
+}
+
 // Read implements the io.Reader interface.
 func (e *StickyBigEndianReader) Read(p []byte) (int, error) {
 	if e.Err != nil {

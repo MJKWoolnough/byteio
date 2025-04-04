@@ -16,6 +16,16 @@ type StickyLittleEndianWriter struct {
 	Count  int64
 }
 
+// GetCount returns any error received.
+func (e *StickyLittleEndianWriter) GetError() error {
+	return e.Err
+}
+
+// GetCount returns the number of bytes written.
+func (e *StickyLittleEndianWriter) GetCount() int64 {
+	return e.Count
+}
+
 // Write implements the io.Writer interface.
 func (e *StickyLittleEndianWriter) Write(p []byte) (int, error) {
 	if e.Err != nil {

@@ -14,6 +14,16 @@ type StickyReader struct {
 	Count  int64
 }
 
+// GetCount returns any error received.
+func (s *StickyReader) GetError() error {
+	return s.Err
+}
+
+// GetCount returns the number of bytes read.
+func (s *StickyReader) GetCount() int64 {
+	return s.Count
+}
+
 // Read will do a simple byte read from the underlying io.Reader.
 func (s *StickyReader) Read(b []byte) (int, error) {
 	if s.Err != nil {
@@ -596,6 +606,16 @@ type StickyWriter struct {
 	Writer EndianWriter
 	Err    error
 	Count  int64
+}
+
+// GetCount returns any error received.
+func (s *StickyWriter) GetError() error {
+	return s.Err
+}
+
+// GetCount returns the number of bytes written.
+func (s *StickyWriter) GetCount() int64 {
+	return s.Count
 }
 
 // Write will do a simple byte write from the underlying io.Writer.
