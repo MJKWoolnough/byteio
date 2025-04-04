@@ -69,6 +69,16 @@ HEREDOC
 				if [ ! -z "$s" ]; then
 					cat <<HEREDOC
 
+// GetCount returns any error received.
+func (e *${s}${e}Endian${rw}${er}) GetError() error {
+	return e.Err
+}
+
+// GetCount returns the number of bytes ${r:+read}${w:+written}.
+func (e *${s}${e}Endian${rw}${er}) GetCount() int64 {
+	return e.Count
+}
+
 // ${rw} implements the io.${rw}${er} interface.
 func (e *${s}${e}Endian${rw}${er}) ${rw}(p []byte) (int, error) {
 	if e.Err != nil {
@@ -551,6 +561,16 @@ type Sticky$rw$er struct {
 	$rw$er Endian${rw}${er}
 	Err    error
 	Count  int64
+}
+
+// GetCount returns any error received.
+func (s *Sticky$rw$er) GetError() error {
+	return s.Err
+}
+
+// GetCount returns the number of bytes ${r:+read}${w:+written}.
+func (s *Sticky$rw$er) GetCount() int64 {
+	return s.Count
 }
 
 // $rw will do a simple byte ${rw@L} from the underlying io.$rw$er.
