@@ -28,7 +28,9 @@ func (e *BigEndianReader) ReadInt8() (int8, int, error) {
 		return 0, n, err
 	}
 
-	return int8(e.buffer[0]), 1, nil
+	d := e.buffer[0]
+
+	return int8(d), 1, nil
 }
 
 // ReadInt16 Reads a 16 bit int as a int16 using the underlying io.Reader.
@@ -38,7 +40,9 @@ func (e *BigEndianReader) ReadInt16() (int16, int, error) {
 		return 0, n, err
 	}
 
-	return int16(uint16(e.buffer[1]) | uint16(e.buffer[0])<<8), 2, nil
+	d := uint16(e.buffer[1]) | uint16(e.buffer[0])<<8
+
+	return int16(d), 2, nil
 }
 
 // ReadInt24 Reads a 24 bit int as a int32 using the underlying io.Reader.
@@ -48,7 +52,13 @@ func (e *BigEndianReader) ReadInt24() (int32, int, error) {
 		return 0, n, err
 	}
 
-	return int32(uint32(e.buffer[2]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[0])<<16), 3, nil
+	d := uint32(e.buffer[2]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[0])<<16
+
+	if d >= 0x00800000 {
+		d |= 0xff000000
+	}
+
+	return int32(d), 3, nil
 }
 
 // ReadInt32 Reads a 32 bit int as a int32 using the underlying io.Reader.
@@ -58,7 +68,9 @@ func (e *BigEndianReader) ReadInt32() (int32, int, error) {
 		return 0, n, err
 	}
 
-	return int32(uint32(e.buffer[3]) | uint32(e.buffer[2])<<8 | uint32(e.buffer[1])<<16 | uint32(e.buffer[0])<<24), 4, nil
+	d := uint32(e.buffer[3]) | uint32(e.buffer[2])<<8 | uint32(e.buffer[1])<<16 | uint32(e.buffer[0])<<24
+
+	return int32(d), 4, nil
 }
 
 // ReadInt40 Reads a 40 bit int as a int64 using the underlying io.Reader.
@@ -68,7 +80,13 @@ func (e *BigEndianReader) ReadInt40() (int64, int, error) {
 		return 0, n, err
 	}
 
-	return int64(uint64(e.buffer[4]) | uint64(e.buffer[3])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[1])<<24 | uint64(e.buffer[0])<<32), 5, nil
+	d := uint64(e.buffer[4]) | uint64(e.buffer[3])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[1])<<24 | uint64(e.buffer[0])<<32
+
+	if d >= 0x0000008000000000 {
+		d |= 0xffffff0000000000
+	}
+
+	return int64(d), 5, nil
 }
 
 // ReadInt48 Reads a 48 bit int as a int64 using the underlying io.Reader.
@@ -78,7 +96,13 @@ func (e *BigEndianReader) ReadInt48() (int64, int, error) {
 		return 0, n, err
 	}
 
-	return int64(uint64(e.buffer[5]) | uint64(e.buffer[4])<<8 | uint64(e.buffer[3])<<16 | uint64(e.buffer[2])<<24 | uint64(e.buffer[1])<<32 | uint64(e.buffer[0])<<40), 6, nil
+	d := uint64(e.buffer[5]) | uint64(e.buffer[4])<<8 | uint64(e.buffer[3])<<16 | uint64(e.buffer[2])<<24 | uint64(e.buffer[1])<<32 | uint64(e.buffer[0])<<40
+
+	if d >= 0x0000800000000000 {
+		d |= 0xffff000000000000
+	}
+
+	return int64(d), 6, nil
 }
 
 // ReadInt56 Reads a 56 bit int as a int64 using the underlying io.Reader.
@@ -88,7 +112,13 @@ func (e *BigEndianReader) ReadInt56() (int64, int, error) {
 		return 0, n, err
 	}
 
-	return int64(uint64(e.buffer[6]) | uint64(e.buffer[5])<<8 | uint64(e.buffer[4])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[2])<<32 | uint64(e.buffer[1])<<40 | uint64(e.buffer[0])<<48), 7, nil
+	d := uint64(e.buffer[6]) | uint64(e.buffer[5])<<8 | uint64(e.buffer[4])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[2])<<32 | uint64(e.buffer[1])<<40 | uint64(e.buffer[0])<<48
+
+	if d >= 0x0080000000000000 {
+		d |= 0xff00000000000000
+	}
+
+	return int64(d), 7, nil
 }
 
 // ReadInt64 Reads a 64 bit int as a int64 using the underlying io.Reader.
@@ -98,7 +128,9 @@ func (e *BigEndianReader) ReadInt64() (int64, int, error) {
 		return 0, n, err
 	}
 
-	return int64(uint64(e.buffer[7]) | uint64(e.buffer[6])<<8 | uint64(e.buffer[5])<<16 | uint64(e.buffer[4])<<24 | uint64(e.buffer[3])<<32 | uint64(e.buffer[2])<<40 | uint64(e.buffer[1])<<48 | uint64(e.buffer[0])<<56), 8, nil
+	d := uint64(e.buffer[7]) | uint64(e.buffer[6])<<8 | uint64(e.buffer[5])<<16 | uint64(e.buffer[4])<<24 | uint64(e.buffer[3])<<32 | uint64(e.buffer[2])<<40 | uint64(e.buffer[1])<<48 | uint64(e.buffer[0])<<56
+
+	return int64(d), 8, nil
 }
 
 // ReadUint8 Reads a 8 bit uint as a uint8 using the underlying io.Reader.
@@ -108,7 +140,9 @@ func (e *BigEndianReader) ReadUint8() (uint8, int, error) {
 		return 0, n, err
 	}
 
-	return e.buffer[0], 1, nil
+	d := e.buffer[0]
+
+	return d, 1, nil
 }
 
 // ReadUint16 Reads a 16 bit uint as a uint16 using the underlying io.Reader.
@@ -118,7 +152,9 @@ func (e *BigEndianReader) ReadUint16() (uint16, int, error) {
 		return 0, n, err
 	}
 
-	return uint16(e.buffer[1]) | uint16(e.buffer[0])<<8, 2, nil
+	d := uint16(e.buffer[1]) | uint16(e.buffer[0])<<8
+
+	return d, 2, nil
 }
 
 // ReadUint24 Reads a 24 bit uint as a uint32 using the underlying io.Reader.
@@ -128,7 +164,9 @@ func (e *BigEndianReader) ReadUint24() (uint32, int, error) {
 		return 0, n, err
 	}
 
-	return uint32(e.buffer[2]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[0])<<16, 3, nil
+	d := uint32(e.buffer[2]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[0])<<16
+
+	return d, 3, nil
 }
 
 // ReadUint32 Reads a 32 bit uint as a uint32 using the underlying io.Reader.
@@ -138,7 +176,9 @@ func (e *BigEndianReader) ReadUint32() (uint32, int, error) {
 		return 0, n, err
 	}
 
-	return uint32(e.buffer[3]) | uint32(e.buffer[2])<<8 | uint32(e.buffer[1])<<16 | uint32(e.buffer[0])<<24, 4, nil
+	d := uint32(e.buffer[3]) | uint32(e.buffer[2])<<8 | uint32(e.buffer[1])<<16 | uint32(e.buffer[0])<<24
+
+	return d, 4, nil
 }
 
 // ReadUint40 Reads a 40 bit uint as a uint64 using the underlying io.Reader.
@@ -148,7 +188,9 @@ func (e *BigEndianReader) ReadUint40() (uint64, int, error) {
 		return 0, n, err
 	}
 
-	return uint64(e.buffer[4]) | uint64(e.buffer[3])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[1])<<24 | uint64(e.buffer[0])<<32, 5, nil
+	d := uint64(e.buffer[4]) | uint64(e.buffer[3])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[1])<<24 | uint64(e.buffer[0])<<32
+
+	return d, 5, nil
 }
 
 // ReadUint48 Reads a 48 bit uint as a uint64 using the underlying io.Reader.
@@ -158,7 +200,9 @@ func (e *BigEndianReader) ReadUint48() (uint64, int, error) {
 		return 0, n, err
 	}
 
-	return uint64(e.buffer[5]) | uint64(e.buffer[4])<<8 | uint64(e.buffer[3])<<16 | uint64(e.buffer[2])<<24 | uint64(e.buffer[1])<<32 | uint64(e.buffer[0])<<40, 6, nil
+	d := uint64(e.buffer[5]) | uint64(e.buffer[4])<<8 | uint64(e.buffer[3])<<16 | uint64(e.buffer[2])<<24 | uint64(e.buffer[1])<<32 | uint64(e.buffer[0])<<40
+
+	return d, 6, nil
 }
 
 // ReadUint56 Reads a 56 bit uint as a uint64 using the underlying io.Reader.
@@ -168,7 +212,9 @@ func (e *BigEndianReader) ReadUint56() (uint64, int, error) {
 		return 0, n, err
 	}
 
-	return uint64(e.buffer[6]) | uint64(e.buffer[5])<<8 | uint64(e.buffer[4])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[2])<<32 | uint64(e.buffer[1])<<40 | uint64(e.buffer[0])<<48, 7, nil
+	d := uint64(e.buffer[6]) | uint64(e.buffer[5])<<8 | uint64(e.buffer[4])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[2])<<32 | uint64(e.buffer[1])<<40 | uint64(e.buffer[0])<<48
+
+	return d, 7, nil
 }
 
 // ReadUint64 Reads a 64 bit uint as a uint64 using the underlying io.Reader.
@@ -178,7 +224,9 @@ func (e *BigEndianReader) ReadUint64() (uint64, int, error) {
 		return 0, n, err
 	}
 
-	return uint64(e.buffer[7]) | uint64(e.buffer[6])<<8 | uint64(e.buffer[5])<<16 | uint64(e.buffer[4])<<24 | uint64(e.buffer[3])<<32 | uint64(e.buffer[2])<<40 | uint64(e.buffer[1])<<48 | uint64(e.buffer[0])<<56, 8, nil
+	d := uint64(e.buffer[7]) | uint64(e.buffer[6])<<8 | uint64(e.buffer[5])<<16 | uint64(e.buffer[4])<<24 | uint64(e.buffer[3])<<32 | uint64(e.buffer[2])<<40 | uint64(e.buffer[1])<<48 | uint64(e.buffer[0])<<56
+
+	return d, 8, nil
 }
 
 // ReadFloat32 Reads a 32 bit float as a float32 using the underlying io.Reader.
@@ -188,7 +236,9 @@ func (e *BigEndianReader) ReadFloat32() (float32, int, error) {
 		return 0, n, err
 	}
 
-	return math.Float32frombits(uint32(e.buffer[3]) | uint32(e.buffer[2])<<8 | uint32(e.buffer[1])<<16 | uint32(e.buffer[0])<<24), 4, nil
+	d := math.Float32frombits(uint32(e.buffer[3]) | uint32(e.buffer[2])<<8 | uint32(e.buffer[1])<<16 | uint32(e.buffer[0])<<24)
+
+	return d, 4, nil
 }
 
 // ReadFloat64 Reads a 64 bit float as a float64 using the underlying io.Reader.
@@ -198,7 +248,9 @@ func (e *BigEndianReader) ReadFloat64() (float64, int, error) {
 		return 0, n, err
 	}
 
-	return math.Float64frombits(uint64(e.buffer[7]) | uint64(e.buffer[6])<<8 | uint64(e.buffer[5])<<16 | uint64(e.buffer[4])<<24 | uint64(e.buffer[3])<<32 | uint64(e.buffer[2])<<40 | uint64(e.buffer[1])<<48 | uint64(e.buffer[0])<<56), 8, nil
+	d := math.Float64frombits(uint64(e.buffer[7]) | uint64(e.buffer[6])<<8 | uint64(e.buffer[5])<<16 | uint64(e.buffer[4])<<24 | uint64(e.buffer[3])<<32 | uint64(e.buffer[2])<<40 | uint64(e.buffer[1])<<48 | uint64(e.buffer[0])<<56)
+
+	return d, 8, nil
 }
 
 // ReadBytes Reads a []byte.

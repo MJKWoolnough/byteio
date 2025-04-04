@@ -60,7 +60,9 @@ func (e *StickyLittleEndianReader) ReadInt8() int8 {
 		return 0
 	}
 
-	return int8(e.buffer[0])
+	d := e.buffer[0]
+
+	return int8(d)
 }
 
 // ReadInt16 Reads a 16 bit int as a int16 using the underlying io.Reader.
@@ -79,7 +81,9 @@ func (e *StickyLittleEndianReader) ReadInt16() int16 {
 		return 0
 	}
 
-	return int16(uint16(e.buffer[0]) | uint16(e.buffer[1])<<8)
+	d := uint16(e.buffer[0]) | uint16(e.buffer[1])<<8
+
+	return int16(d)
 }
 
 // ReadInt24 Reads a 24 bit int as a int32 using the underlying io.Reader.
@@ -98,7 +102,13 @@ func (e *StickyLittleEndianReader) ReadInt24() int32 {
 		return 0
 	}
 
-	return int32(uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16)
+	d := uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16
+
+	if d >= 0x00800000 {
+		d |= 0xff000000
+	}
+
+	return int32(d)
 }
 
 // ReadInt32 Reads a 32 bit int as a int32 using the underlying io.Reader.
@@ -117,7 +127,9 @@ func (e *StickyLittleEndianReader) ReadInt32() int32 {
 		return 0
 	}
 
-	return int32(uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16 | uint32(e.buffer[3])<<24)
+	d := uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16 | uint32(e.buffer[3])<<24
+
+	return int32(d)
 }
 
 // ReadInt40 Reads a 40 bit int as a int64 using the underlying io.Reader.
@@ -136,7 +148,13 @@ func (e *StickyLittleEndianReader) ReadInt40() int64 {
 		return 0
 	}
 
-	return int64(uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32)
+	d := uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32
+
+	if d >= 0x0000008000000000 {
+		d |= 0xffffff0000000000
+	}
+
+	return int64(d)
 }
 
 // ReadInt48 Reads a 48 bit int as a int64 using the underlying io.Reader.
@@ -155,7 +173,13 @@ func (e *StickyLittleEndianReader) ReadInt48() int64 {
 		return 0
 	}
 
-	return int64(uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40)
+	d := uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40
+
+	if d >= 0x0000800000000000 {
+		d |= 0xffff000000000000
+	}
+
+	return int64(d)
 }
 
 // ReadInt56 Reads a 56 bit int as a int64 using the underlying io.Reader.
@@ -174,7 +198,13 @@ func (e *StickyLittleEndianReader) ReadInt56() int64 {
 		return 0
 	}
 
-	return int64(uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48)
+	d := uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48
+
+	if d >= 0x0080000000000000 {
+		d |= 0xff00000000000000
+	}
+
+	return int64(d)
 }
 
 // ReadInt64 Reads a 64 bit int as a int64 using the underlying io.Reader.
@@ -193,7 +223,9 @@ func (e *StickyLittleEndianReader) ReadInt64() int64 {
 		return 0
 	}
 
-	return int64(uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48 | uint64(e.buffer[7])<<56)
+	d := uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48 | uint64(e.buffer[7])<<56
+
+	return int64(d)
 }
 
 // ReadUint8 Reads a 8 bit uint as a uint8 using the underlying io.Reader.
@@ -212,7 +244,9 @@ func (e *StickyLittleEndianReader) ReadUint8() uint8 {
 		return 0
 	}
 
-	return e.buffer[0]
+	d := e.buffer[0]
+
+	return d
 }
 
 // ReadUint16 Reads a 16 bit uint as a uint16 using the underlying io.Reader.
@@ -231,7 +265,9 @@ func (e *StickyLittleEndianReader) ReadUint16() uint16 {
 		return 0
 	}
 
-	return uint16(e.buffer[0]) | uint16(e.buffer[1])<<8
+	d := uint16(e.buffer[0]) | uint16(e.buffer[1])<<8
+
+	return d
 }
 
 // ReadUint24 Reads a 24 bit uint as a uint32 using the underlying io.Reader.
@@ -250,7 +286,9 @@ func (e *StickyLittleEndianReader) ReadUint24() uint32 {
 		return 0
 	}
 
-	return uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16
+	d := uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16
+
+	return d
 }
 
 // ReadUint32 Reads a 32 bit uint as a uint32 using the underlying io.Reader.
@@ -269,7 +307,9 @@ func (e *StickyLittleEndianReader) ReadUint32() uint32 {
 		return 0
 	}
 
-	return uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16 | uint32(e.buffer[3])<<24
+	d := uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16 | uint32(e.buffer[3])<<24
+
+	return d
 }
 
 // ReadUint40 Reads a 40 bit uint as a uint64 using the underlying io.Reader.
@@ -288,7 +328,9 @@ func (e *StickyLittleEndianReader) ReadUint40() uint64 {
 		return 0
 	}
 
-	return uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32
+	d := uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32
+
+	return d
 }
 
 // ReadUint48 Reads a 48 bit uint as a uint64 using the underlying io.Reader.
@@ -307,7 +349,9 @@ func (e *StickyLittleEndianReader) ReadUint48() uint64 {
 		return 0
 	}
 
-	return uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40
+	d := uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40
+
+	return d
 }
 
 // ReadUint56 Reads a 56 bit uint as a uint64 using the underlying io.Reader.
@@ -326,7 +370,9 @@ func (e *StickyLittleEndianReader) ReadUint56() uint64 {
 		return 0
 	}
 
-	return uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48
+	d := uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48
+
+	return d
 }
 
 // ReadUint64 Reads a 64 bit uint as a uint64 using the underlying io.Reader.
@@ -345,7 +391,9 @@ func (e *StickyLittleEndianReader) ReadUint64() uint64 {
 		return 0
 	}
 
-	return uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48 | uint64(e.buffer[7])<<56
+	d := uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48 | uint64(e.buffer[7])<<56
+
+	return d
 }
 
 // ReadFloat32 Reads a 32 bit float as a float32 using the underlying io.Reader.
@@ -364,7 +412,9 @@ func (e *StickyLittleEndianReader) ReadFloat32() float32 {
 		return 0
 	}
 
-	return math.Float32frombits(uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16 | uint32(e.buffer[3])<<24)
+	d := math.Float32frombits(uint32(e.buffer[0]) | uint32(e.buffer[1])<<8 | uint32(e.buffer[2])<<16 | uint32(e.buffer[3])<<24)
+
+	return d
 }
 
 // ReadFloat64 Reads a 64 bit float as a float64 using the underlying io.Reader.
@@ -383,7 +433,9 @@ func (e *StickyLittleEndianReader) ReadFloat64() float64 {
 		return 0
 	}
 
-	return math.Float64frombits(uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48 | uint64(e.buffer[7])<<56)
+	d := math.Float64frombits(uint64(e.buffer[0]) | uint64(e.buffer[1])<<8 | uint64(e.buffer[2])<<16 | uint64(e.buffer[3])<<24 | uint64(e.buffer[4])<<32 | uint64(e.buffer[5])<<40 | uint64(e.buffer[6])<<48 | uint64(e.buffer[7])<<56)
+
+	return d
 }
 
 // ReadBytes Reads a []byte.
