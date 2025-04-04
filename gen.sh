@@ -209,11 +209,9 @@ HEREDOC
 
 						echo "	}";
 						echo ;
-						echo -n "	return ";
+						echo -n "	d := ";
 
-						if [ "$t" = "Int" ]; then
-							echo -n "int$ti(";
-						elif [ "$t" = "Float" ]; then
+						if [ "$t" = "Float" ]; then
 							echo -n "math.Float${i}frombits(";
 						fi;
 
@@ -244,8 +242,46 @@ HEREDOC
 							let "p += order";
 						done;
 
-						if [ "$t" != "Uint" ]; then
+						if [ "$t" = "Float" ]; then
 							echo -n ")";
+						elif [ "$t" = "Int" -a "$i" != "$ti" ]; then
+							echo;
+							echo;
+							echo -n "	if d >= 0x";
+							
+							for n in $(seq $(( (ti - i) / 8 ))); do
+								echo -n "00";
+							done;
+
+							echo -n "80";
+
+							for n in $(seq $(( (i - 1) / 8 ))); do
+								echo -n "00";
+							done;
+
+							echo " {";
+							echo -n "		d |= 0x";
+
+							for n in $(seq $(( (ti - i) / 8 ))); do
+								echo -n "ff";
+							done;
+
+							for n in $(seq $(( i / 8 ))); do
+								echo -n "00";
+							done;
+
+							echo;
+							echo -n "	}";
+						fi;
+
+						echo;
+						echo;
+						echo -n "	return ";
+
+						if [ "$t" = "Int" ]; then
+							echo -n "int$ti(d)";
+						else
+							echo -n "d";
 						fi;
 
 						if [ -z "$s" ]; then
