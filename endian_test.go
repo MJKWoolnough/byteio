@@ -15,9 +15,11 @@ type readWrite struct {
 var (
 	testUints = [][]uint64{
 		{0, 1, 15, 16, 31, 32, 63, 65, 127, 128, 255},
+		{256, 32767, 32768, 65535},
 	}
 	testInts = [][]int64{
 		{-128, -64, -1, 0, 1, 15, 16, 31, 32, 63, 64, 127},
+		{-32768, -255, 256, 32767},
 	}
 	testBytes = []byte{1, 2, 3, 4, 5, 6, 7, 8}
 )
@@ -128,4 +130,21 @@ func Test8(t *testing.T) {
 			s.WriteInt8(int8(n))
 		},
 	}, 1, 1)
+}
+
+func Test16(t *testing.T) {
+	testReadWrite(t, 2, readWrite{
+		readU: func(s StickyEndianReader) uint64 {
+			return uint64(s.ReadUint16())
+		},
+		readI: func(s StickyEndianReader) int64 {
+			return int64(s.ReadInt16())
+		},
+		writeU: func(s StickyEndianWriter, n uint64) {
+			s.WriteUint16(uint16(n))
+		},
+		writeI: func(s StickyEndianWriter, n int64) {
+			s.WriteInt16(int16(n))
+		},
+	}, 513, 258)
 }
