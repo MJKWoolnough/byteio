@@ -21,6 +21,7 @@ var (
 		{0x0100000000, 0x7fffffffff, 0x8000000000, 0xffffffffff},
 		{0x010000000000, 0x7fffffffffff, 0x800000000000, 0xffffffffffff},
 		{0x01000000000000, 0x7fffffffffffff, 0x80000000000000, 0xffffffffffffff},
+		{0x0100000000000000, 0x7fffffffffffffff, 0x8000000000000000, 0xffffffffffffffff},
 	}
 	testInts = [][]int64{
 		{-0x80, -0x40, -0x01, 0x00, 0x01, 0x7f, 0x10, 0x1f, 0x20, 0x3f, 0x40, 0x7f},
@@ -30,6 +31,7 @@ var (
 		{-0x8000000000, -0x00ffffffff, -0x0080000001, -0x0080000000, 0x0100000000, 0x7fffffffff},
 		{-0x800000000000, -0x00ffffffffff, -0x008000000001, -0x008000000000, 0x010000000000, 0x7fffffffffff},
 		{-0x80000000000000, -0x00ffffffffffff, -0x00800000000001, -0x00800000000000, 0x01000000000000, 0x7fffffffffffff},
+		{-0x8000000000000000, -0x00ffffffffffffff, -0x0080000000000001, -0x0080000000000000, 0x0100000000000000, 0x7fffffffffffffff},
 	}
 	testBytes = []byte{1, 2, 3, 4, 5, 6, 7, 8}
 )
@@ -242,4 +244,21 @@ func Test56(t *testing.T) {
 			s.WriteInt56(n)
 		},
 	}, 0x07060504030201, 0x01020304050607)
+}
+
+func Test64(t *testing.T) {
+	testReadWrite(t, 8, readWrite{
+		readU: func(s StickyEndianReader) uint64 {
+			return s.ReadUint64()
+		},
+		readI: func(s StickyEndianReader) int64 {
+			return s.ReadInt64()
+		},
+		writeU: func(s StickyEndianWriter, n uint64) {
+			s.WriteUint64(n)
+		},
+		writeI: func(s StickyEndianWriter, n int64) {
+			s.WriteInt64(n)
+		},
+	}, 0x0807060504030201, 0x0102030405060708)
 }
