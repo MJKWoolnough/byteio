@@ -137,7 +137,7 @@ func Test8(t *testing.T) {
 		writeI: func(s StickyEndianWriter, n int64) {
 			s.WriteInt8(int8(n))
 		},
-	}, 1, 1)
+	}, 0x01, 0x01)
 }
 
 func Test16(t *testing.T) {
@@ -154,7 +154,7 @@ func Test16(t *testing.T) {
 		writeI: func(s StickyEndianWriter, n int64) {
 			s.WriteInt16(int16(n))
 		},
-	}, 513, 258)
+	}, 0x0201, 0x0102)
 }
 
 func Test24(t *testing.T) {
@@ -171,7 +171,7 @@ func Test24(t *testing.T) {
 		writeI: func(s StickyEndianWriter, n int64) {
 			s.WriteInt24(int32(n))
 		},
-	}, 197121, 66051)
+	}, 0x030201, 0x010203)
 }
 
 func Test32(t *testing.T) {
@@ -188,7 +188,7 @@ func Test32(t *testing.T) {
 		writeI: func(s StickyEndianWriter, n int64) {
 			s.WriteInt32(int32(n))
 		},
-	}, 67305985, 16909060)
+	}, 0x04030201, 0x01020304)
 }
 
 func Test40(t *testing.T) {
@@ -205,7 +205,7 @@ func Test40(t *testing.T) {
 		writeI: func(s StickyEndianWriter, n int64) {
 			s.WriteInt40(n)
 		},
-	}, 21542142465, 4328719365)
+	}, 0x0504030201, 0x0102030405)
 }
 
 func Test48(t *testing.T) {
@@ -222,5 +222,5 @@ func Test48(t *testing.T) {
 		writeI: func(s StickyEndianWriter, n int64) {
 			s.WriteInt48(n)
 		},
-	}, 6618611909121, 1108152157446)
+	}, 0x060504030201, 0x010203040506)
 }
