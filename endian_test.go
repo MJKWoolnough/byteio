@@ -2,6 +2,7 @@ package byteio
 
 import (
 	"bytes"
+	"iter"
 	"testing"
 )
 
@@ -36,32 +37,35 @@ var (
 	testBytes = []byte{1, 2, 3, 4, 5, 6, 7, 8}
 )
 
+type testStickyReadWrite struct {
+	StickyEndianReader
+	StickyEndianWriter
+}
+
+func testEndians(buf *bytes.Buffer) iter.Seq2[string, testStickyReadWrite] {
+	return func(yield func(string, testStickyReadWrite) bool) {
+		_ = yield("Little", testStickyReadWrite{
+			&StickyReader{Reader: &LittleEndianReader{Reader: buf}},
+			&StickyWriter{Writer: &LittleEndianWriter{Writer: buf}},
+		}) && yield("Big", testStickyReadWrite{
+			&StickyReader{Reader: &BigEndianReader{Reader: buf}},
+			&StickyWriter{Writer: &BigEndianWriter{Writer: buf}},
+		}) && yield("StickyLittle", testStickyReadWrite{
+			&StickyLittleEndianReader{Reader: buf},
+			&StickyLittleEndianWriter{Writer: buf},
+		}) && yield("StickyBig", testStickyReadWrite{
+			&StickyBigEndianReader{Reader: buf},
+			&StickyBigEndianWriter{Writer: buf},
+		})
+	}
+}
+
 func testReadWrite(t *testing.T, numBytes int, rw readWrite, little, big uint64) {
 	t.Helper()
 
 	var buf bytes.Buffer
 
-	for name, test := range map[string]struct {
-		StickyEndianReader
-		StickyEndianWriter
-	}{
-		"Little": {
-			&StickyReader{Reader: &LittleEndianReader{Reader: &buf}},
-			&StickyWriter{Writer: &LittleEndianWriter{Writer: &buf}},
-		},
-		"Big": {
-			&StickyReader{Reader: &BigEndianReader{Reader: &buf}},
-			&StickyWriter{Writer: &BigEndianWriter{Writer: &buf}},
-		},
-		"StickyLittle": {
-			&StickyLittleEndianReader{Reader: &buf},
-			&StickyLittleEndianWriter{Writer: &buf},
-		},
-		"StickyBig": {
-			&StickyBigEndianReader{Reader: &buf},
-			&StickyBigEndianWriter{Writer: &buf},
-		},
-	} {
+	for name, test := range testEndians(&buf) {
 		var expectedReadWrite int64
 
 		for n := range numBytes {
