@@ -17,11 +17,13 @@ var (
 		{0, 1, 15, 16, 31, 32, 63, 65, 127, 128, 255},
 		{256, 32767, 32768, 65535},
 		{65536, 8388607, 8388608, 16777215},
+		{16777216, 2147483647, 2147483648, 4294967295},
 	}
 	testInts = [][]int64{
 		{-128, -64, -1, 0, 1, 15, 16, 31, 32, 63, 64, 127},
-		{-32768, -255, 256, 32767},
-		{-8388608, -65536, -65536, 65535, 65536, 8388607},
+		{-32768, -255, -129, 128, 256, 32767},
+		{-8388608, -65537, -65536, -32769, 32768, 65535, 65536, 8388607},
+		{-2147483648, -16777216, -8388609, -16777215, 8388608, 16777215, 16777216, 2147483647},
 	}
 	testBytes = []byte{1, 2, 3, 4, 5, 6, 7, 8}
 )
@@ -166,4 +168,21 @@ func Test24(t *testing.T) {
 			s.WriteInt24(int32(n))
 		},
 	}, 197121, 66051)
+}
+
+func Test32(t *testing.T) {
+	testReadWrite(t, 4, readWrite{
+		readU: func(s StickyEndianReader) uint64 {
+			return uint64(s.ReadUint32())
+		},
+		readI: func(s StickyEndianReader) int64 {
+			return int64(s.ReadInt32())
+		},
+		writeU: func(s StickyEndianWriter, n uint64) {
+			s.WriteUint32(uint32(n))
+		},
+		writeI: func(s StickyEndianWriter, n int64) {
+			s.WriteInt32(int32(n))
+		},
+	}, 67305985, 16909060)
 }
