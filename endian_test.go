@@ -283,3 +283,14 @@ func TestFloat64(t *testing.T) {
 		},
 	}, testFloats, math.Float64frombits(0x0807060504030201), math.Float64frombits(0x0102030405060708))
 }
+
+func TestBool(t *testing.T) {
+	testReadWrite(t, "Bool", 1, readWrite[bool]{
+		read: func(s StickyEndianReader) bool {
+			return s.ReadBool()
+		},
+		write: func(s StickyEndianWriter, n bool) {
+			s.WriteBool(n)
+		},
+	}, [][]bool{{true, false}}, true, true)
+}
