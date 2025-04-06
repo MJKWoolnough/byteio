@@ -6,11 +6,9 @@ import (
 	"testing"
 )
 
-type readWrite struct {
-	readU  func(StickyEndianReader) uint64
-	readI  func(StickyEndianReader) int64
-	writeU func(StickyEndianWriter, uint64)
-	writeI func(StickyEndianWriter, int64)
+type readWrite[T any] struct {
+	read  func(StickyEndianReader) T
+	write func(StickyEndianWriter, T)
 }
 
 var (
@@ -60,7 +58,7 @@ func testEndians(buf *bytes.Buffer) iter.Seq2[string, testStickyReadWrite] {
 	}
 }
 
-func testReadWrite(t *testing.T, numBytes int, rw readWrite, little, big uint64) {
+func testReadWrite[T comparable](t *testing.T, tname string, numBytes int, rw readWrite[T], tests [][]T, expectedLittle, expectedBig T) {
 	t.Helper()
 
 	var buf bytes.Buffer
@@ -68,201 +66,193 @@ func testReadWrite(t *testing.T, numBytes int, rw readWrite, little, big uint64)
 	for name, test := range testEndians(&buf) {
 		var expectedReadWrite int64
 
-		for n := range numBytes {
-			uints := testUints[n]
-			ints := testInts[n]
-
+		for n, tests := range tests {
 			buf.Reset()
 
-			for i, d := range uints {
-				rw.writeU(test.StickyEndianWriter, d)
+			for i, d := range tests {
+				rw.write(test.StickyEndianWriter, d)
 
 				if buf.Len() != numBytes {
-					t.Errorf("%sUint%d (%d.%d): expected to write %d byte, wrote %d", name, 8*numBytes, n+1, i+1, numBytes, buf.Len())
-				} else if got := rw.readU(test.StickyEndianReader); got != d {
-					t.Errorf("%sUint%d (%d.%d): wanted %d, got %d", name, 8*numBytes, n+1, i+1, d, got)
+					t.Errorf("%s%s%d (%d.%d): expected to write %d byte, wrote %d", name, tname, 8*numBytes, n+1, i+1, numBytes, buf.Len())
+				} else if got := rw.read(test.StickyEndianReader); got != d {
+					t.Errorf("%s%s%d (%d.%d): wanted %v, got %v", name, tname, 8*numBytes, n+1, i+1, d, got)
 				} else if buf.Len() != 0 {
-					t.Errorf("%sUint%d (%d.%d): expected to have read all bytes, %d remain", name, 8*numBytes, n+1, i+1, buf.Len())
+					t.Errorf("%s%s%d (%d.%d): expected to have read all bytes, %d remain", name, tname, 8*numBytes, n+1, i+1, buf.Len())
 				}
 			}
 
-			expectedReadWrite += int64(len(uints) * numBytes)
+			expectedReadWrite += int64(len(tests) * numBytes)
 
 			if written := test.StickyEndianWriter.GetCount(); written != expectedReadWrite {
-				t.Errorf("%s%d (%d.1): expected to write %d bytes, read %d", name, 8*numBytes, n+1, expectedReadWrite, written)
+				t.Errorf("%s%s%d (%d.1): expected to write %d bytes, read %d", name, tname, 8*numBytes, n+1, expectedReadWrite, written)
 			} else if read := test.StickyEndianReader.GetCount(); read != expectedReadWrite {
-				t.Errorf("%s%d (%d.1): expected to read %d bytes, read %d", name, 8*numBytes, n+1, expectedReadWrite, read)
-			}
-
-			buf.Reset()
-
-			for i, d := range ints {
-				rw.writeI(test.StickyEndianWriter, d)
-
-				if buf.Len() != numBytes {
-					t.Errorf("%sInt%d (%d.%d): expected to write %d byte, wrote %d", name, 8*numBytes, n+1, i+1, numBytes, buf.Len())
-				} else if got := rw.readI(test.StickyEndianReader); got != d {
-					t.Errorf("%sInt%d (%d.%d): wanted %d, got %d", name, 8*numBytes, n+1, i+1, d, got)
-				} else if buf.Len() != 0 {
-					t.Errorf("%sInt%d (%d.%d): expected to have read all bytes, %d remain", name, 8*numBytes, n+1, i+1, buf.Len())
-				}
-			}
-
-			expectedReadWrite += int64(len(ints) * numBytes)
-
-			if written := test.StickyEndianWriter.GetCount(); written != expectedReadWrite {
-				t.Errorf("%s%d (%d.2): expected to write %d bytes, read %d", name, 8*numBytes, n+1, expectedReadWrite, written)
-			} else if read := test.StickyEndianReader.GetCount(); read != expectedReadWrite {
-				t.Errorf("%s%d (%d.2): expected to read %d bytes, read %d", name, 8*numBytes, n+1, expectedReadWrite, read)
+				t.Errorf("%s%s%d (%d.1): expected to read %d bytes, read %d", name, tname, 8*numBytes, n+1, expectedReadWrite, read)
 			}
 		}
 	}
 
 	buf.Write(testBytes[:numBytes])
 
-	if read := rw.readU(&StickyLittleEndianReader{Reader: &buf}); read != little {
-		t.Errorf("LittleEndian%d: expected to read value %d, got %d", 8*numBytes, little, read)
+	if read := rw.read(&StickyLittleEndianReader{Reader: &buf}); read != expectedLittle {
+		t.Errorf("LittleEndian%s%d: expected to read value %v, got %v", tname, 8*numBytes, expectedLittle, read)
 	}
 
 	buf.Write(testBytes[:numBytes])
 
-	if read := rw.readU(&StickyBigEndianReader{Reader: &buf}); read != big {
-		t.Errorf("BigEndian%d: expected to read value %d, got %d", 8*numBytes, big, read)
+	if read := rw.read(&StickyBigEndianReader{Reader: &buf}); read != expectedBig {
+		t.Errorf("BigEndian%s%d: expected to read value %v, got %v", tname, 8*numBytes, expectedBig, read)
 	}
 }
 
 func Test8(t *testing.T) {
-	testReadWrite(t, 1, readWrite{
-		readU: func(s StickyEndianReader) uint64 {
+	testReadWrite(t, "Uint", 1, readWrite[uint64]{
+		read: func(s StickyEndianReader) uint64 {
 			return uint64(s.ReadUint8())
 		},
-		readI: func(s StickyEndianReader) int64 {
-			return int64(s.ReadInt8())
-		},
-		writeU: func(s StickyEndianWriter, n uint64) {
+		write: func(s StickyEndianWriter, n uint64) {
 			s.WriteUint8(uint8(n))
 		},
-		writeI: func(s StickyEndianWriter, n int64) {
+	}, testUints[:1], 0x01, 0x01)
+
+	testReadWrite(t, "Int", 1, readWrite[int64]{
+		read: func(s StickyEndianReader) int64 {
+			return int64(s.ReadInt8())
+		},
+		write: func(s StickyEndianWriter, n int64) {
 			s.WriteInt8(int8(n))
 		},
-	}, 0x01, 0x01)
+	}, testInts[:1], 0x01, 0x01)
 }
 
 func Test16(t *testing.T) {
-	testReadWrite(t, 2, readWrite{
-		readU: func(s StickyEndianReader) uint64 {
+	testReadWrite(t, "Uint", 2, readWrite[uint64]{
+		read: func(s StickyEndianReader) uint64 {
 			return uint64(s.ReadUint16())
 		},
-		readI: func(s StickyEndianReader) int64 {
-			return int64(s.ReadInt16())
-		},
-		writeU: func(s StickyEndianWriter, n uint64) {
+		write: func(s StickyEndianWriter, n uint64) {
 			s.WriteUint16(uint16(n))
 		},
-		writeI: func(s StickyEndianWriter, n int64) {
+	}, testUints[:2], 0x0201, 0x0102)
+	testReadWrite(t, "Int", 2, readWrite[int64]{
+		read: func(s StickyEndianReader) int64 {
+			return int64(s.ReadInt16())
+		},
+		write: func(s StickyEndianWriter, n int64) {
 			s.WriteInt16(int16(n))
 		},
-	}, 0x0201, 0x0102)
+	}, testInts[:2], 0x0201, 0x0102)
 }
 
 func Test24(t *testing.T) {
-	testReadWrite(t, 3, readWrite{
-		readU: func(s StickyEndianReader) uint64 {
+	testReadWrite(t, "Uint", 3, readWrite[uint64]{
+		read: func(s StickyEndianReader) uint64 {
 			return uint64(s.ReadUint24())
 		},
-		readI: func(s StickyEndianReader) int64 {
-			return int64(s.ReadInt24())
-		},
-		writeU: func(s StickyEndianWriter, n uint64) {
+		write: func(s StickyEndianWriter, n uint64) {
 			s.WriteUint24(uint32(n))
 		},
-		writeI: func(s StickyEndianWriter, n int64) {
+	}, testUints[:3], 0x030201, 0x010203)
+	testReadWrite(t, "Ints", 3, readWrite[int64]{
+		read: func(s StickyEndianReader) int64 {
+			return int64(s.ReadInt24())
+		},
+		write: func(s StickyEndianWriter, n int64) {
 			s.WriteInt24(int32(n))
 		},
-	}, 0x030201, 0x010203)
+	}, testInts[:3], 0x030201, 0x010203)
 }
 
 func Test32(t *testing.T) {
-	testReadWrite(t, 4, readWrite{
-		readU: func(s StickyEndianReader) uint64 {
+	testReadWrite(t, "Uint", 4, readWrite[uint64]{
+		read: func(s StickyEndianReader) uint64 {
 			return uint64(s.ReadUint32())
 		},
-		readI: func(s StickyEndianReader) int64 {
-			return int64(s.ReadInt32())
-		},
-		writeU: func(s StickyEndianWriter, n uint64) {
+		write: func(s StickyEndianWriter, n uint64) {
 			s.WriteUint32(uint32(n))
 		},
-		writeI: func(s StickyEndianWriter, n int64) {
+	}, testUints[:4], 0x04030201, 0x01020304)
+	testReadWrite(t, "Int", 4, readWrite[int64]{
+		read: func(s StickyEndianReader) int64 {
+			return int64(s.ReadInt32())
+		},
+		write: func(s StickyEndianWriter, n int64) {
 			s.WriteInt32(int32(n))
 		},
-	}, 0x04030201, 0x01020304)
+	}, testInts[:4], 0x04030201, 0x01020304)
 }
 
 func Test40(t *testing.T) {
-	testReadWrite(t, 5, readWrite{
-		readU: func(s StickyEndianReader) uint64 {
+	testReadWrite(t, "Uint", 5, readWrite[uint64]{
+		read: func(s StickyEndianReader) uint64 {
 			return s.ReadUint40()
 		},
-		readI: func(s StickyEndianReader) int64 {
-			return s.ReadInt40()
-		},
-		writeU: func(s StickyEndianWriter, n uint64) {
+		write: func(s StickyEndianWriter, n uint64) {
 			s.WriteUint40(n)
 		},
-		writeI: func(s StickyEndianWriter, n int64) {
+	}, testUints[:5], 0x0504030201, 0x0102030405)
+	testReadWrite(t, "Int", 5, readWrite[int64]{
+		read: func(s StickyEndianReader) int64 {
+			return s.ReadInt40()
+		},
+		write: func(s StickyEndianWriter, n int64) {
 			s.WriteInt40(n)
 		},
-	}, 0x0504030201, 0x0102030405)
+	}, testInts[:5], 0x0504030201, 0x0102030405)
 }
 
 func Test48(t *testing.T) {
-	testReadWrite(t, 6, readWrite{
-		readU: func(s StickyEndianReader) uint64 {
+	testReadWrite(t, "Uint", 6, readWrite[uint64]{
+		read: func(s StickyEndianReader) uint64 {
 			return s.ReadUint48()
 		},
-		readI: func(s StickyEndianReader) int64 {
-			return s.ReadInt48()
-		},
-		writeU: func(s StickyEndianWriter, n uint64) {
+		write: func(s StickyEndianWriter, n uint64) {
 			s.WriteUint48(n)
 		},
-		writeI: func(s StickyEndianWriter, n int64) {
+	}, testUints[:6], 0x060504030201, 0x010203040506)
+	testReadWrite(t, "Int", 6, readWrite[int64]{
+		read: func(s StickyEndianReader) int64 {
+			return s.ReadInt48()
+		},
+		write: func(s StickyEndianWriter, n int64) {
 			s.WriteInt48(n)
 		},
-	}, 0x060504030201, 0x010203040506)
+	}, testInts[:6], 0x060504030201, 0x010203040506)
 }
 
 func Test56(t *testing.T) {
-	testReadWrite(t, 7, readWrite{
-		readU: func(s StickyEndianReader) uint64 {
+	testReadWrite(t, "Uint", 7, readWrite[uint64]{
+		read: func(s StickyEndianReader) uint64 {
 			return s.ReadUint56()
 		},
-		readI: func(s StickyEndianReader) int64 {
-			return s.ReadInt56()
-		},
-		writeU: func(s StickyEndianWriter, n uint64) {
+		write: func(s StickyEndianWriter, n uint64) {
 			s.WriteUint56(n)
 		},
-		writeI: func(s StickyEndianWriter, n int64) {
+	}, testUints[:7], 0x07060504030201, 0x01020304050607)
+	testReadWrite(t, "Int", 7, readWrite[int64]{
+		read: func(s StickyEndianReader) int64 {
+			return s.ReadInt56()
+		},
+		write: func(s StickyEndianWriter, n int64) {
 			s.WriteInt56(n)
 		},
-	}, 0x07060504030201, 0x01020304050607)
+	}, testInts[:7], 0x07060504030201, 0x01020304050607)
 }
 
 func Test64(t *testing.T) {
-	testReadWrite(t, 8, readWrite{
-		readU: func(s StickyEndianReader) uint64 {
+	testReadWrite(t, "Uint", 8, readWrite[uint64]{
+		read: func(s StickyEndianReader) uint64 {
 			return s.ReadUint64()
 		},
-		readI: func(s StickyEndianReader) int64 {
-			return s.ReadInt64()
-		},
-		writeU: func(s StickyEndianWriter, n uint64) {
+		write: func(s StickyEndianWriter, n uint64) {
 			s.WriteUint64(n)
 		},
-		writeI: func(s StickyEndianWriter, n int64) {
+	}, testUints, 0x0807060504030201, 0x0102030405060708)
+	testReadWrite(t, "Int", 8, readWrite[int64]{
+		read: func(s StickyEndianReader) int64 {
+			return s.ReadInt64()
+		},
+		write: func(s StickyEndianWriter, n int64) {
 			s.WriteInt64(n)
 		},
-	}, 0x0807060504030201, 0x0102030405060708)
+	}, testInts, 0x0807060504030201, 0x0102030405060708)
 }
