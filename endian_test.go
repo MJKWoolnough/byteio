@@ -35,6 +35,7 @@ var (
 	}
 	testFloats = [][]float64{
 		{0, 1, float64(math.Float32frombits(0x01)), float64(math.Float32frombits(0xff)), float64(math.Float32frombits(0xffffff)), float64(math.Float32frombits(0x80000000))},
+		{math.Float64frombits(0xffffffffffffff), math.Float64frombits(0x8000000000000000), math.Float64frombits(0x0101010101010101)},
 	}
 	testBytes = []byte{1, 2, 3, 4, 5, 6, 7, 8}
 )
@@ -270,4 +271,15 @@ func TestFloat32(t *testing.T) {
 			s.WriteFloat32(float32(n))
 		},
 	}, testFloats[:1], float64(math.Float32frombits(0x04030201)), float64(math.Float32frombits(0x01020304)))
+}
+
+func TestFloat64(t *testing.T) {
+	testReadWrite(t, "Float", 8, readWrite[float64]{
+		read: func(s StickyEndianReader) float64 {
+			return s.ReadFloat64()
+		},
+		write: func(s StickyEndianWriter, n float64) {
+			s.WriteFloat64(n)
+		},
+	}, testFloats, math.Float64frombits(0x0807060504030201), math.Float64frombits(0x0102030405060708))
 }
