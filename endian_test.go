@@ -3,6 +3,7 @@ package byteio
 import (
 	"bytes"
 	"iter"
+	"math"
 	"testing"
 )
 
@@ -31,6 +32,9 @@ var (
 		{-0x800000000000, -0x00ffffffffff, -0x008000000001, -0x008000000000, 0x010000000000, 0x7fffffffffff},
 		{-0x80000000000000, -0x00ffffffffffff, -0x00800000000001, -0x00800000000000, 0x01000000000000, 0x7fffffffffffff},
 		{-0x8000000000000000, -0x00ffffffffffffff, -0x0080000000000001, -0x0080000000000000, 0x0100000000000000, 0x7fffffffffffffff},
+	}
+	testFloats = [][]float64{
+		{0, 1, float64(math.Float32frombits(0x01)), float64(math.Float32frombits(0xff)), float64(math.Float32frombits(0xffffff)), float64(math.Float32frombits(0x80000000))},
 	}
 	testBytes = []byte{1, 2, 3, 4, 5, 6, 7, 8}
 )
@@ -255,4 +259,15 @@ func Test64(t *testing.T) {
 			s.WriteInt64(n)
 		},
 	}, testInts, 0x0807060504030201, 0x0102030405060708)
+}
+
+func TestFloat32(t *testing.T) {
+	testReadWrite(t, "Float", 4, readWrite[float64]{
+		read: func(s StickyEndianReader) float64 {
+			return float64(s.ReadFloat32())
+		},
+		write: func(s StickyEndianWriter, n float64) {
+			s.WriteFloat32(float32(n))
+		},
+	}, testFloats[:1], float64(math.Float32frombits(0x04030201)), float64(math.Float32frombits(0x01020304)))
 }
