@@ -46,8 +46,8 @@ for s in "" Sticky; do
 		fi;
 
 		readWrite | while read rw er; do
-			declare r="${rw/Write/}"
-			declare w="${rw/Read/}"
+			declare r="${rw/Write/}";
+			declare w="${rw/Read/}";
 			(
 				cat <<HEREDOC
 package byteio
@@ -117,7 +117,7 @@ HEREDOC
 						ret="return ";
 					fi;
 
-					echo ") {"
+					echo ") {";
 
 					cat <<HEREDOC
 	if b {
@@ -208,14 +208,14 @@ HEREDOC
 						fi;
 
 						echo "	}";
-						echo ;
+						echo;
 						echo -n "	d := ";
 
 						if [ "$t" = "Float" ]; then
 							echo -n "math.Float${i}frombits(";
 						fi;
 
-						p=$(( $startP * $i / 8 - startP));
+						p=$(( $startP * $i / 8 - startP ));
 
 						shift=0;
 
@@ -248,21 +248,21 @@ HEREDOC
 							echo;
 							echo;
 							echo -n "	if d >= 0x";
-							
-							for n in $(seq $(( (ti - i) / 8 ))); do
+
+							for n in $(seq $(( ( ti - i ) / 8 ))); do
 								echo -n "00";
 							done;
 
 							echo -n "80";
 
-							for n in $(seq $(( (i - 1) / 8 ))); do
+							for n in $(seq $(( ( i - 1 ) / 8 ))); do
 								echo -n "00";
 							done;
 
 							echo " {";
 							echo -n "		d |= 0x";
 
-							for n in $(seq $(( (ti - i) / 8 ))); do
+							for n in $(seq $(( ( ti - i ) / 8 ))); do
 								echo -n "ff";
 							done;
 
@@ -312,7 +312,7 @@ HEREDOC
 							shift=0;
 
 							if [ $order -eq -1 ]; then
-								shift=$(( ((i / 8) - 1) * 8));
+								shift=$(( ( ( i / 8 ) - 1 ) * 8 ));
 							fi;
 
 							for n in $(seq $(( i / 8 ))); do
@@ -341,7 +341,7 @@ HEREDOC
 							echo -n "	n, e.Err = ";
 						fi;
 
-						echo  "e.Writer.Write(e.buffer[:$(( $i / 8 ))])";
+						echo "e.Writer.Write(e.buffer[:$(( $i / 8 ))])";
 
 						if [ ! -z "$s" ]; then
 							echo "	e.Count += int64(n)";
@@ -357,7 +357,7 @@ HEREDOC
 					echo -n "func (e *${s}${e}Endian${rw}${er}) ${rw}${t}(";
 
 					if [ "$rw" = "Write" ]; then
-						echo -n "d ${type})"
+						echo -n "d ${type})";
 
 						if [ -z "$s" ]; then
 							echo " (int, error) {";
@@ -377,9 +377,9 @@ HEREDOC
 							echo "	if e.Err != nil {";
 
 							if [ "$t" = "String" ]; then
-							echo "		return 0, e.Err";
+								echo "		return 0, e.Err";
 							else
-							echo "		return";
+								echo "		return";
 							fi;
 
 							echo "	}";
@@ -580,10 +580,9 @@ package byteio
 // File automatically generated with ./gen.sh.
 HEREDOC
 
-
 	readWrite | while read rw er; do
-		declare r="${rw/Write/}"
-		declare w="${rw/Read/}"
+		declare r="${rw/Write/}";
+		declare w="${rw/Read/}";
 
 		cat <<HEREDOC
 
@@ -662,7 +661,7 @@ func (s *Sticky$rw$er) $rw$t$i(${w:+i ${t@L}$ti})${r:+ ${t@L}$ti} {
 HEREDOC
 		done;
 
-		for i in Int Uint; do 
+		for i in Int Uint; do
 			cat <<HEREDOC
 
 // $rw${i}X will ${rw@L} a 64-bit var-${i@L} using the underlying $rw${i}X method.
@@ -684,10 +683,10 @@ HEREDOC
 				declare x="";
 
 				if [ "$size" = "0" -a "$t" = "Bytes" ]; then
-					continue
+					continue;
 				elif [ "$size" = "" -a "$rw" = "Read" ]; then
-					ptype="int"
-					w="1"
+					ptype="int";
+					w="1";
 				elif [ "$size" = "" -a "$rw" = "Write" -a "$t" = "String" ]; then
 					x="1";
 				fi;
@@ -706,9 +705,9 @@ func (s *Sticky$rw$er) $rw$t$size(${w:+p $ptype})${r:+ $type}${x:+ (int, error)}
 }
 HEREDOC
 
-				w="${rw/Read/}"
-				r="${rw/Write/}"
+				w="${rw/Read/}";
+				r="${rw/Write/}";
 			done;
-		done
+		done;
 	done;
-) > "sticky.go"
+) > "sticky.go";
