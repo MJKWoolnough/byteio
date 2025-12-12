@@ -9,7 +9,7 @@ func (e *StickyLittleEndianReader) ReadUintX() uint64 {
 	)
 
 	for n < 9 {
-		c, _ := e.ReadByte()
+		c := e.ReadUint8()
 		val += uint64(c&0xff) << uint(n*7)
 		n++
 
