@@ -1,4 +1,4 @@
-// Package byteio helps with writing number types in both big and little endian formats.
+// Package byteio helps with writing binary data in both big and little endian.
 package byteio // import "vimagination.zapto.org/byteio"
 
 import "io"
