@@ -18,7 +18,7 @@ func (e *StickyBigEndianWriter) WriteUintX(d uint64) {
 		e.buffer[pos] = byte(d&0x7f) | 0x80
 	}
 
-	e.Write(e.buffer[pos:])
+	e.WriteBytes(e.buffer[pos:])
 }
 
 // WriteIntX writes the integer using a variable number of bytes.
