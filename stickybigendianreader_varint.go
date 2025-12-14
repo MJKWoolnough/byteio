@@ -10,7 +10,7 @@ func (e *StickyBigEndianReader) ReadUintX() uint64 {
 		c = e.ReadUint8()
 		val++
 
-		if n == 8 {
+		if n == 8 && c&0x80 > 0 {
 			val = (val << 8) | uint64(c)
 		} else {
 			val = (val << 7) | uint64(c&0x7f)
