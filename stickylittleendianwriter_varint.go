@@ -11,7 +11,7 @@ func (e *StickyLittleEndianWriter) WriteUintX(d uint64) {
 	}
 
 	e.buffer[pos] = byte(d)
-	e.Write(e.buffer[:pos+1])
+	e.WriteBytes(e.buffer[:pos+1])
 }
 
 // WriteIntX writes the integer using a variable number of bytes.
