@@ -711,3 +711,337 @@ HEREDOC
 		done;
 	done;
 ) > "sticky.go";
+
+for e in Big Little; do
+	declare startP;
+	declare order;
+
+	if [ "$e" = "Big" ]; then
+		startP=1;
+		order=-1;
+	else
+		startP=0;
+		order=1;
+	fi;
+
+	readWrite | while read rw er; do
+		declare r="${rw/Write/}";
+		declare w="${rw/Read/}";
+		(
+			cat <<HEREDOC
+package byteio
+
+// File automatically generated with ./gen.sh.
+
+HEREDOC
+
+			if [ "$rw" = "Write" ]; then
+				cat <<HEREDOC
+import "math"
+
+HEREDOC
+			else
+				cat <<HEREDOC
+import (
+	"io"
+	"math"
+)
+
+HEREDOC
+			fi;
+
+			cat <<HEREDOC
+// Mem${e}Endian${rw}${er} is a byte slice that has methods
+// to make it easier to $rw fundamental types.
+type Mem${e}Endian${rw}${er} []byte
+
+HEREDOC
+
+				echo "// ${rw}Bool ${rw}s a boolean.";
+				echo -n "func (e *Mem${e}Endian${rw}${er}) ${rw}Bool(";
+				if [ "${rw}" = "Write" ]; then
+					echo "b bool) {";
+
+					cat <<HEREDOC
+	if b {
+		e.WriteUint8(1)
+	} else {
+		e.WriteUint8(0)
+	}
+}
+HEREDOC
+				else
+					echo ") bool {";
+					echo "	return e.ReadUint8() != 0";
+					echo "}";
+				fi;
+
+				numberTypes | while read t i ti; do
+					declare tu="${t@u}$ti";
+
+					echo;
+					echo "// ${rw}${t}${i} ${rw}s a $i bit ${t@L} as a ${tu@L} ${r:+from}${w:+to} the byte slice.";
+					echo -n "func (e *Mem${e}Endian${rw}${er}) ${rw}${t}${i}(";
+
+					if [ "$rw" = "Write" ]; then
+						echo -n "d ${tu@L})";
+					else
+						echo -n ") ${tu@L}";
+					fi;
+
+					echo " {";
+
+					if [ "$rw" = "Read" ]; then
+						echo "	if len(*e) < $(( $i / 8 )) {";
+						echo "		return 0";
+						echo "	}";
+						echo;
+						echo -n "	d := ";
+
+						if [ "$t" = "Float" ]; then
+							echo -n "math.Float${i}frombits(";
+						fi;
+
+						p=$(( $startP * $i / 8 - startP ));
+
+						shift=0;
+
+						for n in $(seq 1 $(( $i / 8 ))); do
+							if [ $n -ne 1 ]; then
+								echo -n " | ";
+							fi;
+
+							if [ "$i" -ne 8 ]; then
+								echo -n "uint$ti(";
+							fi;
+
+							echo -n "(*e)[$p]";
+
+							if [ "$i" -ne 8 ]; then
+								echo -n ")";
+							fi;
+
+							if [ $shift -gt 0 ]; then
+								echo -n "<<$shift";
+							fi;
+
+							let "shift += 8";
+							let "p += order";
+						done;
+
+						if [ "$t" = "Float" ]; then
+							echo -n ")";
+						elif [ "$t" = "Int" -a "$i" != "$ti" ]; then
+							echo;
+							echo;
+							echo -n "	if d >= 0x";
+
+							for n in $(seq $(( ( ti - i ) / 8 ))); do
+								echo -n "00";
+							done;
+
+							echo -n "80";
+
+							for n in $(seq $(( ( i - 1 ) / 8 ))); do
+								echo -n "00";
+							done;
+
+							echo " {";
+							echo -n "		d |= 0x";
+
+							for n in $(seq $(( ( ti - i ) / 8 ))); do
+								echo -n "ff";
+							done;
+
+							for n in $(seq $(( i / 8 ))); do
+								echo -n "00";
+							done;
+
+							echo;
+							echo -n "	}";
+							echo;
+						fi;
+
+						echo;
+						echo "	*e = (*e)[$(( $i / 8 )):]";
+						echo;
+						echo -n "	return ";
+
+						if [ "$t" = "Int" ]; then
+							echo "int$ti(d)";
+						else
+							echo "d";
+						fi;
+					else
+						declare var="d";
+
+						if [ "$t" = "Float" ]; then
+							var="c";
+							echo "	c := math.Float${i}bits(d)";
+						elif [ "$t" = "Int" ]; then
+							var="c";
+							echo "	c := uint${ti}(d)";
+						fi;
+
+						echo "	*e = append(*e,";
+
+						shift=0;
+
+						if [ $order -eq -1 ]; then
+							shift=$(( ( ( i / 8 ) - 1 ) * 8 ));
+						fi;
+
+						for n in $(seq $(( i / 8 ))); do
+							echo -n "		byte(";
+							echo -n "$var";
+
+							if [ $shift -ne 0 ]; then
+								echo -n ">>$shift";
+							fi;
+
+							echo "),";
+
+							let "shift += 8 * $order";
+						done;
+
+						echo "	)";
+					fi;
+
+					echo "}";
+				done;
+
+				bytesStrings | while read t type empty tt; do
+					echo;
+					echo "// ${rw}${t} ${rw}s a ${type}.";
+					echo -n "func (e *Mem${e}Endian${rw}${er}) ${rw}";
+
+					if [ "$rw" = "Write" ]; then
+						echo -n "${t}(d ${type})";
+
+						if [ "$t" = "String" ]; then
+							echo -n " (int, error)";
+						fi;
+
+						echo " {";
+						echo "	*e = append(*e, d...)";
+
+						if [ "$t" = "String" ]; then
+							echo;
+							echo "	return len(d), nil";
+						fi;
+					else
+						echo "${t}(size int) ${type} {";
+						echo "	if len(*e) < size {";
+						if [ "$t" = "String" ]; then
+							echo "		return \"\"";
+						else
+							echo "		return nil";
+						fi;
+
+						echo "	}";
+						echo;
+
+						if [ "$t" = "String" ]; then
+							echo "	d := string((*e)[:size])";
+						else
+							echo "	d := []byte((*e)[:size])";
+						fi;
+
+						echo "	*e = (*e)[size:]";
+						echo;
+						echo "	return d";
+
+					fi;
+
+					echo "}";
+
+						if [ "$t" = "Bytes" ]; then
+							echo;
+							echo "// Mem${e}Endian${rw}${er} implements io.${rw}${er}.";
+							echo "func (e *Mem${e}Endian${rw}${er}) ${rw}(p []byte) (int, error) {";
+
+
+							if [ "$rw" = "Write" ]; then
+								echo "	*e = append(*e, p...)";
+								echo;
+								echo "	return len(p), nil";
+							else
+								echo "	n := copy(p, *e)";
+								echo;
+								echo "	if n == 0 && len(p) != 0 {";
+								echo "		return 0, io.EOF";
+								echo "	}";
+								echo;
+								echo "	*e = (*e)[n:]";
+								echo;
+								echo "	return n, nil"
+							fi;
+
+							echo "}";
+						fi;
+
+					for size in "X" 8 16 24 32 40 48 56 64; do
+						tSize="$size";
+
+						if [ "$size" = "X" ]; then
+							tSize="64";
+						elif [ $size -eq 24 ]; then
+							tSize=32;
+						elif [ $size -gt 32 ]; then
+							tSize=64;
+						fi;
+
+						echo;
+						echo "// ${rw}${t}${size} ${rw}s the length of the ${t}, using ${rw}Uint${size} and then ${rw}s the bytes.";
+						echo -n "func (e *Mem${e}Endian${rw}${er}) ${rw}${t}${size}(";
+
+						if [ "$rw" = "Write" ]; then
+							echo "p ${type}) {";
+							echo "	e.WriteUint${size}(uint${tSize}(len(p)))";
+							echo "	e.Write${t}(p)";
+						else
+							echo ") ${type} {";
+							echo "	return e.Read${t}(int(e.ReadUint${size}()))";
+						fi;
+
+						echo "}";
+					done;
+
+					type="string";
+				done;
+
+				echo;
+				echo -n "// ${rw}String0 ${rw}s the bytes of the string ";
+
+				if [ "$rw" = "Write" ]; then
+					echo "ending with a 0 byte.";
+				else
+					echo "until a 0 byte is read.";
+				fi;
+
+				echo -n "func (e *Mem${e}Endian${rw}${er}) ${rw}String0(";
+
+				if [ "$rw" = "Write" ]; then
+					echo "p string) {";
+					echo "	e.WriteString(p)";
+					echo "	e.WriteUint8(0)";
+				else
+					echo ") string {";
+					echo "	var d string";
+					echo;
+					echo "	for n, c := range *e {";
+					echo "		if c == 0 {";
+					echo "			d = string((*e)[:n])";
+					echo "			*e = (*e)[n+1:]";
+					echo;
+					echo "			break";
+					echo "		}";
+					echo "	}";
+					echo;
+					echo "	return d";
+				fi;
+
+				echo "}";
+		) > "$(echo "mem${e}Endian${rw}${er}" | tr A-Z a-z).go";
+	done;
+done;
