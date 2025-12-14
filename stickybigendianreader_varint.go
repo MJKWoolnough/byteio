@@ -3,7 +3,7 @@ package byteio
 // ReadUintX reads an unsigned integer that was encoded using a variable number
 // of bytes.
 func (e *StickyBigEndianReader) ReadUintX() uint64 {
-	c, _ := e.ReadByte()
+	c := e.ReadUint8()
 	val := uint64(c) & 0x7f
 
 	for n := 1; c&0x80 != 0 && n < 9; n++ {
