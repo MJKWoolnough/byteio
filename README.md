@@ -21,6 +21,7 @@ Package byteio helps with writing binary data in both big and little endian.
  - Read and Write in both **big-** and **little-endian** formats.
  - Read and Write Variable Integer formats to save on space.
  - Sticky Reads and Writers that store errors and read/write counts.
+ - Read and Write directly from and to byte slices with the Mem* types.
 
 ## Usage
 
