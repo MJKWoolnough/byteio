@@ -53,24 +53,24 @@ func (e *StickyLittleEndianWriter) WriteByte(c byte) error {
 }
 
 // ReadByte implements the io.ByteReader interface.
-func (e *MemBigEndianReader) ReadByte() (byte, error) {
+func (e *MemBigEndian) ReadByte() (byte, error) {
 	return e.ReadUint8(), nil
 }
 
 // WriteByte implements the io.ByteWriter interface.
-func (e *MemBigEndianWriter) WriteByte(c byte) error {
+func (e *MemBigEndian) WriteByte(c byte) error {
 	e.WriteUint8(c)
 
 	return nil
 }
 
 // ReadByte implements the io.ByteReader interface.
-func (e *MemLittleEndianReader) ReadByte() (byte, error) {
+func (e *MemLittleEndian) ReadByte() (byte, error) {
 	return e.ReadUint8(), nil
 }
 
 // WriteByte implements the io.ByteWriter interface.
-func (e *MemLittleEndianWriter) WriteByte(c byte) error {
+func (e *MemLittleEndian) WriteByte(c byte) error {
 	e.WriteUint8(c)
 
 	return nil
