@@ -431,7 +431,7 @@ func (e *StickyBigEndianWriter) WriteBytes(d []byte) {
 		return
 	}
 
-	n, err := e.Write(d)
+	n, err := e.Writer.Write(d)
 	e.Count += int64(n)
 	e.Err = err
 }

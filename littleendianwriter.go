@@ -258,7 +258,7 @@ func (e *LittleEndianWriter) WriteFloat64(d float64) (int, error) {
 
 // WriteBytes Writes a []byte.
 func (e *LittleEndianWriter) WriteBytes(d []byte) (int, error) {
-	return e.Write(d)
+	return e.Writer.Write(d)
 }
 
 // WriteBytesX Writes the length of the Bytes, using WriteUintX and then Writes the bytes.
