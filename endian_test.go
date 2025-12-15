@@ -6,15 +6,11 @@ import (
 	"testing"
 )
 
-func (*MemBigEndianReader) GetCount() int64    { return -1 }
-func (*MemBigEndianWriter) GetCount() int64    { return -1 }
-func (*MemLittleEndianReader) GetCount() int64 { return -1 }
-func (*MemLittleEndianWriter) GetCount() int64 { return -1 }
+func (*MemBigEndian) GetCount() int64    { return -1 }
+func (*MemLittleEndian) GetCount() int64 { return -1 }
 
-func (*MemBigEndianReader) GetError() error    { return nil }
-func (*MemBigEndianWriter) GetError() error    { return nil }
-func (*MemLittleEndianReader) GetError() error { return nil }
-func (*MemLittleEndianWriter) GetError() error { return nil }
+func (*MemBigEndian) GetError() error    { return nil }
+func (*MemLittleEndian) GetError() error { return nil }
 
 type readWrite[T any] struct {
 	read  func(StickyEndianReader) T
@@ -54,26 +50,26 @@ type testStickyReadWrite struct {
 	StickyEndianWriter
 }
 
-func testEndians(buf *MemLittleEndianWriter) iter.Seq2[string, testStickyReadWrite] {
+func testEndians(buf *MemLittleEndian) iter.Seq2[string, testStickyReadWrite] {
 	return func(yield func(string, testStickyReadWrite) bool) {
 		_ = yield("Little", testStickyReadWrite{
-			&StickyReader{Reader: &LittleEndianReader{Reader: (*MemLittleEndianReader)(buf)}},
+			&StickyReader{Reader: &LittleEndianReader{Reader: buf}},
 			&StickyWriter{Writer: &LittleEndianWriter{Writer: buf}},
 		}) && yield("Big", testStickyReadWrite{
-			&StickyReader{Reader: &BigEndianReader{Reader: (*MemLittleEndianReader)(buf)}},
+			&StickyReader{Reader: &BigEndianReader{Reader: buf}},
 			&StickyWriter{Writer: &BigEndianWriter{Writer: buf}},
 		}) && yield("StickyLittle", testStickyReadWrite{
-			&StickyLittleEndianReader{Reader: (*MemLittleEndianReader)(buf)},
+			&StickyLittleEndianReader{Reader: buf},
 			&StickyLittleEndianWriter{Writer: buf},
 		}) && yield("StickyBig", testStickyReadWrite{
-			&StickyBigEndianReader{Reader: (*MemLittleEndianReader)(buf)},
+			&StickyBigEndianReader{Reader: buf},
 			&StickyBigEndianWriter{Writer: buf},
 		}) && yield("MemBig", testStickyReadWrite{
-			(*MemBigEndianReader)(buf),
-			(*MemBigEndianWriter)(buf),
+			(*MemBigEndian)(buf),
+			(*MemBigEndian)(buf),
 		}) && yield("MemLittle", testStickyReadWrite{
-			(*MemLittleEndianReader)(buf),
-			(*MemLittleEndianWriter)(buf),
+			buf,
+			buf,
 		})
 	}
 }
@@ -81,7 +77,7 @@ func testEndians(buf *MemLittleEndianWriter) iter.Seq2[string, testStickyReadWri
 func testReadWrite[T comparable](t *testing.T, tname string, numBytes int, rw readWrite[T], tests [][]T, expectedLittle, expectedBig T) {
 	t.Helper()
 
-	var buf MemLittleEndianWriter
+	var buf MemLittleEndian
 
 	for name, test := range testEndians(&buf) {
 		var expectedReadWrite int64
@@ -113,13 +109,13 @@ func testReadWrite[T comparable](t *testing.T, tname string, numBytes int, rw re
 
 	buf.Write(testBytes[:numBytes])
 
-	if read := rw.read(&StickyLittleEndianReader{Reader: (*MemBigEndianReader)(&buf)}); read != expectedLittle {
+	if read := rw.read(&StickyLittleEndianReader{Reader: &buf}); read != expectedLittle {
 		t.Errorf("LittleEndian%s%d: expected to read value %v, got %v", tname, 8*numBytes, expectedLittle, read)
 	}
 
 	buf.Write(testBytes[:numBytes])
 
-	if read := rw.read(&StickyBigEndianReader{Reader: (*MemBigEndianReader)(&buf)}); read != expectedBig {
+	if read := rw.read(&StickyBigEndianReader{Reader: &buf}); read != expectedBig {
 		t.Errorf("BigEndian%s%d: expected to read value %v, got %v", tname, 8*numBytes, expectedBig, read)
 	}
 }
