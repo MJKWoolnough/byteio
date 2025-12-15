@@ -365,7 +365,7 @@ HEREDOC
 							if [ "$t" = "String" ]; then
 								echo "	return io.WriteString(e.Writer, d)";
 							else
-								echo "	return e.Write(d)";
+								echo "	return e.Writer.Write(d)";
 							fi;
 						else
 							if [ "$t" = "String" ]; then
@@ -388,7 +388,7 @@ HEREDOC
 							if [ "$t" = "String" ]; then
 								echo "	n, err := io.WriteString(e.Writer, d)";
 							else
-								echo "	n, err := e.Write(d)";
+								echo "	n, err := e.Writer.Write(d)";
 							fi;
 
 							echo "	e.Count += int64(n)";
