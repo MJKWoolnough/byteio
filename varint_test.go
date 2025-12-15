@@ -78,6 +78,22 @@ func TestStickyLittleEndianVarUint(t *testing.T) {
 	}
 }
 
+func TestMemLittleEndianVarUint(t *testing.T) {
+	for n, test := range littlevarintTests {
+		var buf MemLittleEndian
+
+		buf.WriteUintX(test.Input)
+		if !bytes.Equal(buf, test.Output) {
+			t.Errorf("test %d.1: expecting %v, got %v", n+1, test.Output, buf)
+			buf.Write(test.Output)
+		}
+
+		if num := buf.ReadUintX(); num != test.Input {
+			t.Errorf("test %d.2: expecting %d, got %d", n+1, test.Input, num)
+		}
+	}
+}
+
 func FuzzLittleEndianVarInt(f *testing.F) {
 	for _, seed := range []uint64{0, 127, 128, 255, 256, 1024, 16512, 134217728, 18446744073709551615} {
 		f.Add(seed)
@@ -161,7 +177,23 @@ func TestStickyBigEndianVarUint(t *testing.T) {
 			buf.Write(test.Output)
 		}
 
-		num := (&StickyBigEndianReader{Reader: buf}).ReadUintX()
+		if num := (&StickyBigEndianReader{Reader: buf}).ReadUintX(); num != test.Input {
+			t.Errorf("test %d.2: expecting %d, got %d", n+1, test.Input, num)
+		}
+	}
+}
+
+func TestMemBigEndianVarUint(t *testing.T) {
+	for n, test := range bigvarintTests {
+		var buf MemBigEndian
+
+		buf.WriteUintX(test.Input)
+		if !bytes.Equal(buf, test.Output) {
+			t.Errorf("test %d.1: expecting %v, got %v", n+1, test.Output, buf)
+			buf.Write(test.Output)
+		}
+
+		num := buf.ReadUintX()
 		if num != test.Input {
 			t.Errorf("test %d.2: expecting %d, got %d", n+1, test.Input, num)
 		}
