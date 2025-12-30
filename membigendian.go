@@ -10,6 +10,16 @@ import (
 // MemBigEndian is a byte slice that has methods to make it easier to read and write fundamental types.
 type MemBigEndian []byte
 
+// GetError returns any error received.
+func (e MemBigEndian) GetError() error {
+	return nil
+}
+
+// GetCount returns the length of the slice.
+func (e MemBigEndian) GetCount() int64 {
+	return int64(len(e))
+}
+
 // ReadBool Reads a boolean.
 func (e *MemBigEndian) ReadBool() bool {
 	return e.ReadUint8() != 0

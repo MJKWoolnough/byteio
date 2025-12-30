@@ -10,6 +10,16 @@ import (
 // MemLittleEndian is a byte slice that has methods to make it easier to read and write fundamental types.
 type MemLittleEndian []byte
 
+// GetError returns any error received.
+func (e MemLittleEndian) GetError() error {
+	return nil
+}
+
+// GetCount returns the length of the slice.
+func (e MemLittleEndian) GetCount() int64 {
+	return int64(len(e))
+}
+
 // ReadBool Reads a boolean.
 func (e *MemLittleEndian) ReadBool() bool {
 	return e.ReadUint8() != 0
