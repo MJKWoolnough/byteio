@@ -16,7 +16,7 @@ type StickyBigEndianReader struct {
 	Count  int64
 }
 
-// GetCount returns any error received.
+// GetError returns any error received.
 func (e *StickyBigEndianReader) GetError() error {
 	return e.Err
 }

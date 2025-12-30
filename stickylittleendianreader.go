@@ -16,7 +16,7 @@ type StickyLittleEndianReader struct {
 	Count  int64
 }
 
-// GetCount returns any error received.
+// GetError returns any error received.
 func (e *StickyLittleEndianReader) GetError() error {
 	return e.Err
 }
