@@ -6,12 +6,6 @@ import (
 	"testing"
 )
 
-func (*MemBigEndian) GetCount() int64    { return -1 }
-func (*MemLittleEndian) GetCount() int64 { return -1 }
-
-func (*MemBigEndian) GetError() error    { return nil }
-func (*MemLittleEndian) GetError() error { return nil }
-
 type readWrite[T any] struct {
 	read  func(StickyEndianReader) T
 	write func(StickyEndianWriter, T)
@@ -74,6 +68,16 @@ func testEndians(buf *MemLittleEndian) iter.Seq2[string, testStickyReadWrite] {
 	}
 }
 
+func isMem(t testStickyReadWrite) bool {
+	if _, ok := t.StickyEndianReader.(*MemLittleEndian); ok {
+		return true
+	}
+
+	_, ok := t.StickyEndianReader.(*MemBigEndian)
+
+	return ok
+}
+
 func testReadWrite[T comparable](t *testing.T, tname string, numBytes int, rw readWrite[T], tests [][]T, expectedLittle, expectedBig T) {
 	t.Helper()
 
@@ -99,9 +103,9 @@ func testReadWrite[T comparable](t *testing.T, tname string, numBytes int, rw re
 
 			expectedReadWrite += int64(len(tests) * numBytes)
 
-			if written := test.StickyEndianWriter.GetCount(); written != expectedReadWrite && written != -1 {
+			if written := test.StickyEndianWriter.GetCount(); written != expectedReadWrite && !isMem(test) {
 				t.Errorf("%s%s%d (%d.1): expected to write %d bytes, read %d", name, tname, 8*numBytes, n+1, expectedReadWrite, written)
-			} else if read := test.StickyEndianReader.GetCount(); read != expectedReadWrite && read != -1 {
+			} else if read := test.StickyEndianReader.GetCount(); read != expectedReadWrite && !isMem(test) {
 				t.Errorf("%s%s%d (%d.1): expected to read %d bytes, read %d", name, tname, 8*numBytes, n+1, expectedReadWrite, read)
 			}
 		}
