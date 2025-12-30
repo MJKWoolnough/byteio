@@ -69,7 +69,7 @@ HEREDOC
 				if [ ! -z "$s" ]; then
 					cat <<HEREDOC
 
-// GetCount returns any error received.
+// GetError returns any error received.
 func (e *${s}${e}Endian${rw}${er}) GetError() error {
 	return e.Err
 }
