@@ -2,9 +2,10 @@ package byteio
 
 // WriteUintX writes the unsigned integer using a variable number of bytes.
 func (e *MemLittleEndian) WriteUintX(d uint64) {
-	var pos int
-
-	var buffer [9]byte
+	var (
+		pos    int
+		buffer [9]byte
+	)
 
 	for ; d > 127 && pos < 8; pos++ {
 		buffer[pos] = byte(d&0x7f) | 0x80

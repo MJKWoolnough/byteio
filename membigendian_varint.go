@@ -3,6 +3,7 @@ package byteio
 // WriteUintX writes the unsigned integer using a variable number of bytes.
 func (e *MemBigEndian) WriteUintX(d uint64) {
 	pos := 8
+
 	var buffer [9]byte
 
 	if d > 9295997013522923647 {
