@@ -2,7 +2,6 @@
 
 [![CI](https://github.com/MJKWoolnough/byteio/actions/workflows/go-checks.yml/badge.svg)](https://github.com/MJKWoolnough/byteio/actions)
 [![Go Reference](https://pkg.go.dev/badge/vimagination.zapto.org/byteio.svg)](https://pkg.go.dev/vimagination.zapto.org/byteio)
-[![Go Report Card](https://goreportcard.com/badge/vimagination.zapto.org/byteio)](https://goreportcard.com/report/vimagination.zapto.org/byteio)
 
 --
     import "vimagination.zapto.org/byteio"
